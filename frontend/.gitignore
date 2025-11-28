@@ -1,0 +1,23 @@
+# dependencies
+/node_modules
+
+# production
+/dist
+/build
+
+# local env files
+.env
+.env.local
+.vite
+
+# misc
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+.DS_Store
+.vscode/
+.idea/
+
+# lockfiles (optional to track) - usually you track lockfile (package-lock.json / yarn.lock)
+# package-lock.json
+# yarn.lock
