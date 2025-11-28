@@ -56,7 +56,7 @@ export default function Footer() {
               <p className="flex items-center gap-2">
                 <FaEnvelope className="text-brandOrange" />
                 <a
-                  href="mailto:info@mapmendsolution.com"
+                  href="mailto:infomapmendsolution@gmail.com"
                   className="hover:text-brandOrange transition"
                 >
                   info@mapmendsolution.com
