@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://mapmendsolution.com/</loc><priority>1.00</priority></url>
+  <url><loc>https://mapmendsolution.com/about</loc><priority>0.8</priority></url>
+  <url><loc>https://mapmendsolution.com/services</loc><priority>0.8</priority></url>
+  <url><loc>https://mapmendsolution.com/pricing</loc><priority>0.7</priority></url>
+  <url><loc>https://mapmendsolution.com/blog</loc><priority>0.6</priority></url>
+  <url><loc>https://mapmendsolution.com/contact</loc><priority>0.8</priority></url>
+  <!-- add city pages -->
+  <url><loc>https://mapmendsolution.com/udaipur</loc><priority>0.7</priority></url>
+  <url><loc>https://mapmendsolution.com/jaipur</loc><priority>0.7</priority></url>
+</urlset>
