@@ -1,10 +1,11 @@
+// backend/models/Testimonial.js
 const mongoose = require("mongoose");
 
-const TestimonialSchema = new mongoose.Schema({
-  name: { type: String, required: true },
-  review: { type: String, required: true },
+const testimonialSchema = new mongoose.Schema({
+  name: String,
+  review: String,
   rating: { type: Number, default: 5 },
-  createdAt: { type: Date, default: Date.now }
-});
+  approved: { type: Boolean, default: true }
+}, { timestamps: true });
 
-module.exports = mongoose.model("Testimonial", TestimonialSchema);
+module.exports = mongoose.model("Testimonial", testimonialSchema);

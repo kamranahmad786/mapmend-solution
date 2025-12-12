@@ -19,3 +19,4 @@ npm run dev
 ## Deploy
 - Frontend -> Vercel/Netlify
 - Backend -> Render/Heroku/Render
+

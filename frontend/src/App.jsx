@@ -1,10 +1,11 @@
 import React from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
+import { HelmetProvider } from "react-helmet-async";
 
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 
-// Main Website Sections
+// Marketing Sections
 import Hero from "./components/Hero";
 import About from "./components/About";
 import WhyChooseUs from "./components/WhyChooseUs";
@@ -19,56 +20,116 @@ import ContactForm from "./components/ContactForm";
 import BlogList from "./pages/BlogList";
 import PostPage from "./pages/PostPage";
 
-// City Landing Pages
+// City Pages
 import CityLanding from "./components/CityLanding";
 
-// Small utility to scroll to top on page change
+// Auth
+import Register from "./pages/Register";
+import Login from "./pages/Login";
+
+// Dashboard Layout + Child Pages
+import Dashboard from "./pages/Dashboard";
+import DashboardHome from "./pages/DashboardHome";
+import AIAnalysis from "./pages/AIAnalysis";
+import MyWebsites from "./pages/MyWebsites";
+import Invoices from "./pages/Invoices";
+import Account from "./pages/Account";
+
+// Admin
+import AdminPanel from "./pages/AdminPanel";
+
+// Policy Pages
+import RefundPolicy from "./pages/RefundPolicy";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import TermsConditions from "./pages/TermsConditions";
+import CancellationPolicy from "./pages/CancellationPolicy";
+import AboutPage from "./pages/AboutPage";
+
+// Scroll to top on route change
 function ScrollToTop() {
-  React.useEffect(() => {
-    window.scrollTo(0, 0);
-  });
+  React.useEffect(() => window.scrollTo(0, 0));
   return null;
 }
 
 export default function App() {
+  const location = useLocation();
+
+  // Detect dashboard and admin area
+  const isDashboard = location.pathname.startsWith("/dashboard");
+  const isAdmin = location.pathname.startsWith("/admin");
+
+  const hideNavbarFooter = isDashboard || isAdmin;
+
   return (
-    <div className="min-h-screen text-gray-800 bg-white">
-      <Navbar />
+    <HelmetProvider>
+      <div className="min-h-screen bg-white text-gray-800 flex flex-col">
 
-      <ScrollToTop />
+        {/* Navbar hidden on Dashboard + Admin */}
+        {!hideNavbarFooter && <Navbar />}
 
-      <Routes>
-        {/* HOME PAGE */}
-        <Route
-          path="/"
-          element={
-            <main>
-              <Hero />
-              <About />
-              <WhyChooseUs />
-              <Services />
-              <Process />
-              <Pricing />
-              <Testimonials />
-              <FAQ />
-              <ContactForm />
-            </main>
-          }
-        />
+        <ScrollToTop />
 
-        {/* BLOG PAGES */}
-        <Route path="/blog" element={<BlogList />} />
-        <Route path="/blog/:slug" element={<PostPage />} />
+        <main className="flex-1">
+          <Routes>
 
-        {/* CITY LANDING PAGES */}
-        <Route path="/udaipur" element={<CityLanding city="Udaipur" />} />
-        <Route path="/jaipur" element={<CityLanding city="Jaipur" />} />
-        <Route path="/kota" element={<CityLanding city="Kota" />} />
-        <Route path="/delhi" element={<CityLanding city="Delhi" />} />
-        <Route path="/mumbai" element={<CityLanding city="Mumbai" />} />
-      </Routes>
+            {/* ---------------- HOME PAGE ---------------- */}
+            <Route
+              path="/"
+              element={
+                <>
+                  <Hero />
+                  <About />
+                  <WhyChooseUs />
+                  <Services />
+                  <Process />
+                  <Pricing />
+                  <Testimonials />
+                  <FAQ />
+                  <ContactForm />
+                </>
+              }
+            />
 
-      <Footer />
-    </div>
+            {/* ---------------- AUTH ---------------- */}
+            <Route path="/register" element={<Register />} />
+            <Route path="/login" element={<Login />} />
+
+            {/* ---------------- DASHBOARD (Protected Layout) ---------------- */}
+            <Route path="/dashboard" element={<Dashboard />}>
+              <Route index element={<DashboardHome />} />
+              <Route path="ai" element={<AIAnalysis />} />
+              <Route path="websites" element={<MyWebsites />} />
+              <Route path="invoices" element={<Invoices />} />
+              <Route path="account" element={<Account />} />
+            </Route>
+
+            {/* ---------------- ADMIN PANEL ---------------- */}
+            <Route path="/admin" element={<AdminPanel />} />
+
+            {/* ---------------- BLOG ---------------- */}
+            <Route path="/blog" element={<BlogList />} />
+            <Route path="/blog/:slug" element={<PostPage />} />
+
+            {/* ---------------- CITY LANDING PAGES ---------------- */}
+            <Route path="/udaipur" element={<CityLanding city="Udaipur" />} />
+            <Route path="/jaipur" element={<CityLanding city="Jaipur" />} />
+            <Route path="/kota" element={<CityLanding city="Kota" />} />
+            <Route path="/delhi" element={<CityLanding city="Delhi" />} />
+            <Route path="/mumbai" element={<CityLanding city="Mumbai" />} />
+
+            {/* ---------------- POLICIES ---------------- */}
+            <Route path="/about-us" element={<AboutPage />} />
+            <Route path="/refund-policy" element={<RefundPolicy />} />
+            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+            <Route path="/terms-and-conditions" element={<TermsConditions />} />
+            <Route path="/cancellation-policy" element={<CancellationPolicy />} />
+
+          </Routes>
+        </main>
+
+        {/* Footer hidden on Dashboard + Admin */}
+        {!hideNavbarFooter && <Footer />}
+      </div>
+    </HelmetProvider>
   );
 }

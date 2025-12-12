@@ -1,42 +1,51 @@
+// backend/server.js
 require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const connectDB = require("./config/db");
-const User = require("./models/User");
-const bcrypt = require("bcryptjs");
+
+// routes
+const authRoutes = require("./routes/auth");
+const sitesRoutes = require("./routes/sites");
+const paymentsRoutes = require("./routes/payments");
+const adminRoutes = require("./routes/admin");
+const testimonialsRoutes = require("./routes/testimonials");
+const contactRoutes = require("./routes/contact");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-app.use(cors({ origin: true }));
+app.use(cors({ origin: true })); // tighten in production
 app.use(express.json());
+app.use("/public", express.static(__dirname + "/public"));
 
-connectDB(process.env.MONGODB_URI);
+connectDB(process.env.MONGODB_URI || process.env.MONGO_URI);
 
-// Routes
-app.use("/api/testimonials", require("./routes/testimonials"));
-app.use("/api/contact", require("./routes/contact"));
-app.use("/api/auth", require("./routes/auth"));
+// mount routes
+app.use("/api/auth", authRoutes);
+app.use("/api/sites", sitesRoutes);
+app.use("/api/payments", paymentsRoutes);
+app.use("/api/admin", adminRoutes);
+app.use("/api/testimonials", testimonialsRoutes);
+app.use("/api/contact", contactRoutes);
 
-// Health
 app.get("/", (req, res) => res.send("MapMend Solution API running"));
 
-// seed admin if configured and no users exist
+// optional admin seed (if no users)
 (async function seedAdmin() {
   try {
     if (process.env.ADMIN_EMAIL && process.env.ADMIN_PASSWORD) {
-      const UserModel = require("./models/User");
-      const count = await UserModel.countDocuments().catch(() => 0);
+      const User = require("./models/User");
+      const count = await User.countDocuments();
       if (count === 0) {
+        const bcrypt = require("bcryptjs");
         const salt = await bcrypt.genSalt(10);
         const passwordHash = await bcrypt.hash(process.env.ADMIN_PASSWORD, salt);
-        await UserModel.create({ email: process.env.ADMIN_EMAIL, passwordHash, name: "Admin" });
-        console.log("Admin user created:", process.env.ADMIN_EMAIL);
+        await User.create({ name: "Admin", email: process.env.ADMIN_EMAIL, passwordHash, role: "admin" });
+        console.log("Admin created:", process.env.ADMIN_EMAIL);
       }
     }
-  } catch (err) {
-    console.error("Admin seed error:", err.message);
-  }
+  } catch (err) { console.error("Seed error:", err.message); }
 })();
 
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`));

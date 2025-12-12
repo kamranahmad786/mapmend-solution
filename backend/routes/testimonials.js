@@ -1,39 +1,29 @@
+// backend/routes/testimonials.js
 const express = require("express");
-const router = express.Router();
 const Testimonial = require("../models/Testimonial");
-const auth = require("../middleware/auth");
+const { authMiddleware, adminMiddleware } = require("../middleware/auth");
+const router = express.Router();
 
-// GET /api/testimonials - public
+// public list (approved)
 router.get("/", async (req, res) => {
-  try {
-    const list = await Testimonial.find().sort({ createdAt: -1 }).limit(50);
-    res.json(list);
-  } catch (err) {
-    res.status(500).json({ error: "Server error" });
-  }
+  const list = await Testimonial.find({ approved: true }).sort({ createdAt: -1 });
+  res.json(list);
 });
 
-// POST /api/testimonials - protected
-router.post("/", auth, async (req, res) => {
+// create (public)
+router.post("/", async (req, res) => {
   const { name, review, rating } = req.body;
-  if (!name || !review) return res.status(400).json({ error: "Name and review required" });
-  try {
-    const t = new Testimonial({ name, review, rating: rating || 5 });
-    await t.save();
-    res.status(201).json(t);
-  } catch (err) {
-    res.status(500).json({ error: "Server error" });
-  }
+  const t = await Testimonial.create({ name, review, rating: rating || 5, approved: false });
+  res.json({ ok: true, id: t._id });
 });
 
-// DELETE /api/testimonials/:id - protected
-router.delete("/:id", auth, async (req, res) => {
-  try {
-    await Testimonial.findByIdAndDelete(req.params.id);
-    res.json({ success: true });
-  } catch (err) {
-    res.status(500).json({ error: "Server error" });
-  }
+// admin approve
+router.post("/:id/approve", authMiddleware, adminMiddleware, async (req, res) => {
+  const t = await Testimonial.findById(req.params.id);
+  if (!t) return res.status(404).json({ error: "Not found" });
+  t.approved = true;
+  await t.save();
+  res.json({ ok: true });
 });
 
 module.exports = router;
