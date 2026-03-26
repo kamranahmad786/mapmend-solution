@@ -70,7 +70,7 @@ export default function Navbar() {
       <nav
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 
         ${hidden ? "-translate-y-full" : "translate-y-0"} 
-        bg-white/70 backdrop-blur-xl shadow`}
+        glass-nav`}
       >
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
 
@@ -85,10 +85,10 @@ export default function Navbar() {
               className="h-12 w-auto object-contain drop-shadow-md"
             />
             <div className="leading-tight">
-              <h1 className="text-xl font-bold text-brandBlue tracking-tight">
+              <h1 className="text-xl font-bold text-white tracking-tight text-glow">
                 MapMend Solution
               </h1>
-              <p className="text-xs text-gray-500">Elevate Your Business Online</p>
+              <p className="text-xs text-neonCyan">Elevate Your Business Online</p>
             </div>
           </div>
 
@@ -103,12 +103,12 @@ export default function Navbar() {
                     key={sec}
                     onClick={() => goToSection(sec)}
                     className={`relative text-sm font-medium transition ${
-                      active === sec ? "text-brandBlue" : "text-gray-700 hover:text-brandBlue"
+                      active === sec ? "text-neonCyan text-glow" : "text-gray-300 hover:text-white"
                     }`}
                   >
                     {sec.charAt(0).toUpperCase() + sec.slice(1)}
                     {active === sec && (
-                      <span className="absolute left-0 bottom-[-4px] w-full h-[2px] bg-brandOrange rounded-full"></span>
+                      <span className="absolute left-0 bottom-[-4px] w-full h-[2px] bg-neonCyan rounded-full shadow-[0_0_8px_#06b6d4]"></span>
                     )}
                   </button>
                 ))}
@@ -120,8 +120,8 @@ export default function Navbar() {
               href="/blog"
               className={`relative text-sm font-medium transition ${
                 location.pathname.startsWith("/blog")
-                  ? "text-brandBlue"
-                  : "text-gray-700 hover:text-brandBlue"
+                  ? "text-neonCyan text-glow"
+                  : "text-gray-300 hover:text-white"
               }`}
             >
               Blog
@@ -132,13 +132,13 @@ export default function Navbar() {
               <>
                 <a
                   href="/login"
-                  className="text-sm font-medium text-gray-700 hover:text-brandBlue transition"
+                  className="text-sm font-medium text-gray-300 hover:text-white transition"
                 >
                   Login
                 </a>
                 <a
                   href="/register"
-                  className="bg-brandOrange text-white px-5 py-2 rounded-lg text-sm font-semibold shadow hover:bg-brandOrange/90 transition"
+                  className="bg-brandOrange text-white px-5 py-2 rounded-lg text-sm font-semibold shadow-[0_0_15px_rgba(242,97,34,0.5)] hover:bg-brandOrange/90 transition hover-glow"
                 >
                   Register
                 </a>
@@ -147,13 +147,13 @@ export default function Navbar() {
               <>
                 <a
                   href="/dashboard"
-                  className="text-sm font-semibold text-brandBlue hover:text-brandOrange transition"
+                  className="text-sm font-semibold text-neonCyan hover:text-white transition"
                 >
                   Dashboard
                 </a>
                 <button
                   onClick={handleLogout}
-                  className="text-sm font-medium text-red-600 hover:text-red-800 transition"
+                  className="text-sm font-medium text-red-500 hover:text-red-400 transition"
                 >
                   Logout
                 </button>
@@ -164,14 +164,14 @@ export default function Navbar() {
             <a
               href="https://wa.me/917366890727?text=Hello%2C%20I%20want%20a%20free%20website%20%26%20Google%20Maps%20audit."
               target="_blank"
-              className="bg-brandBlue text-white px-5 py-2 rounded-lg text-sm font-semibold shadow hover:bg-brandBlue/90 transition"
+              className="bg-neonBlue text-white px-5 py-2 rounded-lg text-sm font-semibold shadow-[0_0_15px_rgba(59,130,246,0.5)] hover:bg-blue-500 transition hover-glow"
             >
               Get Free Quote
             </a>
           </div>
 
           {/* MOBILE MENU BUTTON */}
-          <button className="md:hidden text-3xl text-brandBlue" onClick={() => setOpen(true)}>
+          <button className="md:hidden text-3xl text-white" onClick={() => setOpen(true)}>
             ☰
           </button>
         </div>
@@ -187,12 +187,12 @@ export default function Navbar() {
 
       {/* MOBILE MENU */}
       <aside
-        className={`fixed top-0 right-0 w-[75%] h-full bg-white shadow-xl z-50 
+        className={`fixed top-0 right-0 w-[75%] h-full bg-[#0a0a0f] border-l border-white/10 shadow-2xl z-50 
         transform transition-all duration-300 
         ${open ? "translate-x-0" : "translate-x-full"}`}
       >
         <button
-          className="absolute top-5 right-5 text-2xl text-gray-700 hover:text-brandBlue transition"
+          className="absolute top-5 right-5 text-2xl text-gray-400 hover:text-white transition"
           onClick={() => setOpen(false)}
         >
           <FaTimes />

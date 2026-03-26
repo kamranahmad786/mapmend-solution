@@ -1,107 +1,126 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../utils/api";
 import { FaStar } from "react-icons/fa";
+import { motion } from "framer-motion";
 
 export default function Testimonials() {
   const [list, setList] = useState([]);
 
   useEffect(() => {
-    axios
-      .get(`${import.meta.env.VITE_API_URL}/api/testimonials`)
+    api
+      .get(`/api/testimonials`)
       .then((res) => setList(res.data))
       .catch(() => {
         // Fallback Testimonials
         setList([
           {
             name: "Rahul Verma",
-            review: "MapMend created a beautiful website for my shop. Highly satisfied!",
+            review: "MapMend created a beautiful smart website for my shop. Highly satisfied with the AI-driven approach!",
             rating: 5,
           },
           {
             name: "Sneha Enterprises",
-            review: "Very professional and fast work. Website delivered in just 2 days!",
+            review: "Very professional and fast work. Next-gen digital presence delivered in just 2 days!",
             rating: 5,
           },
           {
             name: "Amit Traders",
-            review: "Google Maps optimization boosted our daily customer calls.",
+            review: "Google Maps AI optimization boosted our daily customer calls and overall visibility.",
             rating: 5,
           },
         ]);
       });
   }, []);
 
-  // Auto-generate avatar (initials)
+  // Auto-generate avatar (initials) with neon purple tint
   const getAvatar = (name) =>
-    `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=ff7a00&color=fff&bold=true&size=120`;
+    `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=8b5cf6&color=fff&bold=true&size=120`;
 
   return (
     <section
       id="testimonials"
-      className="min-h-screen flex items-center py-24 bg-gradient-to-b from-gray-50 to-white relative"
+      className="min-h-screen flex items-center py-24 bg-[#050505] relative overflow-hidden"
     >
-      {/* Background Pattern */}
-      <div className="absolute inset-0 bg-[url('https://www.toptal.com/designers/subtlepatterns/uploads/dots.png')] opacity-20"></div>
+      {/* Background Glow */}
+      <div className="absolute top-1/2 right-0 -translate-y-1/2 w-[500px] h-[500px] bg-neonPink/10 rounded-full blur-[150px] mix-blend-screen pointer-events-none"></div>
 
       <div className="max-w-7xl mx-auto px-6 w-full relative z-10">
 
         {/* Heading */}
-        <h2 className="text-4xl md:text-5xl font-extrabold text-center text-brandBlue mb-4">
-          Trusted by Businesses Across India
-        </h2>
-
-        <p className="text-gray-600 text-center max-w-2xl mx-auto mb-16 text-lg">
-          See how businesses improved their visibility, trust and customer calls after working with MapMend Solution.
-        </p>
+        <motion.div 
+          initial={{ opacity: 0, y: -20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center mb-16"
+        >
+          <h2 className="text-4xl md:text-5xl font-extrabold text-white mb-4">
+            Trusted by Next-Gen <span className="text-gradient">Businesses</span>
+          </h2>
+          <p className="text-gray-400 max-w-2xl mx-auto text-lg">
+            See how forward-thinking brands scaled their digital visibility and automated their growth with MapMend Solution.
+          </p>
+        </motion.div>
 
         {/* Testimonials Grid */}
-        <div className="grid gap-10 md:grid-cols-3">
+        <div className="grid gap-8 md:grid-cols-3">
           {list.map((t, i) => (
-            <div
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              transition={{ delay: i * 0.15 }}
+              viewport={{ once: true }}
               key={i}
-              className="relative bg-white p-8 rounded-3xl border border-gray-200 shadow-[0_8px_24px_rgba(0,0,0,0.08)]
-                         hover:shadow-[0_12px_32px_rgba(0,0,0,0.12)] hover:-translate-y-2 transition-all duration-300 group"
+              className="relative glass-card p-8 rounded-[2rem] border border-white/10 hover-glow transition-transform duration-300 hover:-translate-y-2 group overflow-hidden"
             >
+              {/* Subtle overlay glow */}
+              <div className="absolute inset-0 bg-gradient-to-br from-neonPurple/5 to-transparent pointer-events-none"></div>
+
               {/* Avatar */}
-              <div className="flex justify-start mb-5">
+              <div className="flex justify-start mb-6 relative z-10">
                 <img
                   src={getAvatar(t.name)}
                   alt={t.name}
-                  className="w-16 h-16 rounded-full border-2 border-brandOrange shadow"
+                  className="w-16 h-16 rounded-full border border-neonPurple shadow-[0_0_15px_rgba(139,92,246,0.3)] group-hover:scale-110 transition-transform duration-300"
                 />
               </div>
 
               {/* Stars */}
-              <div className="flex gap-1 text-brandOrange mb-3">
+              <div className="flex gap-1 text-neonCyan mb-4 drop-shadow-[0_0_5px_rgba(6,182,212,0.8)] relative z-10">
                 {[...Array(t.rating || 5)].map((_, idx) => (
                   <FaStar key={idx} />
                 ))}
               </div>
 
               {/* Review */}
-              <p className="text-gray-700 leading-relaxed text-[16px] mb-5">
+              <p className="text-gray-300 leading-relaxed text-[16px] mb-6 relative z-10 italic">
                 “{t.review}”
               </p>
 
               {/* Name */}
-              <div className="font-bold text-brandBlue text-lg">{t.name}</div>
+              <div className="font-bold text-white text-lg relative z-10">{t.name}</div>
 
-              {/* Decorative Orange Highlight */}
-              <div className="absolute left-6 bottom-6 w-16 h-1 bg-brandOrange rounded-full opacity-60 group-hover:w-24 transition-all"></div>
-            </div>
+              {/* Decorative Highlight */}
+              <div className="absolute left-0 bottom-0 w-2 h-full bg-gradient-to-b from-transparent via-neonPurple to-transparent opacity-30 group-hover:opacity-100 transition-all duration-500"></div>
+            </motion.div>
           ))}
         </div>
 
         {/* CTA */}
-        <div className="text-center mt-16">
+        <motion.div 
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ delay: 0.5 }}
+          viewport={{ once: true }}
+          className="text-center mt-20"
+        >
           <a
             href="https://wa.me/917366890727?text=Hello,%20I%20want%20to%20grow%20my%20business%20online.%20Please%20help%20me."
             target="_blank"
-            className="inline-block bg-brandBlue hover:bg-brandBlue/90 text-white text-lg font-semibold px-10 py-4 rounded-xl shadow transition"
+            className="inline-block bg-white text-black text-lg font-bold px-10 py-4 rounded-xl shadow-[0_0_20px_rgba(255,255,255,0.2)] hover:scale-105 transition-transform duration-300"
           >
-            Join Our Happy Clients →
+            Join the Network →
           </a>
-        </div>
+        </motion.div>
 
       </div>
     </section>

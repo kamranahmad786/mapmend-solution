@@ -1,0 +1,29 @@
+{
+  "name": "mapmend-solution",
+  "version": "1.0.0",
+  "description": "Monorepo with frontend (React + Tailwind) and backend (Node + Express + MongoDB).",
+  "main": "index.js",
+  "scripts": {
+    "start": "cd backend && npm start",
+    "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
+    "dev:server": "cd backend && npm run dev",
+    "dev:client": "cd frontend && npm run dev",
+    "install:all": "npm install && cd backend && npm install && cd ../frontend && npm install",
+    "build": "cd frontend && npm install && npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kamranahmad786/mapmend-solution.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/kamranahmad786/mapmend-solution/issues"
+  },
+  "homepage": "https://github.com/kamranahmad786/mapmend-solution#readme",
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}

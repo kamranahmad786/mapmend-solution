@@ -1,10 +1,6 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../utils/api";
 import { useNavigate } from "react-router-dom";
-
-function getToken() {
-  return localStorage.getItem("mapmend_token");
-}
 
 export default function AdminPanel() {
   const [testimonials, setTestimonials] = useState([]);
@@ -13,7 +9,7 @@ export default function AdminPanel() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const token = getToken();
+    const token = localStorage.getItem("mapmend_token");
     if (!token) {
       navigate("/admin/login");
       return;
@@ -23,26 +19,18 @@ export default function AdminPanel() {
 
   const fetchList = async () => {
     try {
-      const res = await axios.get(import.meta.env.VITE_API_URL + "/api/testimonials");
+      const res = await api.get("/api/testimonials");
       setTestimonials(res.data);
     } catch (err) {
       console.error(err);
     }
   };
 
-  const authHeader = () => ({
-    headers: { Authorization: "Bearer " + getToken() }
-  });
-
   const add = async (e) => {
     e.preventDefault();
     setError(null);
     try {
-      const res = await axios.post(
-        import.meta.env.VITE_API_URL + "/api/testimonials",
-        form,
-        authHeader()
-      );
+      const res = await api.post("/api/testimonials", form);
       setTestimonials((prev) => [res.data, ...prev]);
       setForm({ name: "", review: "", rating: 5 });
     } catch (err) {
@@ -52,10 +40,7 @@ export default function AdminPanel() {
 
   const remove = async (id) => {
     try {
-      await axios.delete(
-        import.meta.env.VITE_API_URL + "/api/testimonials/" + id,
-        authHeader()
-      );
+      await api.delete("/api/testimonials/" + id);
       setTestimonials((prev) =>
         prev.filter((t) => (t._id || t.id) !== id)
       );

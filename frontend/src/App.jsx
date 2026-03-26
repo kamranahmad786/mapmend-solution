@@ -62,7 +62,7 @@ export default function App() {
 
   return (
     <HelmetProvider>
-      <div className="min-h-screen bg-white text-gray-800 flex flex-col">
+      <div className="min-h-screen flex flex-col relative w-full overflow-hidden">
 
         {/* Navbar hidden on Dashboard + Admin */}
         {!hideNavbarFooter && <Navbar />}

@@ -1,264 +1,206 @@
 // src/pages/BlogList.jsx
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 import SEO from "../components/SEO";
 
 const POSTS = [
   {
     slug: "why-local-business-needs-website-2025",
-    title: "Why Every Local Business Needs a Website in 2025",
-    excerpt: "Modern customers check online first — here’s why your business needs a website today.",
-    date: "2025-06-01",
-    category: "Website",
+    title: "Why Every Local Business Needs a Smart Website in 2025",
+    excerpt: "Modern customers query AI and search engines first — here’s why your digital footprint matters.",
+    date: "Jun 01, 2025",
+    category: "Architecture",
     tags: ["website", "marketing", "small business"],
     views: 560,
+    img: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1000&auto=format&fit=crop"
   },
   {
     slug: "google-maps-ranking-secrets-for-small-business",
-    title: "Google Maps Ranking Secrets for Small Businesses",
-    excerpt: "Rank higher in 'near me' searches with smart optimization.",
-    date: "2025-05-28",
-    category: "Google Maps",
+    title: "The Algorithmic Secrets of Google Maps Ranking",
+    excerpt: "Reverse-engineer local search algorithms to rank higher in 'near me' organic queries.",
+    date: "May 28, 2025",
+    category: "Visibility",
     tags: ["maps", "seo", "ranking"],
     views: 920,
+    img: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1000&auto=format&fit=crop"
   },
   {
     slug: "how-a-1999-website-can-grow-your-business",
-    title: "How a ₹1,999 Website Can Grow Your Business",
-    excerpt: "A small investment can bring big returns through online visibility.",
-    date: "2025-05-20",
-    category: "Website",
+    title: "Deploying High-Converting Infrastructure on a Budget",
+    excerpt: "A tactical approach to generating high ROI through robust micro-websites.",
+    date: "May 20, 2025",
+    category: "Engineering",
     tags: ["website", "affordable", "design"],
     views: 430,
+    img: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1000&auto=format&fit=crop"
   },
   {
     slug: "best-local-seo-strategies-for-small-businesses",
-    title: "Best Local SEO Strategies for Small Businesses",
-    excerpt: "Boost calls, leads & customer footfall with strong local SEO.",
-    date: "2025-04-20",
-    category: "SEO",
+    title: "Hyper-Local SEO: Strategies for Dominating Your Grid",
+    excerpt: "Drive automated customer acquisition workflows using targeted local SEO signaling.",
+    date: "Apr 20, 2025",
+    category: "Visibility",
     tags: ["seo", "local", "small business"],
     views: 760,
+    img: "https://images.unsplash.com/photo-1573164713988-8665fc963095?q=80&w=1000&auto=format&fit=crop"
   },
   {
     slug: "how-a-fast-website-increases-your-sales",
-    title: "How a Fast Website Can Increase Your Sales",
-    excerpt: "Speed improves trust and conversion rate significantly.",
-    date: "2025-04-12",
-    category: "Website",
+    title: "Performance Defines Conversion: Why Speed is Critical",
+    excerpt: "Latency hurts trust. See how sub-second load times exponentially increase interaction rates.",
+    date: "Apr 12, 2025",
+    category: "Engineering",
     tags: ["speed", "website", "sales"],
     views: 680,
+    img: "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?q=80&w=1000&auto=format&fit=crop"
   },
   {
     slug: "why-google-reviews-are-more-important-than-ads",
-    title: "Why Google Reviews Beat Paid Ads in 2025",
-    excerpt: "Reviews build trust and drive conversions better than ads.",
-    date: "2025-05-10",
-    category: "Reviews",
+    title: "Trust Economy: Why Reviews Outperform Paid Acquisition",
+    excerpt: "The math behind organic trust dynamics and why social proof yields better CPC than ads.",
+    date: "May 10, 2025",
+    category: "Marketing",
     tags: ["reviews", "trust", "seo"],
     views: 840,
-  },
-  {
-    slug: "website-vs-instagram-page-what-your-business-needs",
-    title: "Website vs Instagram — What Does Your Business Need?",
-    excerpt: "Instagram is not enough — here’s why a website builds trust.",
-    date: "2025-05-05",
-    category: "Website",
-    tags: ["website", "instagram", "branding"],
-    views: 510,
-  },
+    img: "https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=1000&auto=format&fit=crop"
+  }
 ];
 
-// Utility Data
-const CATEGORIES = [...new Set(POSTS.map((p) => p.category))];
-const TAGS = [...new Set(POSTS.flatMap((p) => p.tags))];
-const POPULAR = [...POSTS].sort((a, b) => b.views - a.views).slice(0, 3);
+const CATEGORIES = ["All", ...new Set(POSTS.map((p) => p.category))];
 
 export default function BlogList() {
-  const [search, setSearch] = useState("");
-  const [tagFilter, setTagFilter] = useState(null);
-  const [selectedCat, setSelectedCat] = useState(null);
-  const [showCat, setShowCat] = useState(false);
-  const [page, setPage] = useState(1);
+  const [activeCat, setActiveCat] = useState("All");
 
-  const PER_PAGE = 4;
+  const filteredPosts = activeCat === "All" 
+    ? POSTS 
+    : POSTS.filter(p => p.category === activeCat);
 
-  // Filtering Logic
-  let filtered = POSTS.filter(
-    (p) =>
-      p.title.toLowerCase().includes(search.toLowerCase()) ||
-      p.excerpt.toLowerCase().includes(search.toLowerCase())
-  );
-
-  if (tagFilter) filtered = filtered.filter((p) => p.tags.includes(tagFilter));
-  if (selectedCat) filtered = filtered.filter((p) => p.category === selectedCat);
-
-  const totalPages = Math.ceil(filtered.length / PER_PAGE);
-  const paginated = filtered.slice((page - 1) * PER_PAGE, page * PER_PAGE);
+  // First post is featured if no category is filtering it down too small, or just always take [0]
+  const featured = filteredPosts[0];
+  const gridPosts = filteredPosts.slice(1);
 
   return (
     <>
       <SEO
-        title="Blog"
-        description="Explore high-quality articles about website design, Google Maps ranking, SEO, and business growth."
+        title="Engineering & Insights"
+        description="Explore technical methodology, AI transformation, and growth algorithms from MapMend."
         url={`${import.meta.env.VITE_SITE_URL || ""}/blog`}
       />
 
-      {/* HERO SECTION */}
-      <section className="bg-gradient-to-r from-brandBlue to-blue-700 text-white py-20">
-        <div className="max-w-6xl mx-auto px-6 text-center">
-          <h1 className="text-4xl md:text-5xl font-extrabold">MapMend Blog</h1>
-          <p className="mt-3 text-lg opacity-90">
-            Insights on websites, Google Maps, SEO, and growing your business.
-          </p>
-        </div>
-      </section>
+      <main className="min-h-screen bg-[#050505] pt-32 pb-24 relative overflow-hidden text-white w-full">
+        {/* Ambient Top Glow */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[80vw] h-[500px] bg-neonCyan/5 rounded-full blur-[200px] pointer-events-none"></div>
 
-      {/* BLOG CONTENT + SIDEBAR */}
-      <section className="py-16 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-4 gap-10">
+        <div className="max-w-[1400px] mx-auto px-6 relative z-10 w-full">
           
-          {/* ---- SIDEBAR ---- */}
-          <aside className="md:col-span-1 space-y-8">
-            
-            {/* Search Bar */}
-            <div className="bg-white p-5 rounded-xl shadow">
-              <h3 className="font-semibold mb-3">Search</h3>
-              <input
-                type="text"
-                placeholder="Search posts..."
-                value={search}
-                onChange={(e) => {
-                  setSearch(e.target.value);
-                  setPage(1);
-                }}
-                className="w-full p-3 border rounded-lg"
-              />
-            </div>
-
-            {/* Category Dropdown */}
-            <div className="bg-white p-5 rounded-xl shadow relative">
-              <h3 className="font-semibold mb-3">Filter by Category</h3>
-
-              <div className="relative">
-                <button
-                  onClick={() => setShowCat(!showCat)}
-                  className="w-full p-3 border rounded-lg flex justify-between items-center text-gray-700"
-                >
-                  {selectedCat || "Select Category"}
-                  <span className="text-brandBlue">{showCat ? "▲" : "▼"}</span>
-                </button>
-
-                {showCat && (
-                  <div className="absolute left-0 right-0 mt-2 bg-white border rounded-lg shadow-lg z-20 max-h-60 overflow-y-auto animate-fadeIn">
-                    <button
-                      onClick={() => {
-                        setSelectedCat(null);
-                        setPage(1);
-                        setShowCat(false);
-                      }}
-                      className="w-full text-left px-4 py-2 hover:bg-gray-100"
-                    >
-                      All Categories
-                    </button>
-
-                    {CATEGORIES.map((cat) => (
-                      <button
-                        key={cat}
-                        onClick={() => {
-                          setSelectedCat(cat);
-                          setPage(1);
-                          setShowCat(false);
-                        }}
-                        className="w-full text-left px-4 py-2 hover:bg-gray-100"
-                      >
-                        {cat}
-                      </button>
-                    ))}
-                  </div>
-                )}
-              </div>
-            </div>
-
-            {/* Popular Posts */}
-            <div className="bg-white p-5 rounded-xl shadow">
-              <h3 className="font-semibold mb-3">Popular Posts</h3>
-              <ul className="space-y-3">
-                {POPULAR.map((p) => (
-                  <li key={p.slug}>
-                    <Link
-                      to={`/blog/${p.slug}`}
-                      className="text-brandBlue hover:text-brandOrange"
-                    >
-                      {p.title}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* Tags */}
-            <div className="bg-white p-5 rounded-xl shadow">
-              <h3 className="font-semibold mb-3">Tags</h3>
-              <div className="flex flex-wrap gap-2">
-                {TAGS.map((t) => (
-                  <button
-                    key={t}
-                    onClick={() => {
-                      setTagFilter(t === tagFilter ? null : t);
-                      setPage(1);
-                    }}
-                    className={`px-3 py-1 rounded-full border text-sm ${
-                      tagFilter === t
-                        ? "bg-brandBlue text-white"
-                        : "bg-white border-gray-300 text-gray-600"
-                    }`}
-                  >
-                    {t}
-                  </button>
-                ))}
-              </div>
-            </div>
-          </aside>
-
-          {/* ---- MAIN BLOG GRID ---- */}
-          <div className="md:col-span-3 space-y-10">
-            <div className="grid md:grid-cols-2 gap-8">
-              {paginated.map((p) => (
-                <Link
-                  to={`/blog/${p.slug}`}
-                  key={p.slug}
-                  className="bg-white p-6 rounded-2xl shadow hover:shadow-xl hover:-translate-y-1 transition border"
-                >
-                  <div className="text-sm text-gray-500">{p.date}</div>
-                  <h2 className="text-xl font-semibold text-brandBlue mt-2 hover:text-brandOrange">
-                    {p.title}
-                  </h2>
-                  <p className="text-gray-600 mt-2 text-sm">{p.excerpt}</p>
-                </Link>
-              ))}
-            </div>
-
-            {/* Pagination */}
-            <div className="flex justify-center gap-4 mt-10">
-              <button
-                disabled={page === 1}
-                onClick={() => setPage(page - 1)}
-                className="px-4 py-2 bg-white rounded-lg shadow disabled:opacity-40"
-              >
-                Previous
-              </button>
-              <button
-                disabled={page === totalPages}
-                onClick={() => setPage(page + 1)}
-                className="px-4 py-2 bg-white rounded-lg shadow disabled:opacity-40"
-              >
-                Next
-              </button>
-            </div>
+          {/* Header Section */}
+          <div className="mb-16">
+            <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight mb-6">
+              Insights & <span className="text-gradient hover-glow">Engineering</span>
+            </h1>
+            <p className="text-lg md:text-xl text-gray-400 max-w-3xl leading-relaxed">
+              Research, technical methodology, and tactical workflows designed to help modern businesses dominate the algorithmic landscape.
+            </p>
           </div>
+
+          {/* Categories Navigation (MNC Pill Style) */}
+          <div className="flex flex-wrap gap-3 mb-16 pb-4 border-b border-white/10">
+            {CATEGORIES.map(cat => (
+              <button
+                key={cat}
+                onClick={() => setActiveCat(cat)}
+                className={`px-5 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 backdrop-blur-md border ${
+                  activeCat === cat 
+                    ? "bg-white text-black border-transparent shadow-[0_0_15px_rgba(255,255,255,0.3)]" 
+                    : "bg-white/5 border-white/10 text-gray-400 hover:text-white hover:bg-white/10 hover:border-white/20"
+                }`}
+              >
+                {cat}
+              </button>
+            ))}
+          </div>
+
+          {/* If no posts found */}
+          {filteredPosts.length === 0 && (
+            <div className="py-20 text-center text-gray-500">
+              No entries found for this category.
+            </div>
+          )}
+
+          {/* Featured Post */}
+          {featured && (
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className="mb-16 group cursor-pointer"
+            >
+              <Link to={`/blog/${featured.slug}`} className="block relative rounded-[2rem] overflow-hidden border border-white/10 bg-[#0a0a0f] aspect-[2/1] md:aspect-[2.5/1]">
+                {/* Image */}
+                <img 
+                  src={featured.img} 
+                  alt={featured.title} 
+                  className="w-full h-full object-cover opacity-60 group-hover:opacity-80 group-hover:scale-105 transition-all duration-700 ease-out mix-blend-luminosity hover:mix-blend-normal"
+                />
+                
+                {/* Overlay Content */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent flex flex-col justify-end p-8 md:p-14">
+                  <div className="flex items-center gap-4 mb-4">
+                    <span className="bg-neonCyan text-black px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider">
+                      {featured.category}
+                    </span>
+                    <span className="text-gray-300 text-sm font-medium">{featured.date}</span>
+                  </div>
+                  <h2 className="text-3xl md:text-5xl font-bold text-white mb-4 leading-tight group-hover:text-neonCyan transition-colors">
+                    {featured.title}
+                  </h2>
+                  <p className="text-gray-300 text-lg md:text-xl max-w-3xl line-clamp-2 md:line-clamp-none">
+                    {featured.excerpt}
+                  </p>
+                </div>
+              </Link>
+            </motion.div>
+          )}
+
+          {/* Masonry / Grid Posts */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {gridPosts.map((post, i) => (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: i * 0.1 }}
+                key={post.slug}
+              >
+                <Link to={`/blog/${post.slug}`} className="group block h-full bg-[#0a0a0f] border border-white/10 rounded-[2rem] p-6 hover:border-white/20 hover:bg-[#111] transition-all duration-300">
+                  <div className="relative rounded-2xl overflow-hidden mb-6 aspect-video">
+                    <img 
+                      src={post.img} 
+                      alt={post.title} 
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out opacity-80 group-hover:opacity-100 mix-blend-luminosity group-hover:mix-blend-normal"
+                    />
+                    <div className="absolute top-4 left-4 bg-black/60 backdrop-blur-md text-white border border-white/10 px-3 py-1 rounded-full text-xs font-semibold">
+                      {post.category}
+                    </div>
+                  </div>
+
+                  <div className="text-neonPurple text-sm font-medium mb-3">
+                    {post.date}
+                  </div>
+                  <h3 className="text-2xl font-bold text-white mb-3 group-hover:text-neonCyan transition-colors leading-tight">
+                    {post.title}
+                  </h3>
+                  <p className="text-gray-400 text-sm leading-relaxed line-clamp-3">
+                    {post.excerpt}
+                  </p>
+                </Link>
+              </motion.div>
+            ))}
+          </div>
+
         </div>
-      </section>
+      </main>
     </>
   );
 }

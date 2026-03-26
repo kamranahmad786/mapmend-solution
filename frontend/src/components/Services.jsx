@@ -1,4 +1,5 @@
 import React from "react";
+import { motion } from "framer-motion";
 import {
   FaGlobe,
   FaMapMarkedAlt,
@@ -47,54 +48,83 @@ const items = [
   },
 ];
 
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.15 },
+  },
+};
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
+};
+
 export default function Services() {
   return (
-    <section id="services" className="py-20 bg-gradient-to-b from-gray-50 to-white">
-      <div className="max-w-7xl mx-auto px-6">
+    <section id="services" className="py-24 bg-[#050505] relative">
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[80%] h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent"></div>
+      
+      <div className="max-w-7xl mx-auto px-6 relative z-10">
 
         {/* Heading */}
-        <h2 className="text-4xl font-extrabold text-center text-brandBlue mb-4">
-          Our Professional Services
-        </h2>
-        <p className="text-center text-gray-600 max-w-2xl mx-auto mb-12 text-lg">
-          End-to-end digital solutions designed to grow your business and increase visibility.
-        </p>
+        <motion.div 
+          initial={{ opacity: 0, y: -20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-16"
+        >
+          <h2 className="text-4xl md:text-5xl font-extrabold text-white mb-4 tracking-tight">
+            Our <span className="text-gradient">Professional Services</span>
+          </h2>
+          <p className="text-gray-400 max-w-2xl mx-auto text-lg">
+            End-to-end digital solutions designed to grow your business and increase visibility in the modern era.
+          </p>
+        </motion.div>
 
         {/* Service Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10">
+        <motion.div 
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"
+        >
           {items.map((it) => (
-            <div
+            <motion.div
+              variants={cardVariants}
               key={it.title}
-              className="relative bg-white p-8 rounded-3xl shadow-lg border border-gray-200 
-                         hover:shadow-2xl transition transform hover:-translate-y-2 group overflow-hidden"
+              className="relative glass-card p-8 rounded-3xl hover-glow group overflow-hidden"
             >
               {/* Icon Circle */}
-              <div className="w-16 h-16 mx-auto rounded-full bg-brandOrange/10 flex items-center justify-center 
-                              text-3xl text-brandOrange transition group-hover:bg-brandOrange group-hover:text-white">
+              <div className="w-16 h-16 rounded-full bg-white/5 border border-white/10 flex items-center justify-center 
+                              text-3xl text-neonCyan transition-all duration-300 group-hover:scale-110 group-hover:shadow-[0_0_20px_rgba(6,182,212,0.4)]">
                 {it.icon}
               </div>
 
               {/* Title */}
-              <h3 className="mt-5 text-xl font-bold text-brandBlue text-center">
+              <h3 className="mt-6 text-xl font-bold text-white">
                 {it.title}
               </h3>
 
               {/* Description */}
-              <p className="mt-3 text-gray-600 text-center text-sm leading-relaxed">
+              <p className="mt-3 text-gray-400 text-sm leading-relaxed">
                 {it.desc}
               </p>
 
               {/* Price */}
-              <div className="mt-6 text-center font-semibold text-brandOrange">
+              <div className="mt-6 font-semibold text-neonPurple text-glow">
                 {it.price}
               </div>
 
-              {/* ORANGE GLOW ON HOVER */}
-              <div className="absolute inset-0 opacity-0 group-hover:opacity-20 
-                              bg-white transition rounded-3xl blur-3xl"></div>
-            </div>
+              {/* Subtle background glow on hover */}
+              <div className="absolute inset-0 opacity-0 group-hover:opacity-10 
+                              bg-gradient-to-br from-neonBlue to-neonPurple transition-opacity duration-500 rounded-3xl pointer-events-none blur-xl"></div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );

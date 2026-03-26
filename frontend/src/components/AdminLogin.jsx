@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
+import api from "../utils/api";
 import { useNavigate } from "react-router-dom";
 
 export default function AdminLogin() {
@@ -12,10 +12,7 @@ export default function AdminLogin() {
     setErr(null);
 
     try {
-      const res = await axios.post(
-        `${import.meta.env.VITE_API_URL}/api/auth/login`,
-        form
-      );
+      const res = await api.post("/api/auth/login", form);
 
       // Save JWT token
       localStorage.setItem("mapmend_token", res.data.token);

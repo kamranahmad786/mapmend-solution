@@ -6,25 +6,25 @@ import api from "../utils/api";
 const plans = [
   {
     id: "starter",
-    title: "Starter",
+    title: "Starter AI",
     price: 99900,
-    bullets: ["1-Page Lead Website", "Basic Google Maps Fix", "Mobile-Optimized Design"],
+    bullets: ["1-Page Smart Website", "Basic Google Maps Fix", "Mobile-Optimized Layout"],
   },
   {
     id: "business",
-    title: "Business",
+    title: "AI Business",
     price: 199900,
-    bullets: ["3-Page Website", "Full Google Maps Optimization", "Speed & SEO Enhancements"],
+    bullets: ["3-Page Next-Gen Website", "Full Maps AI Optimization", "Speed & SEO Enhancements"],
     tag: "Most Popular",
   },
   {
     id: "premium",
-    title: "Premium",
+    title: "Premium AI",
     price: 449900,
     bullets: [
-      "Custom Professional Website",
-      "Advanced Maps SEO + Ranking Boost",
-      "Priority Support",
+      "Custom Digital Experience",
+      "Advanced AI Maps SEO",
+      "Priority Support via Automation",
     ],
     tag: "All-in-One",
   },
@@ -48,7 +48,7 @@ export default function Pricing() {
           alert("Payment successful! Check your email for invoice.");
           window.location.href = "/dashboard";
         },
-        theme: { color: "#0057B8" },
+        theme: { color: "#06b6d4" }, // neon cyan razorpay tint
       };
 
       if (!window.Razorpay) {
@@ -64,51 +64,57 @@ export default function Pricing() {
   };
 
   return (
-    <section id="pricing" className="py-20 bg-gray-50">
-      <div className="max-w-6xl mx-auto px-6 text-center">
+    <section id="pricing" className="py-24 bg-[#08080c] relative">
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-neonPurple/5 rounded-full blur-[150px] pointer-events-none"></div>
+
+      <div className="max-w-6xl mx-auto px-6 text-center relative z-10">
         
         {/* HEADER */}
-        <h2 className="text-4xl font-extrabold text-brandBlue">Affordable Pricing</h2>
-        <p className="text-gray-600 mt-3 mb-14 text-lg">
-          Transparent pricing crafted for local businesses — no hidden charges.
+        <h2 className="text-4xl md:text-5xl font-extrabold text-white">
+          Transparent <span className="text-gradient">AI Pricing</span>
+        </h2>
+        <p className="text-gray-400 mt-4 mb-16 text-lg">
+          Clear, upfront pricing crafted for ambitious businesses — no hidden charges.
         </p>
 
         {/* PRICING GRID */}
-        <div className="grid gap-10 md:grid-cols-3">
+        <div className="grid gap-8 md:grid-cols-3">
           {plans.map((p) => (
             <div
               key={p.id}
-              className={`relative bg-white rounded-3xl p-8 shadow-xl border 
-              hover:scale-[1.03] hover:shadow-2xl transition-transform duration-300
+              className={`relative glass-card rounded-[2rem] p-8 hover-glow transition-transform duration-300 hover:scale-105 group overflow-hidden border
               ${
                 p.tag
-                  ? "border-brandOrange/40 shadow-brandOrange/20"
-                  : "border-gray-200"
+                  ? "border-neonCyan hover:shadow-[0_0_25px_rgba(6,182,212,0.3)] shadow-[0_0_10px_rgba(6,182,212,0.1)]"
+                  : "border-white/10"
               }`}
             >
               {/* TAG BADGE */}
               {p.tag && (
-                <div className="absolute -top-3 right-4 bg-brandOrange text-white text-xs px-3 py-1 rounded-full shadow">
+                <div className="absolute top-0 right-0 bg-neonCyan text-black text-xs px-4 py-1.5 rounded-bl-[1rem] font-bold shadow-md">
                   {p.tag}
                 </div>
               )}
 
               {/* TITLE */}
-              <h3 className="text-2xl font-semibold text-brandBlue">{p.title}</h3>
+              <h3 className="text-2xl font-bold text-white mt-4">{p.title}</h3>
 
               {/* PRICE */}
-              <div className="my-6">
-                <span className="text-5xl font-extrabold text-brandBlue">
+              <div className="my-6 relative">
+                <span className="text-5xl font-extrabold text-white">
                   ₹{(p.price / 100).toLocaleString()}
                 </span>
-                <p className="text-sm text-gray-500 mt-1">One-time payment</p>
+                <p className="text-sm text-neonPurple mt-2 font-medium tracking-wide uppercase">One-time payment</p>
+                
+                {/* Glow behind price on popular */}
+                {p.tag && <div className="absolute inset-0 bg-neonCyan opacity-20 blur-2xl rounded-full"></div>}
               </div>
 
               {/* FEATURES */}
-              <ul className="space-y-3 mb-8 text-left">
+              <ul className="space-y-4 mb-10 text-left relative z-10">
                 {p.bullets.map((b, idx) => (
-                  <li key={idx} className="flex items-center gap-2 text-gray-700">
-                    <FiCheckCircle className="text-brandOrange text-lg" />
+                  <li key={idx} className="flex items-start gap-3 text-gray-300 text-sm">
+                    <FiCheckCircle className="text-neonCyan text-lg shrink-0 mt-0.5" />
                     {b}
                   </li>
                 ))}
@@ -117,12 +123,12 @@ export default function Pricing() {
               {/* CTA BUTTON */}
               <button
                 onClick={() => purchase(p)}
-                className={`w-full py-3 rounded-xl text-white font-semibold shadow 
+                className={`w-full py-4 rounded-xl font-bold shadow-lg transition-transform hover:scale-[1.02]
                 ${
                   p.tag
-                    ? "bg-brandOrange hover:bg-brandOrange/90"
-                    : "bg-brandBlue hover:bg-brandBlue/90"
-                } transition`}
+                    ? "bg-neonCyan text-black hover:bg-cyan-400 shadow-[0_0_15px_rgba(6,182,212,0.4)]"
+                    : "glass-card text-white hover:bg-white/10"
+                }`}
               >
                 Choose {p.title}
               </button>

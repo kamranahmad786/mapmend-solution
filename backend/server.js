@@ -2,6 +2,7 @@
 require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
+const path = require("path");
 const connectDB = require("./config/db");
 
 // routes
@@ -29,9 +30,7 @@ app.use("/api/admin", adminRoutes);
 app.use("/api/testimonials", testimonialsRoutes);
 app.use("/api/contact", contactRoutes);
 
-app.get("/", (req, res) => res.send("MapMend Solution API running"));
-
-// optional admin seed (if no users)
+// Optional admin seed (if no users)
 (async function seedAdmin() {
   try {
     if (process.env.ADMIN_EMAIL && process.env.ADMIN_PASSWORD) {
@@ -47,5 +46,16 @@ app.get("/", (req, res) => res.send("MapMend Solution API running"));
     }
   } catch (err) { console.error("Seed error:", err.message); }
 })();
+
+// Serve frontend in production
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "../frontend/dist")));
+
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "../frontend/dist/index.html"));
+  });
+} else {
+  app.get("/", (req, res) => res.send("MapMend Solution API running"));
+}
 
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
