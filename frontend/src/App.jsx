@@ -48,6 +48,9 @@ import AboutPage from "./pages/AboutPage";
 // Interactive
 import Chatbot from "./components/Chatbot";
 
+// Admin
+import AdminLogin from "./components/AdminLogin";
+
 // Scroll to top on route change
 function ScrollToTop() {
   React.useEffect(() => window.scrollTo(0, 0));
@@ -107,6 +110,7 @@ export default function App() {
             </Route>
 
             {/* ---------------- ADMIN PANEL ---------------- */}
+            <Route path="/admin/login" element={<AdminLogin />} />
             <Route path="/admin" element={<AdminPanel />} />
 
             {/* ---------------- BLOG ---------------- */}
