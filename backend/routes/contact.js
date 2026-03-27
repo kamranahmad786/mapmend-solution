@@ -1,11 +1,17 @@
 // backend/routes/contact.js
 const express = require("express");
 const { sendMail } = require("../utils/mail");
+const Contact = require("../models/Contact");
 const router = express.Router();
 
 router.post("/", async (req, res) => {
   try {
     const { name, business, email, phone, message } = req.body;
+    
+    // 1. Save to Database Inbox
+    await Contact.create({ name, business, email, phone, message });
+
+    // 2. Alert Admin via Email
     const html = `
       <p>New contact request</p>
       <ul>

@@ -48,8 +48,15 @@ import AboutPage from "./pages/AboutPage";
 // Interactive
 import Chatbot from "./components/Chatbot";
 
-// Admin
+// Admin System
 import AdminLogin from "./components/AdminLogin";
+import AdminPanel from "./pages/AdminPanel";
+import AdminOverview from "./pages/admin/AdminOverview";
+import AdminUsers from "./pages/admin/AdminUsers";
+import AdminLeads from "./pages/admin/AdminLeads";
+import AdminPayments from "./pages/admin/AdminPayments";
+import AdminSites from "./pages/admin/AdminSites";
+import AdminTestimonials from "./pages/admin/AdminTestimonials";
 
 // Scroll to top on route change
 function ScrollToTop() {
@@ -111,7 +118,14 @@ export default function App() {
 
             {/* ---------------- ADMIN PANEL ---------------- */}
             <Route path="/admin/login" element={<AdminLogin />} />
-            <Route path="/admin" element={<AdminPanel />} />
+            <Route path="/admin" element={<AdminPanel />}>
+              <Route index element={<AdminOverview />} />
+              <Route path="users" element={<AdminUsers />} />
+              <Route path="leads" element={<AdminLeads />} />
+              <Route path="payments" element={<AdminPayments />} />
+              <Route path="sites" element={<AdminSites />} />
+              <Route path="testimonials" element={<AdminTestimonials />} />
+            </Route>
 
             {/* ---------------- BLOG ---------------- */}
             <Route path="/blog" element={<BlogList />} />

@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from "react";
-import api from "../utils/api";
-import { useNavigate } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
+import AdminSidebar from "../components/AdminSidebar";
 
 export default function AdminPanel() {
-  const [testimonials, setTestimonials] = useState([]);
-  const [form, setForm] = useState({ name: "", review: "", rating: 5 });
-  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -14,122 +12,48 @@ export default function AdminPanel() {
       navigate("/admin/login");
       return;
     }
-    fetchList();
+    // Simulate secure hand-shake loader
+    const timer = setTimeout(() => setLoading(false), 900);
+    return () => clearTimeout(timer);
   }, []);
 
-  const fetchList = async () => {
-    try {
-      const res = await api.get("/api/testimonials");
-      setTestimonials(res.data);
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
-  const add = async (e) => {
-    e.preventDefault();
-    setError(null);
-    try {
-      const res = await api.post("/api/testimonials", form);
-      setTestimonials((prev) => [res.data, ...prev]);
-      setForm({ name: "", review: "", rating: 5 });
-    } catch (err) {
-      setError(err.response?.data?.error || "Error adding testimonial");
-    }
-  };
-
-  const remove = async (id) => {
-    try {
-      await api.delete("/api/testimonials/" + id);
-      setTestimonials((prev) =>
-        prev.filter((t) => (t._id || t.id) !== id)
-      );
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
-  const logout = () => {
-    localStorage.removeItem("mapmend_token");
-    navigate("/admin/login");
-  };
-
   return (
-    <div className="pt-24 max-w-6xl mx-auto px-4">
-      {/* HEADER */}
-      <div className="flex justify-between items-center mb-6">
-        <h2 className="text-2xl font-bold">Admin Panel</h2>
-        <button onClick={logout} className="text-sm text-brandBlue">
-          Logout
-        </button>
+    <div className="bg-[#050505] min-h-screen text-white flex overflow-hidden">
+      
+      {/* FULL-SCREEN SECURE LOADER */}
+      {loading && (
+        <div className="fixed inset-0 bg-[#08080c]/90 backdrop-blur-md flex items-center justify-center z-[999]">
+          <div className="flex flex-col items-center">
+            <div className="w-16 h-16 border-4 border-neonCyan/20 border-t-neonCyan rounded-full animate-spin shadow-[0_0_15px_rgba(6,182,212,0.5)]"></div>
+            <p className="mt-6 text-neonCyan font-extrabold tracking-widest text-lg animate-pulse">
+              AUTHENTICATING...
+            </p>
+          </div>
+        </div>
+      )}
+
+      {/* ADMIN SIDEBAR (Left Anchor) */}
+      <div className="w-64 shrink-0 hidden md:block">
+        <AdminSidebar />
       </div>
 
-      {/* ADD TESTIMONIAL */}
-      <section className="mb-10">
-        <h3 className="font-semibold mb-3">Add Testimonial</h3>
+      {/* MOBILE WARNING (optional but robust) */}
+      <div className="md:hidden flex-1 flex flex-col items-center justify-center p-8 text-center bg-[#08080c]">
+        <h2 className="text-2xl font-bold text-white mb-4">Desktop Required</h2>
+        <p className="text-gray-400">The MapMend Administrator Command Center is optimized strictly for desktop displays to manage high-density intelligence data.</p>
+        <button onClick={() => navigate("/")} className="mt-8 px-6 py-3 bg-white/10 text-white rounded-xl hover:bg-white/20 transition-colors">Return Home</button>
+      </div>
 
-        <form onSubmit={add} className="grid gap-3 md:grid-cols-3">
-          <input
-            value={form.name}
-            onChange={(e) => setForm({ ...form, name: e.target.value })}
-            placeholder="Name"
-            className="p-3 border rounded"
-          />
-          <input
-            value={form.rating}
-            onChange={(e) => setForm({ ...form, rating: e.target.value })}
-            placeholder="Rating"
-            className="p-3 border rounded"
-          />
-          <textarea
-            value={form.review}
-            onChange={(e) => setForm({ ...form, review: e.target.value })}
-            placeholder="Review"
-            className="p-3 border rounded md:col-span-3"
-            rows={3}
-          ></textarea>
+      {/* MAIN CONTENT AREA */}
+      {!loading && (
+        <main className="flex-1 h-screen overflow-y-auto hidden md:block relative custom-scrollbar">
+          {/* Subtle noise/grid overlay can go here */}
+          <div className="p-10">
+            <Outlet />
+          </div>
+        </main>
+      )}
 
-          <button
-            type="submit"
-            className="bg-brandBlue text-white px-4 py-2 rounded md:col-span-3"
-          >
-            Add Testimonial
-          </button>
-
-          {error && (
-            <div className="text-red-600 md:col-span-3">{error}</div>
-          )}
-        </form>
-      </section>
-
-      {/* MANAGE TESTIMONIALS */}
-      <section>
-        <h3 className="font-semibold mb-3">Manage Testimonials</h3>
-
-        <div className="grid gap-4">
-          {testimonials.map((t, i) => (
-            <div
-              key={t._id || t.id || i}
-              className="p-4 border rounded flex justify-between items-start"
-            >
-              <div>
-                <div className="font-bold text-brandBlue">{t.name}</div>
-                <div className="text-sm italic">{t.review}</div>
-              </div>
-
-              <div className="flex flex-col items-end gap-2">
-                <div className="text-sm">⭐ {t.rating || 5}</div>
-                <button
-                  onClick={() => remove(t._id || t.id)}
-                  className="text-red-600 text-sm"
-                >
-                  Delete
-                </button>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
     </div>
   );
 }
