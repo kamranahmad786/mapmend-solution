@@ -26,21 +26,61 @@ export default function Chatbot() {
     scrollToBottom();
   }, [messages, isTyping]);
 
-  // Simple keyword-based AI logic
+  // Comprehensive knowledge-base logic based on website copy
   const generateBotResponse = (userMessage) => {
     const lower = userMessage.toLowerCase();
     
-    if (lower.includes("pricing") || lower.includes("cost")) {
-      return "Our pricing starts at an incredible $1/day! Check out our Pricing section above for the exact breakdown of our Starter, Professional, and Enterprise tiers.";
-    } else if (lower.includes("contact") || lower.includes("support")) {
-      return "You can reach our team via the Contact form below, or email us at support@mapmendsolution.com.";
-    } else if (lower.includes("seo") || lower.includes("google")) {
-      return "We specialize in Google Business Profile (GBP) SEO and dominating Local Rankings. Our strategies aim directly at the 'Map Pack'!.";
-    } else if (lower.includes("hello") || lower.includes("hi")) {
-      return "Hello again! What specific services can I tell you about?";
-    } else {
-      return "Thanks for reaching out! A human agent will review your inquiry shortly. In the meantime, feel free to explore our Dashboard features.";
+    // Greeting
+    if (lower.match(/^(hi|hello|hey|greetings|hola)/)) {
+      return "Hello there! I can help you with our Services, Pricing, FAQs, or put you in touch with our team. What exactly are you looking to improve for your business today?";
     }
+    
+    // Core Services Overview
+    if (lower.includes("service") || lower.includes("offer") || lower.includes("what do you do")) {
+      return "We offer 6 premium services: Website Creation, Google Maps Optimization, Website Redesign, Speed Optimization, Business Digitization, and custom Landing Pages. Which one are you interested in?";
+    }
+
+    // Specific Service: Website Creation
+    if (lower.includes("website") && (lower.includes("create") || lower.includes("build") || lower.includes("make"))) {
+      return "We build modern, mobile-friendly websites designed for trust & conversions! We also do redesigns if you have an old site. Would you like to know our pricing?";
+    }
+
+    // Specific Service: Maps & SEO
+    if (lower.includes("map") || lower.includes("seo") || lower.includes("rank") || lower.includes("google")) {
+      return "Our Deep AI-Powered Audit reviews your Google Maps and website completely! We correct categories, optimize SEO, and automate trust signals so the Google algorithm natively prioritizes you to increase real customers.";
+    }
+
+    // Specific Service: Speed
+    if (lower.includes("speed") || lower.includes("slow") || lower.includes("fast")) {
+      return "We offer Speed Optimization starting from ₹999. We fix slow websites with compression and code cleanup to give you a significantly faster loading experience.";
+    }
+
+    // Specific Service: Landing Pages
+    if (lower.includes("landing") || lower.includes("ad")) {
+      return "Our Landing Pages start at ₹1,499! We build high-conversion pages strictly designed for ads, leads, and promotions.";
+    }
+
+    // Pricing & Costs (Using INR from Pricing.jsx)
+    if (lower.includes("price") || lower.includes("cost") || lower.includes("fee") || lower.includes("plan")) {
+      return "We have three transparent One-Time Payment plans: 'Starter AI' (₹999) for a 1-page site & basic Maps fix, 'AI Business' (₹1,999) for a 3-page site & full Maps SEO, and 'Premium AI' (₹4,499) for a custom digital experience.";
+    }
+
+    // Speed of delivery / FAQs
+    if (lower.includes("how fast") || lower.includes("how long") || lower.includes("time") || lower.includes("days")) {
+      return "Our smart AI-driven optimizations ensure initial delivery within 1–3 days! Most of our partners notice influxes in footfall within mere days of our updates taking effect.";
+    }
+    
+    if (lower.includes("payment")) {
+      return "Payments are made securely using unified gateways. You can initiate the project with 50% down! Just hit a 'Choose Plan' button on the Pricing section.";
+    }
+
+    // Contact & Support
+    if (lower.includes("contact") || lower.includes("support") || lower.includes("help") || lower.includes("email") || lower.includes("call")) {
+      return "You can reach our team via the Contact form on the homepage, or email us at info@mapmendsolution.com. We'd love to help fix your online presence!";
+    }
+
+    // Default Fallback
+    return "That's a great question! While I am just the smart assistant, our human experts can give you a deeper answer. Feel free to use the Contact form or send an email to info@mapmendsolution.com, and we'll get right back to you.";
   };
 
   const handleSend = (e) => {
