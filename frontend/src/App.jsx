@@ -47,7 +47,6 @@ import AboutPage from "./pages/AboutPage";
 
 // Interactive
 import Chatbot from "./components/Chatbot";
-import WhatsAppButton from "./components/WhatsAppButton";
 
 // Scroll to top on route change
 function ScrollToTop() {
@@ -134,7 +133,6 @@ export default function App() {
         {/* Global Floating Chatbot & Footer */}
         {!hideNavbarFooter && (
           <>
-            <WhatsAppButton />
             <Chatbot />
             <Footer />
           </>

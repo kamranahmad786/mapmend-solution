@@ -1,9 +1,14 @@
 import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FiMessageSquare, FiX, FiSend, FiMinimize2 } from "react-icons/fi";
-import { FaRobot } from "react-icons/fa";
+import { FaRobot, FaWhatsapp } from "react-icons/fa";
 
 export default function Chatbot() {
+  // Replace with your actual WhatsApp business number
+  const phoneNumber = "919999999999"; 
+  const whatsappMsg = encodeURIComponent("Hi MapMend Solution! I'm interested in your digital services.");
+  const whatsappUrl = `https://wa.me/${phoneNumber}?text=${whatsappMsg}`;
+
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([
     {
@@ -75,12 +80,12 @@ export default function Chatbot() {
     }
 
     // Contact & Support
-    if (lower.includes("contact") || lower.includes("support") || lower.includes("help") || lower.includes("email") || lower.includes("call")) {
-      return "You can reach our team via the Contact form on the homepage, or email us at info@mapmendsolution.com. We'd love to help fix your online presence!";
+    if (lower.includes("contact") || lower.includes("support") || lower.includes("help") || lower.includes("email") || lower.includes("call") || lower.includes("whatsapp")) {
+      return "You can reach our team via the Contact form on the homepage, or simply click the green WhatsApp icon at the top of this chat to message us directly!";
     }
 
     // Default Fallback
-    return "That's a great question! While I am just the smart assistant, our human experts can give you a deeper answer. Feel free to use the Contact form or send an email to info@mapmendsolution.com, and we'll get right back to you.";
+    return "That's a great question! While I am just the smart assistant, our human experts can give you a deeper answer. Feel free to click the WhatsApp icon above to chat with us, or send an email to info@mapmendsolution.com.";
   };
 
   const handleSend = (e) => {
@@ -154,13 +159,29 @@ export default function Chatbot() {
                   </div>
                 </div>
               </div>
-              <button
-                onClick={() => setIsOpen(false)}
-                className="text-white/70 hover:text-white p-2 hover:bg-white/10 rounded-full transition-colors"
-                aria-label="Close Chat"
-              >
-                <FiMinimize2 className="w-5 h-5" />
-              </button>
+              <div className="flex items-center space-x-1">
+                <a
+                  href={whatsappUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-green-400 hover:text-green-300 p-2 hover:bg-white/10 rounded-full transition-colors group relative"
+                  aria-label="Chat on WhatsApp"
+                  title="Direct WhatsApp Reach"
+                >
+                  <FaWhatsapp className="w-5 h-5 group-hover:scale-110 transition-transform" />
+                  <span className="absolute -top-1 -right-1 flex h-2.5 w-2.5">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500"></span>
+                  </span>
+                </a>
+                <button
+                  onClick={() => setIsOpen(false)}
+                  className="text-white/70 hover:text-white p-2 hover:bg-white/10 rounded-full transition-colors"
+                  aria-label="Close Chat"
+                >
+                  <FiMinimize2 className="w-5 h-5" />
+                </button>
+              </div>
             </div>
 
             {/* Messages Area */}
