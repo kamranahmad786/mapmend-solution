@@ -1,5 +1,5 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { FiUsers, FiMail, FiCreditCard, FiGlobe, FiMessageSquare, FiLogOut, FiPieChart } from "react-icons/fi";
+import { FiUsers, FiMail, FiCreditCard, FiGlobe, FiMessageSquare, FiLogOut, FiPieChart, FiMonitor } from "react-icons/fi";
 import { motion } from "framer-motion";
 
 export default function AdminSidebar() {
@@ -61,13 +61,22 @@ export default function AdminSidebar() {
         })}
       </nav>
 
-      <div className="p-4 border-t border-white/5">
+      <div className="p-4 border-t border-white/5 space-y-2">
+        <Link
+          to="/dashboard"
+          className="flex items-center gap-3 w-full px-4 py-3 rounded-xl text-neonCyan hover:text-black hover:bg-neonCyan transition-all duration-300 shadow-[0_0_10px_rgba(6,182,212,0.1)] border border-neonCyan/20 group"
+          title="Jump out of Admin area to test the actual system as a Client"
+        >
+          <FiMonitor className="text-lg group-hover:scale-110 transition-transform" />
+          <span className="font-extrabold text-sm uppercase tracking-widest">Client Portal</span>
+        </Link>
+        
         <button
           onClick={handleLogout}
-          className="flex items-center gap-3 w-full px-4 py-3 rounded-xl text-gray-400 hover:text-neonPink hover:bg-neonPink/10 transition-colors border border-transparent hover:border-neonPink/20"
+          className="flex items-center gap-3 w-full px-4 py-3 rounded-xl text-gray-500 hover:text-red-500 hover:bg-red-500/10 transition-colors border border-transparent hover:border-red-500/20"
         >
           <FiLogOut className="text-lg" />
-          <span className="font-semibold">Logout System</span>
+          <span className="font-semibold text-sm uppercase tracking-widest">Destroy Session</span>
         </button>
       </div>
     </div>

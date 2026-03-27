@@ -22,6 +22,42 @@ router.get("/users", authMiddleware, adminMiddleware, async (req, res) => {
   }
 });
 
+// Delete a User
+router.delete("/users/:id", authMiddleware, adminMiddleware, async (req, res) => {
+  try {
+    if (req.user._id.toString() === req.params.id) {
+      return res.status(400).json({ error: "Cannot delete yourself." });
+    }
+    await User.findByIdAndDelete(req.params.id);
+    await Site.deleteMany({ userId: req.params.id }); // Clean up attached sites
+    res.json({ ok: true, id: req.params.id });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// 1.5 System Metrics for Overview Dashboard
+router.get("/metrics", authMiddleware, adminMiddleware, async (req, res) => {
+  try {
+    const usersCount = await User.countDocuments();
+    const leadsCount = await Contact.countDocuments({ status: "unread" });
+    const sitesCount = await Site.countDocuments();
+    
+    // Sum all captured payment amounts
+    const payments = await Payment.find({ status: "captured" });
+    const revenueSum = payments.reduce((acc, curr) => acc + curr.amount, 0) / 100; // Assuming Razorpay paisa mapping
+
+    res.json({
+      users: usersCount,
+      leads: leadsCount,
+      sites: sitesCount,
+      revenue: revenueSum
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 // 2. Get all Leads (Inbox)
 router.get("/contacts", authMiddleware, adminMiddleware, async (req, res) => {
   try {
@@ -48,6 +84,27 @@ router.get("/sites", authMiddleware, adminMiddleware, async (req, res) => {
     // Populate the userId to see who owns it
     const sites = await Site.find().populate("userId", "name email").sort({ createdAt: -1 });
     res.json(sites);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Update Site Status
+router.put("/sites/:id", authMiddleware, adminMiddleware, async (req, res) => {
+  try {
+    const { status } = req.body;
+    const site = await Site.findByIdAndUpdate(req.params.id, { status, lastChecked: Date.now() }, { new: true }).populate("userId", "name email");
+    res.json(site);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Delete a Site
+router.delete("/sites/:id", authMiddleware, adminMiddleware, async (req, res) => {
+  try {
+    await Site.findByIdAndDelete(req.params.id);
+    res.json({ ok: true, id: req.params.id });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

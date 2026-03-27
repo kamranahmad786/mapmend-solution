@@ -20,6 +20,16 @@ export default function AdminUsers() {
     }
   };
 
+  const deleteUser = async (id) => {
+    if (!window.confirm("CRITICAL WARNING: Are you sure you want to permanently delete this user? This cannot be undone.")) return;
+    try {
+      await api.delete("/api/admin/users/" + id);
+      setUsers((prev) => prev.filter((u) => u._id !== id));
+    } catch (err) {
+      alert(err.response?.data?.error || "Error deleting user");
+    }
+  };
+
   const filtered = users.filter((u) => u.name.toLowerCase().includes(search.toLowerCase()) || u.email.toLowerCase().includes(search.toLowerCase()));
 
   return (
@@ -58,6 +68,7 @@ export default function AdminUsers() {
                 <th className="px-6 py-4">Email Address</th>
                 <th className="px-6 py-4">System Role</th>
                 <th className="px-6 py-4 flex gap-2"><FiActivity /> Registration Date</th>
+                <th className="px-6 py-4 text-center">Controls</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-white/[0.02]">
@@ -85,12 +96,24 @@ export default function AdminUsers() {
                   <td className="px-6 py-4 text-gray-500 text-sm">
                     {new Date(user.createdAt).toLocaleDateString()}
                   </td>
+                  <td className="px-6 py-4 text-center">
+                    {user.role !== "admin" ? (
+                      <button 
+                        onClick={() => deleteUser(user._id)}
+                        className="bg-red-500/10 text-red-400 hover:bg-red-500 hover:text-white px-4 py-2 rounded-xl text-xs font-bold border border-red-500/20 hover:border-red-400 transition-colors shadow-[0_0_10px_rgba(239,68,68,0.1)] hover:shadow-[0_0_20px_rgba(239,68,68,0.4)]"
+                      >
+                        Ban Identity
+                      </button>
+                    ) : (
+                      <span className="text-gray-500 italic text-xs uppercase tracking-widest px-4">Protected</span>
+                    )}
+                  </td>
                 </motion.tr>
               ))}
               
               {filtered.length === 0 && (
                 <tr>
-                  <td colSpan="4" className="text-center py-10 text-gray-500">No users found matching query.</td>
+                  <td colSpan="5" className="text-center py-10 text-gray-500">No users found matching query.</td>
                 </tr>
               )}
             </tbody>
