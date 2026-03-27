@@ -45,6 +45,9 @@ import TermsConditions from "./pages/TermsConditions";
 import CancellationPolicy from "./pages/CancellationPolicy";
 import AboutPage from "./pages/AboutPage";
 
+// Interactive
+import Chatbot from "./components/Chatbot";
+
 // Scroll to top on route change
 function ScrollToTop() {
   React.useEffect(() => window.scrollTo(0, 0));
@@ -127,8 +130,13 @@ export default function App() {
           </Routes>
         </main>
 
-        {/* Footer hidden on Dashboard + Admin */}
-        {!hideNavbarFooter && <Footer />}
+        {/* Global Floating Chatbot & Footer */}
+        {!hideNavbarFooter && (
+          <>
+            <Chatbot />
+            <Footer />
+          </>
+        )}
       </div>
     </HelmetProvider>
   );
