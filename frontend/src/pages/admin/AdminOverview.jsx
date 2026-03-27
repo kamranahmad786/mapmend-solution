@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { FiTrendingUp, FiUsers, FiMail, FiGlobe } from "react-icons/fi";
-import api from "../../../utils/api";
+import api from "../../utils/api";
 
 export default function AdminOverview() {
   const [metrics, setMetrics] = useState({

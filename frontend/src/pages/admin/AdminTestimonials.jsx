@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import api from "../../../utils/api";
+import api from "../../utils/api";
 import { FiTrash2, FiStar, FiPlus } from "react-icons/fi";
 import { motion } from "framer-motion";
 

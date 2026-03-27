@@ -35,9 +35,6 @@ import MyWebsites from "./pages/MyWebsites";
 import Invoices from "./pages/Invoices";
 import Account from "./pages/Account";
 
-// Admin
-import AdminPanel from "./pages/AdminPanel";
-
 // Policy Pages
 import RefundPolicy from "./pages/RefundPolicy";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
