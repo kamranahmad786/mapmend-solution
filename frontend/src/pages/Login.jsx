@@ -14,7 +14,13 @@ export default function Login() {
     try {
       const res = await api.post("/api/auth/login", form);
       localStorage.setItem("mapmend_token", res.data.token);
-      navigate("/dashboard");
+      localStorage.setItem("mapmend_role", res.data.role);
+      
+      if (res.data.role === "admin") {
+        navigate("/admin");
+      } else {
+        navigate("/dashboard");
+      }
     } catch (error) {
       setErr(error.response?.data?.error || "Login failed");
     }

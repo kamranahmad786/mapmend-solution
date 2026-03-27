@@ -10,6 +10,8 @@ export default function Navbar() {
 
   // Detect login status
   const isLoggedIn = !!localStorage.getItem("mapmend_token");
+  const userRole = localStorage.getItem("mapmend_role") || "user";
+  const dashboardUrl = userRole === "admin" ? "/admin" : "/dashboard";
 
   // Scroll Spy
   useEffect(() => {
@@ -61,6 +63,7 @@ export default function Navbar() {
 
   const handleLogout = () => {
     localStorage.removeItem("mapmend_token");
+    localStorage.removeItem("mapmend_role");
     window.location.href = "/";
   };
 
@@ -146,7 +149,7 @@ export default function Navbar() {
             ) : (
               <>
                 <a
-                  href="/dashboard"
+                  href={dashboardUrl}
                   className="text-sm font-semibold text-neonCyan hover:text-white transition"
                 >
                   Dashboard
@@ -239,7 +242,7 @@ export default function Navbar() {
             </>
           ) : (
             <>
-              <a href="/dashboard" className="text-lg font-semibold text-brandBlue">
+              <a href={dashboardUrl} className="text-lg font-semibold text-brandBlue">
                 Dashboard
               </a>
 

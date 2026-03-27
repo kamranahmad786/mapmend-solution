@@ -16,6 +16,7 @@ export default function AdminLogin() {
 
       // Save JWT token
       localStorage.setItem("mapmend_token", res.data.token);
+      localStorage.setItem("mapmend_role", res.data.role);
 
       // Redirect to admin panel
       navigate("/admin");

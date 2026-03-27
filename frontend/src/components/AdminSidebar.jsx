@@ -17,6 +17,7 @@ export default function AdminSidebar() {
 
   const handleLogout = () => {
     localStorage.removeItem("mapmend_token");
+    localStorage.removeItem("mapmend_role");
     navigate("/admin/login");
   };
 
