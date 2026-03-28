@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import api from "../../utils/api";
-import { FiTrash2, FiStar, FiPlus } from "react-icons/fi";
+import { FiTrash2, FiStar, FiPlus, FiCheck, FiX, FiEdit3 } from "react-icons/fi";
 import { motion } from "framer-motion";
 
 export default function AdminTestimonials() {
@@ -14,8 +14,17 @@ export default function AdminTestimonials() {
 
   const fetchList = async () => {
     try {
-      const res = await api.get("/api/testimonials");
+      const res = await api.get("/api/testimonials/all");
       setTestimonials(res.data);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const toggleApproval = async (t) => {
+    try {
+      const res = await api.put("/api/testimonials/" + (t._id || t.id), { approved: !t.approved });
+      setTestimonials((prev) => prev.map((item) => (item._id === t._id ? res.data : item)));
     } catch (err) {
       console.error(err);
     }
@@ -136,13 +145,23 @@ export default function AdminTestimonials() {
                       <div className="text-gray-400 text-sm leading-relaxed max-w-xl italic border-l-2 border-white/10 pl-4 py-1">"{t.review}"</div>
                     </div>
 
-                    <button
-                      onClick={() => remove(t._id || t.id)}
-                      className="text-gray-500 hover:text-neonPink p-2 hover:bg-neonPink/10 rounded-xl transition-all duration-300 shadow-md border border-transparent hover:border-neonPink/20"
-                      title="Delete Testimonial"
-                    >
-                      <FiTrash2 className="text-lg" />
-                    </button>
+                    <div className="flex items-center gap-2">
+                      <button
+                        onClick={() => toggleApproval(t)}
+                        className={`p-2 rounded-xl transition-all border ${t.approved ? 'bg-green-500/10 text-green-400 border-green-500/20 hover:bg-green-500 hover:text-white' : 'bg-yellow-500/10 text-yellow-400 border-yellow-500/20 hover:bg-yellow-500 hover:text-white'}`}
+                        title={t.approved ? "Unapprove" : "Approve"}
+                      >
+                        {t.approved ? <FiCheck /> : <FiX />}
+                      </button>
+
+                      <button
+                        onClick={() => remove(t._id || t.id)}
+                        className="text-gray-500 hover:text-neonPink p-2 hover:bg-neonPink/10 rounded-xl transition-all duration-300 shadow-md border border-transparent hover:border-neonPink/20"
+                        title="Delete Testimonial"
+                      >
+                        <FiTrash2 className="text-lg" />
+                      </button>
+                    </div>
                   </motion.div>
                 ))
             )}

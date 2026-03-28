@@ -6,9 +6,12 @@ import {
   FiTrendingUp,
   FiUser,
   FiLogOut,
+  FiMessageSquare,
 } from "react-icons/fi";
+import { Link, useLocation } from "react-router-dom";
 
 export default function DashboardSidebar() {
+  const location = useLocation();
   const logout = () => {
     localStorage.removeItem("mapmend_token");
     window.location.href = "/login";
@@ -19,6 +22,7 @@ export default function DashboardSidebar() {
     { id: "ai", label: "AI Analysis", icon: <FiTrendingUp />, path: "/dashboard/ai" },
     { id: "sites", label: "My Websites", icon: <FiGlobe />, path: "/dashboard/websites" },
     { id: "invoices", label: "Invoices", icon: <FiFileText />, path: "/dashboard/invoices" },
+    { id: "reviews", label: "Reviews", icon: <FiMessageSquare />, path: "/dashboard/reviews" },
     { id: "account", label: "Account", icon: <FiUser />, path: "/dashboard/account" },
   ];
 
@@ -48,25 +52,29 @@ export default function DashboardSidebar() {
 
       {/* MENU */}
       <nav className="flex flex-col gap-1 px-4 mt-2">
-        {menu.map((item) => (
-          <a
-            key={item.id}
-            href={item.path}
-            className="
-              flex items-center gap-4 
-              px-4 py-3 
-              rounded-lg 
-              text-white/90 
-              hover:bg-brandOrange/20 
-              hover:text-white 
-              transition
-              font-medium
-            "
-          >
-            <span className="text-lg">{item.icon}</span>
-            <span>{item.label}</span>
-          </a>
-        ))}
+        {menu.map((item) => {
+          const isActive = location.pathname === item.path;
+          return (
+            <Link
+              key={item.id}
+              to={item.path}
+              className={`
+                flex items-center gap-4 
+                px-4 py-3 
+                rounded-lg 
+                transition
+                font-medium
+                ${isActive 
+                  ? "bg-brandOrange text-white shadow-lg shadow-orange-950/20" 
+                  : "text-white/90 hover:bg-brandOrange/20 hover:text-white"
+                }
+              `}
+            >
+              <span className={`text-lg ${isActive ? "animate-pulse" : ""}`}>{item.icon}</span>
+              <span>{item.label}</span>
+            </Link>
+          );
+        })}
       </nav>
 
       {/* SPACER */}

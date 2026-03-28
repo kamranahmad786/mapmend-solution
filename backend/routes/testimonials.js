@@ -4,26 +4,62 @@ const Testimonial = require("../models/Testimonial");
 const { authMiddleware, adminMiddleware } = require("../middleware/auth");
 const router = express.Router();
 
-// public list (approved)
+// public list (approved) for main website
 router.get("/", async (req, res) => {
   const list = await Testimonial.find({ approved: true }).sort({ createdAt: -1 });
   res.json(list);
 });
 
-// create (public)
-router.post("/", async (req, res) => {
-  const { name, review, rating } = req.body;
-  const t = await Testimonial.create({ name, review, rating: rating || 5, approved: false });
-  res.json({ ok: true, id: t._id });
+// get my review status (client dashboard)
+router.get("/my", authMiddleware, async (req, res) => {
+  try {
+    const t = await Testimonial.findOne({ user: req.user._id });
+    res.json(t);
+  } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
-// admin approve
-router.post("/:id/approve", authMiddleware, adminMiddleware, async (req, res) => {
-  const t = await Testimonial.findById(req.params.id);
-  if (!t) return res.status(404).json({ error: "Not found" });
-  t.approved = true;
-  await t.save();
-  res.json({ ok: true });
+// create (authenticated submission)
+router.post("/", authMiddleware, async (req, res) => {
+  try {
+    const { review, rating, name } = req.body;
+    
+    // Client check (prevent duplicates)
+    if (req.user.role !== "admin") {
+      const existing = await Testimonial.findOne({ user: req.user._id });
+      if (existing) return res.status(400).json({ error: "You already submitted a review." });
+    }
+
+    const t = await Testimonial.create({ 
+      user: req.user._id,
+      name: req.user.role === "admin" && name ? name : req.user.name, 
+      review, 
+      rating: rating || 5, 
+      approved: req.user.role === "admin" ? true : false 
+    });
+    res.json(t);
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// ADMIN: Get All (including unapproved)
+router.get("/all", authMiddleware, adminMiddleware, async (req, res) => {
+  const list = await Testimonial.find().sort({ createdAt: -1 });
+  res.json(list);
+});
+
+// ADMIN: Approve/Edit
+router.put("/:id", authMiddleware, adminMiddleware, async (req, res) => {
+  try {
+    const t = await Testimonial.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    res.json(t);
+  } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+// ADMIN: Delete
+router.delete("/:id", authMiddleware, adminMiddleware, async (req, res) => {
+  try {
+    await Testimonial.findByIdAndDelete(req.params.id);
+    res.json({ ok: true });
+  } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
 module.exports = router;

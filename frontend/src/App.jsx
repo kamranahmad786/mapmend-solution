@@ -34,6 +34,7 @@ import AIAnalysis from "./pages/AIAnalysis";
 import MyWebsites from "./pages/MyWebsites";
 import Invoices from "./pages/Invoices";
 import Account from "./pages/Account";
+import UserReviews from "./pages/UserReviews";
 
 // Policy Pages
 import RefundPolicy from "./pages/RefundPolicy";
@@ -110,6 +111,7 @@ export default function App() {
               <Route path="ai" element={<AIAnalysis />} />
               <Route path="websites" element={<MyWebsites />} />
               <Route path="invoices" element={<Invoices />} />
+              <Route path="reviews" element={<UserReviews />} />
               <Route path="account" element={<Account />} />
             </Route>
 
