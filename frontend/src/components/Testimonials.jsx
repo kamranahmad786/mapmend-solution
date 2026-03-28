@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from "react";
 import api from "../utils/api";
-import { FaStar } from "react-icons/fa";
-import { motion } from "framer-motion";
+import { FaStar, FiChevronLeft, FiChevronRight } from "react-icons/fa";
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function Testimonials() {
-  const [list, setList] = useState([]);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [direction, setDirection] = useState(0);
 
   useEffect(() => {
     api
       .get(`/api/testimonials`)
       .then((res) => setList(res.data))
       .catch(() => {
-        // Fallback Testimonials
         setList([
           {
             name: "Rahul Verma",
@@ -31,6 +31,25 @@ export default function Testimonials() {
         ]);
       });
   }, []);
+
+  // Auto-play logic
+  useEffect(() => {
+    if (list.length === 0) return;
+    const timer = setInterval(() => {
+      moveNext();
+    }, 5000);
+    return () => clearInterval(timer);
+  }, [list, currentIndex]);
+
+  const moveNext = () => {
+    setDirection(1);
+    setCurrentIndex((prev) => (prev + 1) % list.length);
+  };
+
+  const moveBack = () => {
+    setDirection(-1);
+    setCurrentIndex((prev) => (prev - 1 + list.length) % list.length);
+  };
 
   // Auto-generate avatar (initials) with neon purple tint
   const getAvatar = (name) =>
@@ -61,48 +80,93 @@ export default function Testimonials() {
           </p>
         </motion.div>
 
-        {/* Testimonials Grid */}
-        <div className="grid gap-8 md:grid-cols-3">
-          {list.map((t, i) => (
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              transition={{ delay: i * 0.15 }}
-              viewport={{ once: true }}
-              key={i}
-              className="relative glass-card p-8 rounded-[2rem] border border-white/10 hover-glow transition-transform duration-300 hover:-translate-y-2 group overflow-hidden"
+        {/* Testimonials Carousel Wrapper */}
+        <div className="relative max-w-4xl mx-auto min-h-[400px] flex items-center justify-center">
+          
+          <AnimatePresence initial={false} custom={direction} mode="wait">
+            {list.length > 0 && (
+              <motion.div
+                key={currentIndex}
+                custom={direction}
+                variants={{
+                  enter: (direction) => ({ x: direction > 0 ? 300 : -300, opacity: 0, scale: 0.9 }),
+                  center: { x: 0, opacity: 1, scale: 1 },
+                  exit: (direction) => ({ x: direction < 0 ? 300 : -300, opacity: 0, scale: 0.9 })
+                }}
+                initial="enter"
+                animate="center"
+                exit="exit"
+                transition={{ duration: 0.6, ease: "anticipate" }}
+                className="w-full relative glass-card p-10 md:p-16 rounded-[3rem] border border-white/10 shadow-2xl overflow-hidden group"
+              >
+                {/* Subtle overlay glow */}
+                <div className="absolute inset-0 bg-gradient-to-br from-neonPurple/5 to-transparent pointer-events-none"></div>
+
+                <div className="flex flex-col md:flex-row items-center gap-10 relative z-10">
+                  {/* Left Side: Avatar & Stars */}
+                  <div className="shrink-0 flex flex-col items-center">
+                    <img
+                      src={getAvatar(list[currentIndex].name)}
+                      alt={list[currentIndex].name}
+                      className="w-24 h-24 md:w-32 md:h-32 rounded-full border-4 border-neonPurple shadow-[0_0_30px_rgba(139,92,246,0.4)] mb-6"
+                    />
+                    <div className="flex gap-1 text-neonCyan drop-shadow-[0_0_8px_rgba(6,182,212,0.8)]">
+                      {[...Array(list[currentIndex].rating || 5)].map((_, idx) => (
+                        <FaStar key={idx} className="text-xl" />
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Right Side: Content */}
+                  <div className="flex-1 text-center md:text-left">
+                    <p className="text-gray-300 text-xl md:text-2xl leading-relaxed italic mb-8 font-medium">
+                      “{list[currentIndex].review}”
+                    </p>
+                    <div className="text-white">
+                      <div className="font-black text-2xl uppercase tracking-widest">{list[currentIndex].name}</div>
+                      <div className="text-neonPurple font-bold mt-1">Verified Client</div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Decorative Highlight */}
+                <div className="absolute left-0 bottom-0 w-full h-1 bg-gradient-to-r from-transparent via-neonCyan to-transparent opacity-50"></div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+
+          {/* Navigation Controls */}
+          <div className="absolute top-1/2 -translate-y-1/2 -left-4 md:-left-20">
+            <button 
+              onClick={moveBack}
+              className="p-4 rounded-full glass-card border border-white/10 text-white hover:bg-neonPurple hover:text-black transition-all shadow-xl"
             >
-              {/* Subtle overlay glow */}
-              <div className="absolute inset-0 bg-gradient-to-br from-neonPurple/5 to-transparent pointer-events-none"></div>
+              <FiChevronLeft size={24} />
+            </button>
+          </div>
+          <div className="absolute top-1/2 -translate-y-1/2 -right-4 md:-right-20">
+            <button 
+              onClick={moveNext}
+              className="p-4 rounded-full glass-card border border-white/10 text-white hover:bg-neonCyan hover:text-black transition-all shadow-xl"
+            >
+              <FiChevronRight size={24} />
+            </button>
+          </div>
 
-              {/* Avatar */}
-              <div className="flex justify-start mb-6 relative z-10">
-                <img
-                  src={getAvatar(t.name)}
-                  alt={t.name}
-                  className="w-16 h-16 rounded-full border border-neonPurple shadow-[0_0_15px_rgba(139,92,246,0.3)] group-hover:scale-110 transition-transform duration-300"
-                />
-              </div>
+          {/* Indicators */}
+          <div className="absolute -bottom-12 flex gap-3">
+            {list.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => {
+                  setDirection(i > currentIndex ? 1 : -1);
+                  setCurrentIndex(i);
+                }}
+                className={`h-2 transition-all duration-300 rounded-full ${i === currentIndex ? 'w-10 bg-neonCyan' : 'w-2 bg-white/20'}`}
+              />
+            ))}
+          </div>
 
-              {/* Stars */}
-              <div className="flex gap-1 text-neonCyan mb-4 drop-shadow-[0_0_5px_rgba(6,182,212,0.8)] relative z-10">
-                {[...Array(t.rating || 5)].map((_, idx) => (
-                  <FaStar key={idx} />
-                ))}
-              </div>
-
-              {/* Review */}
-              <p className="text-gray-300 leading-relaxed text-[16px] mb-6 relative z-10 italic">
-                “{t.review}”
-              </p>
-
-              {/* Name */}
-              <div className="font-bold text-white text-lg relative z-10">{t.name}</div>
-
-              {/* Decorative Highlight */}
-              <div className="absolute left-0 bottom-0 w-2 h-full bg-gradient-to-b from-transparent via-neonPurple to-transparent opacity-30 group-hover:opacity-100 transition-all duration-500"></div>
-            </motion.div>
-          ))}
         </div>
 
         {/* CTA */}
