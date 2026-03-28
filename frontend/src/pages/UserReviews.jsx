@@ -75,7 +75,7 @@ export default function UserReviews() {
           <div className="bg-gray-50 border border-gray-100 p-8 rounded-2xl text-left italic relative">
             <span className="text-4xl text-gray-200 absolute -top-2 left-4 font-serif">“</span>
             <div className="flex gap-1 text-brandOrange mb-4">
-              {[...Array(myReview.rating)].map((_, i) => <FiStar key={i} className="fill-current" />)}
+              {[...Array(Math.max(0, Math.min(5, Number(myReview.rating || 5))))].map((_, i) => <FiStar key={i} className="fill-current" />)}
             </div>
             <p className="text-gray-700 leading-relaxed text-lg">
               {myReview.review}

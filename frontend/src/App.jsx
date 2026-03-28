@@ -1,6 +1,4 @@
-import React from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
-import { HelmetProvider } from "react-helmet-async";
 
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
@@ -72,8 +70,7 @@ export default function App() {
   const hideNavbarFooter = isDashboard || isAdmin;
 
   return (
-    <HelmetProvider>
-      <div className="min-h-screen flex flex-col relative w-full overflow-hidden">
+    <div className="min-h-screen flex flex-col relative w-full overflow-hidden">
 
         {/* Navbar hidden on Dashboard + Admin */}
         {!hideNavbarFooter && <Navbar />}
@@ -154,7 +151,6 @@ export default function App() {
             <Footer />
           </>
         )}
-      </div>
-    </HelmetProvider>
+    </div>
   );
 }
