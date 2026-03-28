@@ -22,6 +22,17 @@ router.get("/users", authMiddleware, adminMiddleware, async (req, res) => {
   }
 });
 
+// Get User by ID (Admin only)
+router.get("/users/:id", authMiddleware, adminMiddleware, async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id).select("-passwordHash");
+    if (!user) return res.status(404).json({ error: "User not found" });
+    res.json(user);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 // Delete a User
 router.delete("/users/:id", authMiddleware, adminMiddleware, async (req, res) => {
   try {

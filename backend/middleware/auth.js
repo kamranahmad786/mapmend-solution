@@ -3,9 +3,13 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 
 exports.authMiddleware = async (req, res, next) => {
+  let token = req.query.token;
   const header = req.headers.authorization;
-  if (!header) return res.status(401).json({ error: "No token" });
-  const token = header.replace("Bearer ", "");
+  if (header) {
+    token = header.replace("Bearer ", "");
+  }
+  
+  if (!token) return res.status(401).json({ error: "No token" });
   try {
     const payload = jwt.verify(token, process.env.JWT_SECRET);
     const user = await User.findById(payload.id).select("-passwordHash");

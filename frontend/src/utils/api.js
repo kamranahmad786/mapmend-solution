@@ -15,6 +15,13 @@ const api = axios.create({
 api.interceptors.request.use((cfg) => {
   const token = localStorage.getItem("mapmend_token");
   if (token) cfg.headers.Authorization = `Bearer ${token}`;
+
+  // Attach impersonation header if present
+  const impersonateId = localStorage.getItem("impersonate_user_id");
+  if (impersonateId) {
+    cfg.headers["X-Impersonate-User"] = impersonateId;
+  }
+
   return cfg;
 });
 

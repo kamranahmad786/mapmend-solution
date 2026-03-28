@@ -14,7 +14,15 @@ router.post("/", authMiddleware, async (req, res) => {
 
 // user's sites
 router.get("/my", authMiddleware, async (req, res) => {
-  const sites = await Site.find({ user: req.user._id }).populate("lastPaymentId");
+  let targetUser = req.user._id;
+
+  // Admin override for impersonation
+  const impersonateId = req.query.userId || req.headers["x-impersonate-user"];
+  if (req.user.role === "admin" && impersonateId) {
+    targetUser = impersonateId;
+  }
+
+  const sites = await Site.find({ user: targetUser }).populate("lastPaymentId");
   res.json(sites);
 });
 

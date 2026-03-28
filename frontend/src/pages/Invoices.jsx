@@ -1,8 +1,31 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FiFileText, FiDownload, FiAlertCircle } from "react-icons/fi";
+import api from "../utils/api";
 
 export default function Invoices() {
-  const invoices = []; // Later replace with API response
+  const [invoices, setInvoices] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    api.get("/api/payments/my")
+      .then(res => {
+        setInvoices(res.data);
+        setLoading(false);
+      })
+      .catch(err => {
+        console.error(err);
+        setLoading(false);
+      });
+  }, []);
+
+  const downloadInvoice = (payId) => {
+    let url = `${import.meta.env.VITE_API_URL || ""}/api/payments/${payId}/invoice?token=${localStorage.getItem("mapmend_token")}`;
+    const impersonateId = localStorage.getItem("impersonate_user_id");
+    if (impersonateId) {
+      url += `&userId=${impersonateId}`;
+    }
+    window.open(url, "_blank");
+  };
 
   return (
     <div className="animate-fadeIn">
@@ -55,13 +78,13 @@ export default function Invoices() {
                   className="border-b hover:bg-gray-50 transition"
                 >
                   <td className="py-3 text-brandBlue font-semibold">
-                    {inv.id}
+                    {inv.razorpayOrderId}
                   </td>
-                  <td className="py-3">{inv.plan}</td>
+                  <td className="py-3">{inv.planTitle}</td>
                   <td className="py-3 font-medium">
                     ₹{(inv.amount / 100).toLocaleString()}
                   </td>
-                  <td className="py-3">{inv.date}</td>
+                  <td className="py-3">{new Date(inv.createdAt).toLocaleDateString()}</td>
                   <td className="py-3">
                     <span
                       className={`px-3 py-1 rounded-full text-xs font-semibold ${
@@ -79,8 +102,8 @@ export default function Invoices() {
 
                   <td className="py-3 text-right">
                     <button
-                      className="flex items-center gap-2 text-brandBlue font-medium hover:text-brandOrange transition"
-                      onClick={() => alert("Download logic goes here")}
+                      className="flex items-center gap-2 text-brandBlue font-medium hover:text-brandOrange transition ml-auto"
+                      onClick={() => downloadInvoice(inv._id)}
                     >
                       <FiDownload /> Download
                     </button>

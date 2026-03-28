@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import api from "../../utils/api";
-import { FiUser, FiActivity, FiSearch } from "react-icons/fi";
+import { FiUser, FiActivity, FiSearch, FiMonitor } from "react-icons/fi";
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 
 export default function AdminUsers() {
   const [users, setUsers] = useState([]);
   const [search, setSearch] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchUsers();
@@ -28,6 +30,12 @@ export default function AdminUsers() {
     } catch (err) {
       alert(err.response?.data?.error || "Error deleting user");
     }
+  };
+
+  const inspectUser = (user) => {
+    localStorage.setItem("impersonate_user_id", user._id);
+    localStorage.setItem("impersonate_user_name", user.name);
+    navigate("/dashboard");
   };
 
   const filtered = users.filter((u) => u.name.toLowerCase().includes(search.toLowerCase()) || u.email.toLowerCase().includes(search.toLowerCase()));
@@ -96,13 +104,23 @@ export default function AdminUsers() {
                   <td className="px-6 py-4 text-gray-500 text-sm">
                     {new Date(user.createdAt).toLocaleDateString()}
                   </td>
-                  <td className="px-6 py-4 text-center">
+                  <td className="px-6 py-4 text-center flex items-center justify-center gap-3">
+                    {user.role !== "admin" && (
+                      <button 
+                        onClick={() => inspectUser(user)}
+                        className="bg-neonCyan/10 text-neonCyan hover:bg-neonCyan hover:text-black px-4 py-2 rounded-xl text-xs font-bold border border-neonCyan/20 hover:border-neonCyan transition-all flex items-center gap-2"
+                        title="View Dashboard as this user"
+                      >
+                        <FiMonitor /> Inspect
+                      </button>
+                    )}
+
                     {user.role !== "admin" ? (
                       <button 
                         onClick={() => deleteUser(user._id)}
-                        className="bg-red-500/10 text-red-400 hover:bg-red-500 hover:text-white px-4 py-2 rounded-xl text-xs font-bold border border-red-500/20 hover:border-red-400 transition-colors shadow-[0_0_10px_rgba(239,68,68,0.1)] hover:shadow-[0_0_20px_rgba(239,68,68,0.4)]"
+                        className="bg-red-500/10 text-red-400 hover:bg-red-500 hover:text-white px-4 py-2 rounded-xl text-xs font-bold border border-red-500/20 hover:border-red-400 transition-colors"
                       >
-                        Ban Identity
+                        Ban
                       </button>
                     ) : (
                       <span className="text-gray-500 italic text-xs uppercase tracking-widest px-4">Protected</span>

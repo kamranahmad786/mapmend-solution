@@ -10,6 +10,24 @@ const router = express.Router();
 
 const rz = new Razorpay({ key_id: process.env.RAZORPAY_KEY_ID, key_secret: process.env.RAZORPAY_KEY_SECRET });
 
+// get my payments
+router.get("/my", authMiddleware, async (req, res) => {
+  let targetUser = req.user._id;
+
+  // Admin override for impersonation
+  const impersonateId = req.query.userId || req.headers["x-impersonate-user"];
+  if (req.user.role === "admin" && impersonateId) {
+    targetUser = impersonateId;
+  }
+
+  try {
+    const list = await Payment.find({ user: targetUser }).sort({ createdAt: -1 });
+    res.json(list);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 // create-order
 router.post("/create-order", authMiddleware, async (req, res) => {
   const { planId } = req.body;
@@ -66,8 +84,16 @@ router.post("/verify", authMiddleware, async (req, res) => {
 router.get("/:id/invoice", authMiddleware, async (req, res) => {
   const pay = await Payment.findById(req.params.id);
   if (!pay) return res.status(404).json({ error: "Not found" });
+
+  let targetUser = req.user._id;
+  const impersonateId = req.query.userId || req.headers["x-impersonate-user"];
+  if (req.user.role === "admin" && impersonateId) {
+    targetUser = impersonateId;
+  }
+
   // security: allow owner or admin
-  if (String(pay.user) !== String(req.user._id) && req.user.role !== "admin") return res.status(403).json({ error: "Forbidden" });
+  if (String(pay.user) !== String(targetUser) && req.user.role !== "admin") return res.status(403).json({ error: "Forbidden" });
+  
   const buf = await generateInvoiceBuffer({ payment: pay });
   res.setHeader("Content-Type", "application/pdf");
   res.setHeader("Content-Disposition", `attachment; filename=invoice_${pay._id}.pdf`);
