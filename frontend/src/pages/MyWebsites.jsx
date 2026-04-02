@@ -55,7 +55,7 @@ export default function MyWebsites() {
             to="/#pricing"
             className="inline-block bg-white text-black font-bold px-8 py-3 rounded-xl hover:scale-105 transition-transform shadow-[0_0_20px_rgba(255,255,255,0.2)]"
           >
-            Get Your Website @ ₹1,999 →
+            Get Your Website @ ₹2,599 →
           </Link>
         </motion.div>
       )}

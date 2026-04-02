@@ -99,9 +99,9 @@ router.post("/create-order", authMiddleware, async (req, res) => {
   try {
     const { planId } = req.body;
     const plans = {
-      starter:  { amount: 99900,  title: "Starter" },
-      business: { amount: 199900, title: "Business" },
-      premium:  { amount: 449900, title: "Premium" },
+      starter:  { amount: 259900, title: "Starter Digital" },
+      business: { amount: 499900, title: "Business Pro" },
+      premium:  { amount: 759900, title: "Enterprise Elite" },
     };
     const plan = plans[planId] || plans.business;
 

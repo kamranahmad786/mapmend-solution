@@ -169,7 +169,7 @@ export default function DashboardHome() {
         >
           <FiGlobe className="text-4xl text-neonBlue mx-auto mb-4" />
           <h3 className="text-xl font-bold text-white mb-2">No websites yet</h3>
-          <p className="text-gray-400 mb-6">Get your first AI-powered website and Google Maps optimization starting at ₹1,999.</p>
+          <p className="text-gray-400 mb-6">Get your professional website and Google Maps optimization starting at ₹2,599.</p>
           <a
             href="https://wa.me/917366890727?text=Hello,%20I%20want%20to%20get%20started%20with%20MapMend%20Solution."
             target="_blank"

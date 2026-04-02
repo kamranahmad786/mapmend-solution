@@ -39,7 +39,7 @@ export default function Hero() {
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
             <a href="#pricing" className="btn-primary flex items-center justify-center gap-2">
-              Get Your Website @ ₹1,999 <FiArrowRight />
+              Get Your Website @ ₹2,599 <FiArrowRight />
             </a>
             <a href="#services" className="btn-secondary">
               View Our Services

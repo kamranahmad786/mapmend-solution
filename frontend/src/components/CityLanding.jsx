@@ -4,7 +4,7 @@ import SEO from "./SEO";
 
 export default function CityLanding({ city = "Udaipur" }) {
   const title = `${city} Website Designer | Google Maps Optimization ${city}`;
-  const desc = `Affordable website design and Google Maps optimization for businesses in ${city}. Get a website starting at ₹1,999 and boost local visibility.`;
+  const desc = `Affordable website design and Google Maps optimization for businesses in ${city}. Get a website starting at ₹2,599 and boost local visibility.`;
 
   const schema = {
     "@context": "https://schema.org",

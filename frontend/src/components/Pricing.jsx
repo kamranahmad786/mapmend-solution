@@ -8,29 +8,45 @@ import { useToast } from "./Toast";
 const plans = [
   {
     id: "starter",
-    title: "Starter Plan",
-    subtitle: "Ideal for small local businesses",
-    price: 99900,
-    bullets: ["1-Page Professional Website", "Google Maps Baseline Fix", "Mobile-Optimized Experience", "Secure SSL Certificate"],
+    title: "Starter Digital",
+    subtitle: "Essential infrastructure for growth",
+    price: 259900,
+    bullets: [
+      "1-Page Professional Website",
+      "Free Domain & SSL Certificate",
+      "Free Lifetime Maintenance",
+      "Google Maps Baseline Fix",
+      "Mobile-Optimized Experience",
+    ],
   },
   {
     id: "business",
     title: "Business Pro",
-    subtitle: "Advanced growth & visibility",
-    price: 199900,
-    bullets: ["3-Page High-Performance Site", "Full Google Maps SEO Stack", "Enhanced Indexing Support", "Premium Speed Optimization"],
+    subtitle: "Advanced local SEO dominance",
+    price: 499900,
+    bullets: [
+      "3-Page High-Performance Site",
+      "Free Domain & SSL Certificate",
+      "Free Lifetime Maintenance",
+      "Advanced Local SEO Engine",
+      "Full Google Maps SEO Stack",
+      "Daily Security Backups",
+    ],
     tag: "Best Value",
   },
   {
     id: "premium",
-    title: "Enterprise",
-    subtitle: "Comprehensive digital infrastructure",
-    price: 449900,
+    title: "Enterprise Elite",
+    subtitle: "Comprehensive digital authority",
+    price: 759900,
     bullets: [
-      "Custom Enterprise Website",
+      "Custom Multi-Page Infrastructure",
+      "Free Domain & SSL Certificate",
+      "Free Lifetime Maintenance",
+      "AI-Powered Content Feed",
       "Advanced Local SEO Engine",
+      "Professional Email Suite",
       "24/7 Priority Support",
-      "Quarterly Strategy Audits",
     ],
   },
 ];
@@ -101,10 +117,10 @@ export default function Pricing() {
         
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
           <h2 className="section-heading">
-            Simple, Transparent Pricing
+            Premium Digital Infrastructure
           </h2>
           <p className="section-subheading">
-            Enterprise-grade digital solutions tailored for your business success. No monthly retainers.
+            Elite online presence with built-in maintenance, global hosting, and strategic local SEO.
           </p>
         </motion.div>
 
@@ -133,12 +149,14 @@ export default function Pricing() {
                 <span className="text-5xl font-black text-white tracking-tight">
                   ₹{(p.price / 100).toLocaleString("en-IN")}
                 </span>
-                <span className="text-slate-500 text-sm font-bold uppercase tracking-widest ml-2">Total</span>
+                <div className="mt-2 text-brandOrange text-[10px] font-black uppercase tracking-[0.2em]">
+                  ₹999 / Month Service Charge Applies
+                </div>
               </div>
 
               <div className="w-full h-px bg-white/5 mb-10"></div>
 
-              <ul className="space-y-4 mb-12 flex-1">
+              <ul className="space-y-4 mb-12 flex-1 w-full text-left">
                 {p.bullets.map((b, idx) => (
                   <li key={idx} className="flex items-center gap-3 text-slate-300 text-sm font-medium">
                     <div className="w-5 h-5 rounded-full bg-brandBlue/10 flex items-center justify-center border border-brandBlue/20">

@@ -67,7 +67,7 @@ export default function Chatbot() {
 
     // Pricing & Costs (Using INR from Pricing.jsx)
     if (lower.includes("price") || lower.includes("cost") || lower.includes("fee") || lower.includes("plan")) {
-      return "We have three transparent One-Time Payment plans: 'Starter' (₹999) for a 1-page site & basic Maps fix, 'Business' (₹1,999) for a 3-page site & full Maps SEO, and 'Premium' (₹4,499) for a custom digital experience.";
+      return "We have three transparent One-Time Payment plans: 'Starter Digital' (₹2,599), 'Business Pro' (₹4,999), and 'Enterprise Elite' (₹7,599). All plans include free domain, SSL, and maintenance!";
     }
 
     // Speed of delivery / FAQs
