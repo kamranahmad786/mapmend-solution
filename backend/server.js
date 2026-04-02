@@ -12,12 +12,19 @@ const paymentsRoutes = require("./routes/payments");
 const adminRoutes = require("./routes/admin");
 const testimonialsRoutes = require("./routes/testimonials");
 const contactRoutes = require("./routes/contact");
+const aiRoutes = require("./routes/ai");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-app.use(cors({ origin: true })); // tighten in production
-app.use(express.json());
+app.use(cors({ origin: true }));
+app.use(express.json({
+  verify: (req, res, buf) => {
+    if (req.originalUrl === "/api/payments/webhook") {
+      req.rawBody = buf;
+    }
+  }
+}));
 app.use("/public", express.static(__dirname + "/public"));
 
 connectDB(process.env.MONGODB_URI || process.env.MONGO_URI);
@@ -29,6 +36,7 @@ app.use("/api/payments", paymentsRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/testimonials", testimonialsRoutes);
 app.use("/api/contact", contactRoutes);
+app.use("/api/ai", aiRoutes);
 
 // Optional admin seed (if no users)
 (async function seedAdmin() {

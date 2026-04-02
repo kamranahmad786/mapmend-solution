@@ -3,14 +3,20 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        brandBlue: '#0A2A5A',
-        brandOrange: '#F26122',
-        darkBg: '#050505',
-        darkCard: '#111116',
-        neonBlue: '#3b82f6',
-        neonCyan: '#06b6d4',
-        neonPurple: '#8b5cf6',
-        neonPink: '#ec4899',
+        // === MapMend Brand Palette (from logo) ===
+        brandBlue:   '#3B8DD4', // Logo blue (the M letter)
+        brandOrange: '#F5841F', // Logo orange (the map pin)
+        brandNavy:   '#0A1628', // Deep navy from logo background
+        brandSlate:  '#7A8DA6', // Muted slate for secondary text
+        darkBg:      '#060E1A', // Near-black navy background
+        darkCard:    '#0D1B2E', // Slightly lighter card surface
+
+        // Semantic aliases (mapped to brand colors)
+        neonCyan:    '#3B8DD4', // → brand blue
+        neonBlue:    '#3B8DD4', // → brand blue
+        neonPurple:  '#F5841F', // → brand orange
+        neonPink:    '#E06D10', // → deeper orange variant
+        accentCyan:  '#5BA3E0', // Lighter blue for soft accents
       },
       animation: {
         blob: "blob 7s infinite",

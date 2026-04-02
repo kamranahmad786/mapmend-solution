@@ -7,8 +7,8 @@ export default function Process() {
     {
       step: "1",
       icon: <FaSearch className="text-2xl" />,
-      title: "Free AI Audit",
-      desc: "We analyze your Google Maps listing & website using AI and send a 3-point growth report.",
+      title: "Free Audit",
+      desc: "We analyze your Google Maps listing & website and send a 3-point growth report.",
     },
     {
       step: "2",
@@ -35,7 +35,7 @@ export default function Process() {
       id="process"
       className="min-h-screen flex items-center py-24 bg-[#050505] relative"
     >
-      <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-neonBlue/10 rounded-full blur-[120px] mix-blend-screen pointer-events-none"></div>
+      <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-brandBlue/10 rounded-full blur-[120px] mix-blend-screen pointer-events-none"></div>
 
       <div className="max-w-7xl mx-auto px-6 w-full relative z-10">
 
@@ -47,7 +47,7 @@ export default function Process() {
           className="text-center mb-16"
         >
           <h2 className="text-4xl md:text-5xl font-extrabold text-white mb-4">
-            Our Simple <span className="text-gradient">4-Step Process</span>
+            Our Simple 4-Step Process
           </h2>
           <p className="text-gray-400 max-w-2xl mx-auto text-lg">
             A fast, transparent process designed to deliver next-gen results quickly and professionally.
@@ -67,15 +67,15 @@ export default function Process() {
             >
               {/* Step Badge */}
               <div className="absolute -top-5 left-1/2 -translate-x-1/2 
-                              w-10 h-10 rounded-full bg-gradient-to-r from-neonBlue to-neonPurple text-white font-bold 
-                              flex items-center justify-center shadow-[0_0_15px_rgba(139,92,246,0.6)] text-lg">
+                              w-10 h-10 rounded-full bg-brandBlue text-white font-bold 
+                              flex items-center justify-center shadow-[0_0_15px_rgba(59,141,212,0.4)] text-lg">
                 {s.step}
               </div>
 
               {/* Icon */}
               <div className="mt-8 w-16 h-16 mx-auto rounded-2xl bg-white/5 
-                              flex items-center justify-center text-neonCyan 
-                              group-hover:scale-110 group-hover:shadow-[0_0_15px_rgba(6,182,212,0.4)] transition-all duration-300">
+                              flex items-center justify-center text-brandOrange 
+                              group-hover:scale-110 group-hover:shadow-[0_0_15px_rgba(245,132,31,0.4)] transition-all duration-300">
                 {s.icon}
               </div>
 
@@ -88,7 +88,7 @@ export default function Process() {
               </p>
 
               {/* Glow */}
-              <div className="absolute inset-0 opacity-0 group-hover:opacity-10 bg-gradient-to-br from-neonCyan to-neonBlue 
+              <div className="absolute inset-0 opacity-0 group-hover:opacity-10 bg-gradient-to-br from-brandBlue to-brandOrange 
                               transition rounded-[2rem] blur-xl pointer-events-none"></div>
             </motion.div>
           ))}

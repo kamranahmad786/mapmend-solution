@@ -1,140 +1,177 @@
-// src/components/Pricing.jsx
 import React from "react";
-import { FiCheckCircle } from "react-icons/fi";
+import { FiCheck, FiArrowRight } from "react-icons/fi";
 import api from "../utils/api";
+import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
+import { useToast } from "./Toast";
 
 const plans = [
   {
     id: "starter",
-    title: "Starter AI",
+    title: "Starter Plan",
+    subtitle: "Ideal for small local businesses",
     price: 99900,
-    bullets: ["1-Page Smart Website", "Basic Google Maps Fix", "Mobile-Optimized Layout"],
+    bullets: ["1-Page Professional Website", "Google Maps Baseline Fix", "Mobile-Optimized Experience", "Secure SSL Certificate"],
   },
   {
     id: "business",
-    title: "AI Business",
+    title: "Business Pro",
+    subtitle: "Advanced growth & visibility",
     price: 199900,
-    bullets: ["3-Page Next-Gen Website", "Full Maps AI Optimization", "Speed & SEO Enhancements"],
-    tag: "Most Popular",
+    bullets: ["3-Page High-Performance Site", "Full Google Maps SEO Stack", "Enhanced Indexing Support", "Premium Speed Optimization"],
+    tag: "Best Value",
   },
   {
     id: "premium",
-    title: "Premium AI",
+    title: "Enterprise",
+    subtitle: "Comprehensive digital infrastructure",
     price: 449900,
     bullets: [
-      "Custom Digital Experience",
-      "Advanced AI Maps SEO",
-      "Priority Support via Automation",
+      "Custom Enterprise Website",
+      "Advanced Local SEO Engine",
+      "24/7 Priority Support",
+      "Quarterly Strategy Audits",
     ],
-    tag: "All-in-One",
   },
 ];
 
 export default function Pricing() {
+  const [loading, setLoading] = React.useState(null);
+  const navigate = useNavigate();
+  const { showToast } = useToast();
   const purchase = async (plan) => {
+    const token = localStorage.getItem("mapmend_token");
+    if (!token) {
+      showToast("Please register to continue, then proceed to payment.", "info");
+      navigate("/register");
+      return;
+    }
+
+    if (loading) return;
+    setLoading(plan.id);
     try {
       const res = await api.post("/api/payments/create-order", { planId: plan.id });
       const { orderId, keyId, amount } = res.data;
+
+      const userName = localStorage.getItem("mapmend_user_name") || "";
+      const userEmail = localStorage.getItem("mapmend_user_email") || "";
 
       const options = {
         key: keyId,
         amount,
         currency: "INR",
         name: "MapMend Solution",
-        description: plan.title,
+        description: `Order: ${plan.title}`,
         order_id: orderId,
         handler: async function (response) {
-          await api.post("/api/payments/verify", response);
-          alert("Payment successful! Check your email for invoice.");
-          window.location.href = "/dashboard";
+          try {
+            await api.post("/api/payments/verify", response);
+            window.location.href = "/dashboard?payment=success";
+          } catch (err) {
+            showToast("Payment verification failed. Please contact support.", "error");
+          }
         },
-        theme: { color: "#06b6d4" }, // neon cyan razorpay tint
+        modal: { ondismiss: () => setLoading(null) },
+        prefill: { name: userName, email: userEmail },
+        theme: { color: "#F5841F" },
       };
 
       if (!window.Razorpay) {
         const s = document.createElement("script");
         s.src = "https://checkout.razorpay.com/v1/checkout.js";
         document.body.appendChild(s);
-        s.onload = () => new window.Razorpay(options).open();
-      } else new window.Razorpay(options).open();
+        s.onload = () => { new window.Razorpay(options).open(); };
+      } else {
+        new window.Razorpay(options).open();
+      }
     } catch (err) {
-      alert("Payment could not start. Please try again.");
+      showToast("Payment could not start. Please try again.", "error");
       console.error(err);
+      setLoading(null);
     }
   };
 
   return (
-    <section id="pricing" className="py-24 bg-[#08080c] relative">
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-neonPurple/5 rounded-full blur-[150px] pointer-events-none"></div>
+    <section id="pricing" className="py-32 bg-darkBg relative overflow-hidden">
+      
+      {/* Background Decor */}
+      <div className="absolute top-1/2 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-white/5 to-transparent"></div>
 
-      <div className="max-w-6xl mx-auto px-6 text-center relative z-10">
+      <div className="max-w-7xl mx-auto px-6 text-center relative z-10">
         
-        {/* HEADER */}
-        <h2 className="text-4xl md:text-5xl font-extrabold text-white">
-          Transparent <span className="text-gradient">AI Pricing</span>
-        </h2>
-        <p className="text-gray-400 mt-4 mb-16 text-lg">
-          Clear, upfront pricing crafted for ambitious businesses — no hidden charges.
-        </p>
+        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
+          <h2 className="section-heading">
+            Simple, Transparent Pricing
+          </h2>
+          <p className="section-subheading">
+            Enterprise-grade digital solutions tailored for your business success. No monthly retainers.
+          </p>
+        </motion.div>
 
-        {/* PRICING GRID */}
-        <div className="grid gap-8 md:grid-cols-3">
-          {plans.map((p) => (
-            <div
+        <div className="grid gap-8 md:grid-cols-3 mt-20">
+          {plans.map((p, i) => (
+            <motion.div
               key={p.id}
-              className={`relative glass-card rounded-[2rem] p-8 hover-glow transition-transform duration-300 hover:scale-105 group overflow-hidden border
-              ${
-                p.tag
-                  ? "border-neonCyan hover:shadow-[0_0_25px_rgba(6,182,212,0.3)] shadow-[0_0_10px_rgba(6,182,212,0.1)]"
-                  : "border-white/10"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.1 }}
+              className={`relative glass-card rounded-3xl p-10 flex flex-col items-start text-left border border-white/5 hover:border-white/10 transition-all duration-300 ${
+                p.tag ? 'ring-2 ring-brandOrange shadow-2xl scale-105 z-10' : ''
               }`}
             >
-              {/* TAG BADGE */}
               {p.tag && (
-                <div className="absolute top-0 right-0 bg-neonCyan text-black text-xs px-4 py-1.5 rounded-bl-[1rem] font-bold shadow-md">
+                <div className="absolute top-0 right-0 bg-brandOrange text-white text-[10px] uppercase font-black px-4 py-1.5 rounded-bl-xl rounded-tr-3xl tracking-widest">
                   {p.tag}
                 </div>
               )}
 
-              {/* TITLE */}
-              <h3 className="text-2xl font-bold text-white mt-4">{p.title}</h3>
+              <h3 className="text-xl font-black text-white uppercase tracking-tight">{p.title}</h3>
+              <p className="text-slate-500 text-sm mt-1">{p.subtitle}</p>
 
-              {/* PRICE */}
-              <div className="my-6 relative">
-                <span className="text-5xl font-extrabold text-white">
-                  ₹{(p.price / 100).toLocaleString()}
+              <div className="my-10">
+                <span className="text-5xl font-black text-white tracking-tight">
+                  ₹{(p.price / 100).toLocaleString("en-IN")}
                 </span>
-                <p className="text-sm text-neonPurple mt-2 font-medium tracking-wide uppercase">One-time payment</p>
-                
-                {/* Glow behind price on popular */}
-                {p.tag && <div className="absolute inset-0 bg-neonCyan opacity-20 blur-2xl rounded-full"></div>}
+                <span className="text-slate-500 text-sm font-bold uppercase tracking-widest ml-2">Total</span>
               </div>
 
-              {/* FEATURES */}
-              <ul className="space-y-4 mb-10 text-left relative z-10">
+              <div className="w-full h-px bg-white/5 mb-10"></div>
+
+              <ul className="space-y-4 mb-12 flex-1">
                 {p.bullets.map((b, idx) => (
-                  <li key={idx} className="flex items-start gap-3 text-gray-300 text-sm">
-                    <FiCheckCircle className="text-neonCyan text-lg shrink-0 mt-0.5" />
+                  <li key={idx} className="flex items-center gap-3 text-slate-300 text-sm font-medium">
+                    <div className="w-5 h-5 rounded-full bg-brandBlue/10 flex items-center justify-center border border-brandBlue/20">
+                       <FiCheck className="text-brandBlue text-[10px] stroke-[4]" />
+                    </div>
                     {b}
                   </li>
                 ))}
               </ul>
 
-              {/* CTA BUTTON */}
               <button
                 onClick={() => purchase(p)}
-                className={`w-full py-4 rounded-xl font-bold shadow-lg transition-transform hover:scale-[1.02]
+                disabled={!!loading}
+                className={`w-full py-4 rounded-2xl font-black uppercase tracking-widest text-sm transition-all duration-300 flex items-center justify-center gap-2
                 ${
                   p.tag
-                    ? "bg-neonCyan text-black hover:bg-cyan-400 shadow-[0_0_15px_rgba(6,182,212,0.4)]"
-                    : "glass-card text-white hover:bg-white/10"
-                }`}
+                    ? 'bg-brandOrange text-white shadow-xl shadow-brandOrange/20 hover:bg-orange-600'
+                    : 'bg-white text-black hover:bg-slate-100 shadow-xl'
+                } ${loading ? 'opacity-50 cursor-not-allowed' : 'active:scale-95'}`}
               >
-                Choose {p.title}
+                {loading === p.id ? (
+                  <span className="w-5 h-5 border-2 border-current border-t-transparent rounded-full animate-spin"></span>
+                ) : (
+                  <>Select Plan <FiArrowRight /></>
+                )}
               </button>
-            </div>
+            </motion.div>
           ))}
         </div>
+        
+        <p className="mt-12 text-slate-500 text-xs font-bold uppercase tracking-widest">
+          🛡️ Secure Checkout Powered by Razorpay
+        </p>
       </div>
     </section>
   );

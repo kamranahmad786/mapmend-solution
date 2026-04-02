@@ -32,7 +32,7 @@ export default function About() {
           </motion.span>
 
           <motion.h3 variants={fadeUp} className="text-4xl md:text-5xl font-extrabold text-white leading-tight">
-            Fix Your Online Presence & <span className="text-gradient">Grow Effortlessly</span>
+            Fix Your Online Presence & Grow Effortlessly
           </motion.h3>
 
           <motion.p variants={fadeUp} className="text-gray-400 text-lg leading-relaxed">
@@ -44,7 +44,7 @@ export default function About() {
               MapMend Solution solves this instantly
             </span>{" "}
             by fixing your online presence, improving visibility, and helping
-            customers trust your business using AI-driven strategies.
+            customers trust your business using strategic solutions.
           </motion.p>
 
           {/* FEATURE LIST */}
@@ -56,7 +56,7 @@ export default function About() {
                 <FaSearch />
               </div>
               <div>
-                <h4 className="text-lg font-semibold text-white">Deep AI-Powered Audit</h4>
+                <h4 className="text-lg font-semibold text-white">Deep Performance Audit</h4>
                 <p className="text-gray-400 text-sm mt-1">
                   We review Maps, website, categories, contact info, images & more — nothing gets missed.
                 </p>

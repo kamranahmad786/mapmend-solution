@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { FiTrendingUp, FiUsers, FiMail, FiGlobe } from "react-icons/fi";
+import { FiTrendingUp, FiUsers, FiMail, FiGlobe, FiCreditCard, FiActivity } from "react-icons/fi";
 import api from "../../utils/api";
 
 export default function AdminOverview() {
@@ -8,7 +8,9 @@ export default function AdminOverview() {
     users: "...",
     leads: "...",
     sites: "...",
-    revenue: "..."
+    revenue: "...",
+    payments: "...",
+    recent: []
   });
 
   useEffect(() => {
@@ -22,18 +24,20 @@ export default function AdminOverview() {
         users: res.data.users,
         leads: res.data.leads,
         sites: res.data.sites,
-        revenue: "₹" + res.data.revenue.toLocaleString()
+        revenue: "₹" + res.data.revenue.toLocaleString(),
+        payments: res.data.payments,
+        recent: res.data.recent || []
       });
     } catch (err) {
       console.error(err);
-      setMetrics({ users: "Err", leads: "Err", sites: "Err", revenue: "Err" });
+      setMetrics({ users: "Err", leads: "Err", sites: "Err", revenue: "Err", payments: "Err", recent: [] });
     }
   };
 
   const stats = [
     { title: "Total Users", val: metrics.users, icon: <FiUsers />, color: "text-neonCyan", bg: "bg-neonCyan/10" },
     { title: "Unread Leads", val: metrics.leads, icon: <FiMail />, color: "text-neonPink", bg: "bg-neonPink/10" },
-    { title: "Site Audits", val: metrics.sites, icon: <FiGlobe />, color: "text-neonPurple", bg: "bg-neonPurple/10" },
+    { title: "Total Payments", val: metrics.payments, icon: <FiCreditCard />, color: "text-neonPurple", bg: "bg-neonPurple/10" },
     { title: "Gross Revenue", val: metrics.revenue, icon: <FiTrendingUp />, color: "text-green-400", bg: "bg-green-400/10" },
   ];
 
@@ -65,23 +69,75 @@ export default function AdminOverview() {
                {s.val}
             </div>
             
-            {/* Subtle glow */}
             <div className={`absolute -bottom-10 -right-10 w-32 h-32 ${s.bg} rounded-full blur-2xl opacity-20 group-hover:opacity-40 transition-opacity`}></div>
           </motion.div>
         ))}
       </div>
 
-      {/* Terminal Visualization Area */}
-      <div className="glass-card h-96 rounded-3xl border border-white/5 bg-[#08080c]/80 flex flex-col p-8 overflow-hidden relative">
-        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-neonCyan via-neonPurple to-neonPink opacity-50"></div>
-        <h3 className="text-xl font-bold text-white mb-6 tracking-wide">System Event Log</h3>
-        
-        <div className="flex-1 font-mono text-xs text-gray-500 space-y-3 overflow-y-auto">
-           <p><span className="text-green-400">[OK]</span> Connected to MapMend Mainframe.</p>
-           <p><span className="text-neonCyan">[INFO]</span> Analyzing localized SEO vectors...</p>
-           <p><span className="text-neonCyan">[INFO]</span> Aggregating Razorpay transaction matrices...</p>
-           <p><span className="text-green-400">[OK]</span> Live metric stream established successfully.</p>
-           <p className="text-gray-600 italic mt-8">Awaiting further chart libraries injection...</p>
+      <div className="grid lg:grid-cols-3 gap-8">
+        {/* RECENT TRANSACTIONS */}
+        <div className="lg:col-span-2 glass-card rounded-3xl border border-white/5 bg-[#08080c]/50 overflow-hidden">
+          <div className="p-6 border-b border-white/5 flex items-center justify-between">
+            <h3 className="text-xl font-bold text-white flex items-center gap-3">
+              <FiCreditCard className="text-neonCyan" /> Recent Transactions
+            </h3>
+            <span className="text-xs font-bold text-gray-500 uppercase tracking-widest">Live Flow</span>
+          </div>
+          <div className="overflow-x-auto">
+            <table className="w-full text-left">
+              <thead className="bg-white/[0.02] text-xs uppercase text-gray-500 font-bold tracking-widest">
+                <tr>
+                  <th className="px-6 py-4">Client</th>
+                  <th className="px-6 py-4">Status</th>
+                  <th className="px-6 py-4 text-right">Amount</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-white/[0.02]">
+                {metrics.recent.map((p, idx) => (
+                  <tr key={p._id} className="hover:bg-white/[0.01] transition-colors group">
+                    <td className="px-6 py-4">
+                      <div className="text-white font-semibold group-hover:text-neonCyan transition-colors">{p.user?.name || p.userEmail?.split('@')[0]}</div>
+                      <div className="text-gray-500 text-xs">{new Date(p.createdAt).toLocaleDateString()}</div>
+                    </td>
+                    <td className="px-6 py-4">
+                      <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full border ${
+                        p.status === 'paid' || p.status === 'captured' 
+                          ? 'bg-green-500/10 text-green-400 border-green-500/20' 
+                          : 'bg-amber-500/10 text-amber-400 border-amber-500/20'
+                      }`}>
+                        {p.status.toUpperCase()}
+                      </span>
+                    </td>
+                    <td className="px-6 py-4 text-right">
+                      <div className="text-white font-bold">₹{(p.amount / 100).toLocaleString()}</div>
+                      <div className="text-[10px] text-gray-500 uppercase">{p.planTitle || 'Manual'}</div>
+                    </td>
+                  </tr>
+                ))}
+                {metrics.recent.length === 0 && (
+                  <tr><td colSpan="3" className="px-6 py-10 text-center text-gray-600">No recent transactions.</td></tr>
+                )}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        {/* SYSTEM LOGS */}
+        <div className="glass-card rounded-3xl border border-white/5 bg-[#08080c]/80 flex flex-col overflow-hidden relative">
+          <div className="absolute top-0 left-0 w-full h-0.5 bg-gradient-to-r from-neonCyan via-neonPurple to-neonPink opacity-50"></div>
+          <div className="p-6 border-b border-white/5">
+            <h3 className="text-xl font-bold text-white flex items-center gap-3">
+              <FiActivity className="text-neonPurple" /> System Events
+            </h3>
+          </div>
+          
+          <div className="flex-1 font-mono text-[10px] text-gray-500 p-6 space-y-4 overflow-y-auto">
+             <p><span className="text-green-400 font-bold">[OK]</span> Mainframe linked.</p>
+             <p><span className="text-neonCyan font-bold">[SYS]</span> Metrics sync: {new Date().toLocaleTimeString()}</p>
+             <p><span className="text-neonPurple font-bold">[PAY]</span> Ledger updated via Manual Trace.</p>
+             <p><span className="text-neonCyan font-bold">[SEO]</span> Domain re-indexing triggered.</p>
+             <p className="text-gray-700 italic border-t border-white/5 pt-4">Waiting for incoming telemetry...</p>
+          </div>
         </div>
       </div>
       

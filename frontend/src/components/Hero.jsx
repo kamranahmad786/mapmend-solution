@@ -1,111 +1,96 @@
 import React from "react";
-import { FaCheckCircle } from "react-icons/fa";
+import { FiCheckCircle, FiArrowRight } from "react-icons/fi";
 import { motion } from "framer-motion";
 
 export default function Hero() {
   return (
-    <section className="min-h-screen flex items-center bg-[#050505] text-white relative overflow-hidden pt-20">
+    <section className="min-h-screen flex items-center bg-darkBg text-white relative overflow-hidden pt-32 pb-20">
 
-      {/* Background Glowing Blobs */}
-      <div className="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] bg-neonPurple/20 rounded-full blur-[120px] mix-blend-screen animate-blob"></div>
-      <div className="absolute bottom-[-10%] right-[-10%] w-[500px] h-[500px] bg-neonCyan/20 rounded-full blur-[120px] mix-blend-screen animate-blob animation-delay-2000"></div>
-      <div className="absolute top-[40%] left-[40%] w-[500px] h-[500px] bg-neonPink/20 rounded-full blur-[120px] mix-blend-screen animate-blob animation-delay-4000"></div>
+      {/* Professional Gradient Overlays (Subtle) */}
+      <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-brandBlue/5 rounded-full blur-[180px] pointer-events-none"></div>
+      <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-brandOrange/5 rounded-full blur-[150px] pointer-events-none"></div>
 
-      <div className="max-w-7xl mx-auto px-6 py-10 grid md:grid-cols-2 gap-10 items-center relative z-10 w-full">
+      <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-16 items-center relative z-10 w-full">
 
         {/* LEFT CONTENT */}
         <motion.div 
-          initial={{ opacity: 0, x: -50 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          className="text-center md:text-left"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="text-center lg:text-left"
         >
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2, duration: 0.8 }}
-            className="inline-block px-4 py-1.5 rounded-full border border-white/10 bg-white/5 backdrop-blur-md mb-6 text-sm text-neonCyan shadow-[0_0_15px_rgba(6,182,212,0.2)]"
-          >
-            ✨ Supercharge Your Digital Growth
-          </motion.div>
-
-          <h1 className="text-4xl md:text-6xl font-extrabold leading-tight tracking-tight">
-            Grow Your Business <br />
-            <span className="text-gradient">
-              In The AI Era
+          <div className="inline-flex items-center gap-2 px-3 py-1 bg-brandOrange/10 border border-brandOrange/20 rounded-full text-xs font-bold text-brandOrange uppercase tracking-widest mb-6">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brandOrange opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-brandOrange"></span>
             </span>
+            Trusted Digital Infrastructure
+          </div>
+
+          <h1 className="text-5xl md:text-7xl font-black leading-[1.1] tracking-tight text-white mb-6">
+            The New Standard For <br />
+            Business Growth
           </h1>
 
-          <p className="mt-6 text-lg md:text-xl text-gray-400 max-w-xl">
-            We create AI-driven websites and optimize your Google Maps presence 
-            so customers can find and trust you instantly. Step into the future.
+          <p className="text-slate-400 text-lg md:text-xl max-w-xl mx-auto lg:mx-0 leading-relaxed mb-10">
+            MapMend builds high-performance digital assets and optimizes Local SEO 
+            presence so your brand stands out where it matters most.
           </p>
 
-          {/* BENEFIT BADGES */}
-          <motion.div 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.5, duration: 0.8 }}
-            className="mt-8 flex flex-wrap gap-4 justify-center md:justify-start"
-          >
-            <div className="flex items-center gap-2 glass-card px-4 py-2 rounded-full text-sm">
-              <FaCheckCircle className="text-neonCyan" /> AI-Driven Growth
-            </div>
-            <div className="flex items-center gap-2 glass-card px-4 py-2 rounded-full text-sm">
-              <FaCheckCircle className="text-neonPurple" /> Unmatched Visibility
-            </div>
-            <div className="flex items-center gap-2 glass-card px-4 py-2 rounded-full text-sm">
-              <FaCheckCircle className="text-neonPink" /> Data-Backed Leads
-            </div>
-          </motion.div>
-
-          {/* CTA BUTTONS */}
-          <motion.div 
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.7, duration: 0.5 }}
-            className="mt-10 flex flex-col sm:flex-row gap-4 md:justify-start justify-center"
-          >
-            <a
-              href="#contact"
-              className="bg-white text-black px-8 py-4 rounded-xl font-bold shadow-[0_0_20px_rgba(255,255,255,0.3)] hover:scale-105 transition"
-            >
-              Get Website @ ₹1,999
+          <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+            <a href="#pricing" className="btn-primary flex items-center justify-center gap-2">
+              Get Your Website @ ₹1,999 <FiArrowRight />
             </a>
-
-            <a
-              href="#services"
-              className="glass-card px-8 py-4 rounded-xl font-semibold hover:bg-white/10 transition hover-glow text-gray-200"
-            >
-              Explore Services
+            <a href="#services" className="btn-secondary">
+              View Our Services
             </a>
-          </motion.div>
+          </div>
 
-          {/* TRUST TEXT */}
-          <p className="mt-8 text-sm text-gray-500">
-            ⭐ Trusted by 50+ Local Businesses Across India
-          </p>
+          {/* Social Proof */}
+          <div className="mt-12 flex flex-col sm:flex-row items-center gap-6 justify-center lg:justify-start">
+            <div className="flex -space-x-3 overflow-hidden">
+               {[1,2,3,4].map(i => (
+                 <div key={i} className="inline-block h-10 w-10 rounded-full ring-2 ring-darkBg bg-slate-800 flex items-center justify-center text-[10px] font-bold">Client</div>
+               ))}
+            </div>
+            <div className="text-sm">
+              <span className="text-white font-bold block">50+ Local Partners</span>
+              <span className="text-slate-500">Trusted across 12+ states in India</span>
+            </div>
+          </div>
         </motion.div>
 
-        {/* RIGHT — GLOWING CARD ILLUSTRATION */}
+        {/* RIGHT VISUAL */}
         <motion.div 
-          initial={{ opacity: 0, scale: 0.8 }}
+          initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1, ease: "easeOut" }}
-          className="hidden md:flex justify-center relative"
+          transition={{ duration: 1, delay: 0.2 }}
+          className="hidden lg:block relative"
         >
-          {/* Pulsing ring behind image */}
-          <div className="absolute inset-0 bg-gradient-to-tr from-neonBlue to-neonPurple rounded-[2rem] blur-[60px] opacity-40 animate-pulse"></div>
-
-          <div className="relative w-[480px] h-[480px] glass-card rounded-[2rem] overflow-hidden group">
+          <div className="relative z-10 rounded-3xl overflow-hidden border border-white/5 shadow-2xl group transition-all duration-500 hover:border-brandOrange/20">
             <img
               src="/hero-mapmend.png"
-              alt="Business Growth Illustration"
-              className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110 opacity-90 mix-blend-luminosity hover:mix-blend-normal"
+              alt="MapMend Business Professional"
+              className="w-full h-auto object-cover grayscale-[20%] group-hover:grayscale-0 transition-all duration-700 scale-105 group-hover:scale-110"
             />
-            {/* Glass Overlay on image */}
-            <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-transparent to-transparent opacity-80"></div>
+            {/* Professional Overlay */}
+            <div className="absolute inset-0 bg-gradient-to-t from-darkBg via-darkBg/10 to-transparent"></div>
+            
+            {/* Interactive Badge */}
+            <div className="absolute bottom-6 left-6 right-6 p-6 glass-card rounded-2xl border-brandOrange/10 flex items-center justify-between animate-fadeIn">
+               <div>
+                  <div className="text-[10px] text-brandOrange font-bold uppercase tracking-widest">Live Optimization</div>
+                  <div className="text-sm font-bold text-white mt-1">G-Maps Rank #1</div>
+               </div>
+               <div className="flex items-center gap-1 text-green-400 text-sm font-bold">
+                  <FiCheckCircle /> Verified
+               </div>
+            </div>
           </div>
+          
+          {/* Subtle decoration */}
+          <div className="absolute -top-10 -right-10 w-32 h-32 bg-brandBlue/10 rounded-full blur-3xl"></div>
+          <div className="absolute -bottom-10 -left-10 w-32 h-32 bg-brandOrange/10 rounded-full blur-3xl"></div>
         </motion.div>
 
       </div>

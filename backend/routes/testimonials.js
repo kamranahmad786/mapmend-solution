@@ -2,6 +2,8 @@
 const express = require("express");
 const Testimonial = require("../models/Testimonial");
 const { authMiddleware, adminMiddleware } = require("../middleware/auth");
+const { sendMail } = require("../utils/mail");
+const { reviewSubmittedEmail } = require("../services/emailTemplates");
 const router = express.Router();
 
 // public list (approved) for main website
@@ -22,20 +24,29 @@ router.get("/my", authMiddleware, async (req, res) => {
 router.post("/", authMiddleware, async (req, res) => {
   try {
     const { review, rating, name } = req.body;
-    
+
     // Client check (prevent duplicates)
     if (req.user.role !== "admin") {
       const existing = await Testimonial.findOne({ user: req.user._id });
       if (existing) return res.status(400).json({ error: "You already submitted a review." });
     }
 
-    const t = await Testimonial.create({ 
+    const t = await Testimonial.create({
       user: req.user._id,
-      name: req.user.role === "admin" && name ? name : req.user.name, 
-      review, 
-      rating: rating || 5, 
-      approved: req.user.role === "admin" ? true : false 
+      name: req.user.role === "admin" && name ? name : req.user.name,
+      review,
+      rating: rating || 5,
+      approved: req.user.role === "admin",
     });
+
+    // Email confirmation to reviewer
+    const tpl = reviewSubmittedEmail({
+      name: req.user.name || req.user.email,
+      review,
+      rating: rating || 5,
+    });
+    sendMail({ to: req.user.email, ...tpl });
+
     res.json(t);
   } catch (err) { res.status(500).json({ error: err.message }); }
 });

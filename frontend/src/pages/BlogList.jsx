@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import SEO from "../components/SEO";
+import { FiArrowRight, FiClock, FiLayers } from "react-icons/fi";
 
 const POSTS = [
   {
@@ -76,44 +77,44 @@ export default function BlogList() {
     ? POSTS 
     : POSTS.filter(p => p.category === activeCat);
 
-  // First post is featured if no category is filtering it down too small, or just always take [0]
   const featured = filteredPosts[0];
   const gridPosts = filteredPosts.slice(1);
 
   return (
     <>
       <SEO
-        title="Engineering & Insights"
-        description="Explore technical methodology, AI transformation, and growth algorithms from MapMend."
+        title="Enterprise Insights | MapMend Strategy Node"
+        description="Strategic research and technical methodology for dominating the digital landscape."
         url={`${import.meta.env.VITE_SITE_URL || ""}/blog`}
       />
 
-      <main className="min-h-screen bg-[#050505] pt-32 pb-24 relative overflow-hidden text-white w-full">
-        {/* Ambient Top Glow */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[80vw] h-[500px] bg-neonCyan/5 rounded-full blur-[200px] pointer-events-none"></div>
+      <main className="min-h-screen bg-darkBg pt-32 pb-24 relative overflow-hidden text-white w-full">
+        {/* Subtle Brand Decor */}
+        <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-brandBlue/5 rounded-full blur-[180px] pointer-events-none"></div>
 
-        <div className="max-w-[1400px] mx-auto px-6 relative z-10 w-full">
+        <div className="max-w-7xl mx-auto px-6 relative z-10 w-full">
           
           {/* Header Section */}
-          <div className="mb-16">
-            <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight mb-6">
-              Insights & <span className="text-gradient hover-glow">Engineering</span>
+          <div className="mb-20 text-center lg:text-left">
+            <div className="text-brandBlue font-black uppercase tracking-[0.3em] text-xs mb-4">Intelligence Portal</div>
+            <h1 className="text-5xl md:text-7xl font-black tracking-tight mb-8">
+              Strategic <span className="text-brandBlue">Insights</span>
             </h1>
-            <p className="text-lg md:text-xl text-gray-400 max-w-3xl leading-relaxed">
-              Research, technical methodology, and tactical workflows designed to help modern businesses dominate the algorithmic landscape.
+            <p className="text-slate-400 text-lg md:text-xl max-w-2xl leading-relaxed">
+              Technical methodologies and tactical research designed to help next-gen businesses dominate localized algorithmic ecosystems.
             </p>
           </div>
 
-          {/* Categories Navigation (MNC Pill Style) */}
-          <div className="flex flex-wrap gap-3 mb-16 pb-4 border-b border-white/10">
+          {/* Categories Navigation */}
+          <div className="flex flex-wrap gap-4 mb-20 pb-8 border-b border-white/5">
             {CATEGORIES.map(cat => (
               <button
                 key={cat}
                 onClick={() => setActiveCat(cat)}
-                className={`px-5 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 backdrop-blur-md border ${
+                className={`px-6 py-2.5 rounded-full text-xs font-black uppercase tracking-widest transition-all duration-300 border ${
                   activeCat === cat 
-                    ? "bg-white text-black border-transparent shadow-[0_0_15px_rgba(255,255,255,0.3)]" 
-                    : "bg-white/5 border-white/10 text-gray-400 hover:text-white hover:bg-white/10 hover:border-white/20"
+                    ? "bg-brandBlue text-white border-brandBlue shadow-xl shadow-brandBlue/20" 
+                    : "bg-white/5 border-white/10 text-slate-400 hover:text-white hover:border-white/20"
                 }`}
               >
                 {cat}
@@ -121,41 +122,35 @@ export default function BlogList() {
             ))}
           </div>
 
-          {/* If no posts found */}
-          {filteredPosts.length === 0 && (
-            <div className="py-20 text-center text-gray-500">
-              No entries found for this category.
-            </div>
-          )}
-
           {/* Featured Post */}
-          {featured && (
+          {featured && activeCat === "All" && (
             <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              className="mb-16 group cursor-pointer"
+              initial={{ opacity: 0, scale: 0.98 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+              className="mb-20 group"
             >
-              <Link to={`/blog/${featured.slug}`} className="block relative rounded-[2rem] overflow-hidden border border-white/10 bg-[#0a0a0f] aspect-[2/1] md:aspect-[2.5/1]">
-                {/* Image */}
+              <Link to={`/blog/${featured.slug}`} className="block relative rounded-[3rem] overflow-hidden border border-white/5 bg-brandNavy shadow-2xl aspect-[21/9]">
                 <img 
                   src={featured.img} 
                   alt={featured.title} 
-                  className="w-full h-full object-cover opacity-60 group-hover:opacity-80 group-hover:scale-105 transition-all duration-700 ease-out mix-blend-luminosity hover:mix-blend-normal"
+                  className="w-full h-full object-cover opacity-40 group-hover:opacity-60 transition-all duration-1000 group-hover:scale-110"
                 />
                 
-                {/* Overlay Content */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent flex flex-col justify-end p-8 md:p-14">
-                  <div className="flex items-center gap-4 mb-4">
-                    <span className="bg-neonCyan text-black px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider">
-                      {featured.category}
+                <div className="absolute inset-0 bg-gradient-to-t from-darkBg via-darkBg/60 to-transparent flex flex-col justify-end p-10 md:p-16">
+                  <div className="flex items-center gap-6 mb-6">
+                    <span className="bg-brandBlue/10 border border-brandBlue/20 text-brandBlue px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest">
+                      Featured · {featured.category}
                     </span>
-                    <span className="text-gray-300 text-sm font-medium">{featured.date}</span>
+                    <span className="text-slate-400 text-xs font-bold uppercase tracking-widest flex items-center gap-2">
+                       <FiClock /> {featured.date}
+                    </span>
                   </div>
-                  <h2 className="text-3xl md:text-5xl font-bold text-white mb-4 leading-tight group-hover:text-neonCyan transition-colors">
+                  <h2 className="text-4xl md:text-6xl font-black text-white mb-6 leading-tight tracking-tight group-hover:text-brandBlue transition-colors">
                     {featured.title}
                   </h2>
-                  <p className="text-gray-300 text-lg md:text-xl max-w-3xl line-clamp-2 md:line-clamp-none">
+                  <p className="text-slate-300 text-lg md:text-xl max-w-3xl line-clamp-2">
                     {featured.excerpt}
                   </p>
                 </div>
@@ -163,41 +158,56 @@ export default function BlogList() {
             </motion.div>
           )}
 
-          {/* Masonry / Grid Posts */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {gridPosts.map((post, i) => (
+          {/* Grid Posts */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+            {(activeCat === "All" ? gridPosts : filteredPosts).map((post, i) => (
               <motion.div
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: i * 0.1 }}
+                transition={{ duration: 0.6, delay: i * 0.1 }}
                 key={post.slug}
+                className="group flex flex-col"
               >
-                <Link to={`/blog/${post.slug}`} className="group block h-full bg-[#0a0a0f] border border-white/10 rounded-[2rem] p-6 hover:border-white/20 hover:bg-[#111] transition-all duration-300">
-                  <div className="relative rounded-2xl overflow-hidden mb-6 aspect-video">
+                <Link to={`/blog/${post.slug}`} className="flex-1 glass-card border border-white/5 rounded-[2.5rem] p-8 hover:border-brandBlue/20 transition-all duration-500 hover:bg-brandNavy/30 flex flex-col items-start shadow-xl">
+                  <div className="relative w-full rounded-3xl overflow-hidden mb-8 aspect-video border border-white/10 shadow-lg">
                     <img 
                       src={post.img} 
                       alt={post.title} 
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out opacity-80 group-hover:opacity-100 mix-blend-luminosity group-hover:mix-blend-normal"
+                      className="w-full h-full object-cover transition-all duration-700 group-hover:scale-110 opacity-70 group-hover:opacity-90 grayscale-[20%] group-hover:grayscale-0"
                     />
-                    <div className="absolute top-4 left-4 bg-black/60 backdrop-blur-md text-white border border-white/10 px-3 py-1 rounded-full text-xs font-semibold">
+                    <div className="absolute top-4 left-4 bg-brandNavy/80 backdrop-blur-md text-[10px] text-brandBlue font-black uppercase tracking-[0.2em] px-4 py-2 rounded-xl border border-white/5 shadow-2xl">
                       {post.category}
                     </div>
                   </div>
 
-                  <div className="text-neonPurple text-sm font-medium mb-3">
-                    {post.date}
+                  <div className="flex items-center gap-3 text-slate-500 text-[10px] font-black uppercase tracking-widest mb-4">
+                     <FiClock /> {post.date}
                   </div>
-                  <h3 className="text-2xl font-bold text-white mb-3 group-hover:text-neonCyan transition-colors leading-tight">
+                  
+                  <h3 className="text-2xl font-black text-white mb-4 tracking-tight group-hover:text-brandBlue transition-colors leading-tight">
                     {post.title}
                   </h3>
-                  <p className="text-gray-400 text-sm leading-relaxed line-clamp-3">
+                  
+                  <p className="text-slate-400 text-sm leading-relaxed line-clamp-3 mb-8">
                     {post.excerpt}
                   </p>
+
+                  <div className="mt-auto flex items-center gap-2 text-xs font-black text-white uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-all transform translate-x-[-10px] group-hover:translate-x-0">
+                     Read Intelligence <FiArrowRight className="text-brandBlue" />
+                  </div>
                 </Link>
               </motion.div>
             ))}
           </div>
+
+          {/* Empty State */}
+          {filteredPosts.length === 0 && (
+            <div className="py-40 text-center flex flex-col items-center">
+              <FiLayers className="text-5xl text-slate-700 mb-6" />
+              <p className="text-slate-500 font-black uppercase tracking-widest">No Intelligence Entries Available</p>
+            </div>
+          )}
 
         </div>
       </main>

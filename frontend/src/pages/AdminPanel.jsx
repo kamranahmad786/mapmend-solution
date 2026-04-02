@@ -8,8 +8,11 @@ export default function AdminPanel() {
 
   useEffect(() => {
     const token = localStorage.getItem("mapmend_token");
-    if (!token) {
-      navigate("/admin/login");
+    const role  = localStorage.getItem("mapmend_role");
+
+    if (!token || role !== "admin") {
+      // Clear any stale client session and redirect to admin login
+      navigate("/admin/login", { replace: true });
       return;
     }
     // Simulate secure hand-shake loader

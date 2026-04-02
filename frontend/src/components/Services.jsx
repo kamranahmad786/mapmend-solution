@@ -1,50 +1,51 @@
 import React from "react";
 import { motion } from "framer-motion";
-import {
-  FaGlobe,
-  FaMapMarkedAlt,
-  FaRedo,
-  FaBolt,
-  FaTools,
-  FaMobileAlt,
-} from "react-icons/fa";
+import { 
+  FiGlobe, 
+  FiMapPin, 
+  FiLayers, 
+  FiZap, 
+  FiBriefcase, 
+  FiLayout, 
+  FiArrowRight 
+} from "react-icons/fi";
 
 const items = [
   {
-    icon: <FaGlobe />,
-    title: "Website Creation",
-    desc: "Modern, mobile-friendly websites designed for trust & conversions.",
-    price: "Starting ₹1,999",
+    icon: <FiGlobe />,
+    title: "Strategic Web Design",
+    desc: "Enterprise-grade, mobile-first architectures designed for high conversions and user trust.",
+    label: "Core Service",
   },
   {
-    icon: <FaMapMarkedAlt />,
-    title: "Google Maps Optimization",
-    desc: "Rank higher on Google Maps with trusted, optimized listings.",
-    price: "Boost Your Ranking",
+    icon: <FiMapPin />,
+    title: "Google Maps SEO",
+    desc: "Advanced local-search optimization to ensure your business dominates Google Maps rankings.",
+    label: "Most Requested",
   },
   {
-    icon: <FaRedo />,
-    title: "Website Redesign",
-    desc: "Transform old designs into clean, fast & professional experiences.",
-    price: "Custom Pricing",
+    icon: <FiLayers />,
+    title: "Architecture Redesign",
+    desc: "Modernizing legacy digital assets with high-performance frameworks and clean UI/UX standards.",
+    label: "Legacy Support",
   },
   {
-    icon: <FaBolt />,
-    title: "Speed Optimization",
-    desc: "Fix slow websites with speed boost, compression & code cleanup.",
-    price: "From ₹999",
+    icon: <FiZap />,
+    title: "Performance Optimization",
+    desc: "Technical audits and speed enhancements to reduce latency and improve indexing performance.",
+    label: "Technical",
   },
   {
-    icon: <FaTools />,
+    icon: <FiBriefcase />,
     title: "Business Digitization",
-    desc: "Bring offline businesses online with branding, tools & payments.",
-    price: "Custom Plans",
+    desc: "Transitioning traditional entities into the digital economy with unified payment and CRM stacks.",
+    label: "Enterprise",
   },
   {
-    icon: <FaMobileAlt />,
-    title: "Landing Pages",
-    desc: "High-conversion pages built for ads, leads & promotions.",
-    price: "Starting ₹1,499",
+    icon: <FiLayout />,
+    title: "High-Traffic Funnels",
+    desc: "Rapid deployment of specialized nodes designed for aggressive lead generation and ad campaigns.",
+    label: "Growth",
   },
 ];
 
@@ -52,35 +53,38 @@ const containerVariants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: { staggerChildren: 0.15 },
+    transition: { staggerChildren: 0.1 },
   },
 };
 
 const cardVariants = {
-  hidden: { opacity: 0, y: 30 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } },
 };
 
 export default function Services() {
   return (
-    <section id="services" className="py-24 bg-[#050505] relative">
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[80%] h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent"></div>
+    <section id="services" className="py-32 bg-darkBg relative overflow-hidden">
+      
+      {/* Decorative vertical line */}
+      <div className="absolute left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-white/5 to-transparent -translate-x-1/2"></div>
       
       <div className="max-w-7xl mx-auto px-6 relative z-10">
 
         {/* Heading */}
         <motion.div 
-          initial={{ opacity: 0, y: -20 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="text-center mb-24"
         >
-          <h2 className="text-4xl md:text-5xl font-extrabold text-white mb-4 tracking-tight">
-            Our <span className="text-gradient">Professional Services</span>
+          <div className="text-brandOrange font-black uppercase tracking-[0.3em] text-xs mb-4">Our Expertise</div>
+          <h2 className="section-heading">
+            Enterprise Digital Capabilities
           </h2>
-          <p className="text-gray-400 max-w-2xl mx-auto text-lg">
-            End-to-end digital solutions designed to grow your business and increase visibility in the modern era.
+          <p className="section-subheading">
+            We provide the technical infrastructure and strategic optimization needed to dominate your local market.
           </p>
         </motion.div>
 
@@ -90,38 +94,39 @@ export default function Services() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10"
         >
           {items.map((it) => (
             <motion.div
               variants={cardVariants}
               key={it.title}
-              className="relative glass-card p-8 rounded-3xl hover-glow group overflow-hidden"
+              className="group relative p-10 bg-brandNavy/30 border border-white/5 rounded-3xl hover:border-brandOrange/20 transition-all duration-500 hover:bg-brandNavy/50"
             >
-              {/* Icon Circle */}
-              <div className="w-16 h-16 rounded-full bg-white/5 border border-white/10 flex items-center justify-center 
-                              text-3xl text-neonCyan transition-all duration-300 group-hover:scale-110 group-hover:shadow-[0_0_20px_rgba(6,182,212,0.4)]">
+              {/* Subtle Label */}
+              <div className="text-[10px] text-slate-500 font-extrabold uppercase tracking-widest mb-6 block">
+                {it.label}
+              </div>
+
+              {/* Icon Container */}
+              <div className="w-14 h-14 rounded-2xl bg-brandBlue/5 border border-brandBlue/10 flex items-center justify-center text-2xl text-brandBlue mb-8 group-hover:scale-110 transition-transform duration-500">
                 {it.icon}
               </div>
 
-              {/* Title */}
-              <h3 className="mt-6 text-xl font-bold text-white">
+              {/* Content */}
+              <h3 className="text-xl font-black text-white tracking-tight mb-4 group-hover:text-brandOrange transition-colors">
                 {it.title}
               </h3>
-
-              {/* Description */}
-              <p className="mt-3 text-gray-400 text-sm leading-relaxed">
+              <p className="text-slate-400 text-sm leading-relaxed mb-8 flex-1">
                 {it.desc}
               </p>
 
-              {/* Price */}
-              <div className="mt-6 font-semibold text-neonPurple text-glow">
-                {it.price}
+              {/* Action Link (Subtle) */}
+              <div className="flex items-center gap-2 text-xs font-black text-white uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                Larn More <FiArrowRight className="text-brandBlue" />
               </div>
 
-              {/* Subtle background glow on hover */}
-              <div className="absolute inset-0 opacity-0 group-hover:opacity-10 
-                              bg-gradient-to-br from-neonBlue to-neonPurple transition-opacity duration-500 rounded-3xl pointer-events-none blur-xl"></div>
+              {/* Border Glow (Very subtle) */}
+              <div className="absolute inset-x-10 bottom-0 h-px bg-gradient-to-r from-transparent via-brandBlue/20 to-transparent"></div>
             </motion.div>
           ))}
         </motion.div>

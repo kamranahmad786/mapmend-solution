@@ -1,199 +1,126 @@
 import React from "react";
 import {
-  FaFacebook,
-  FaInstagram,
-  FaWhatsapp,
-  FaEnvelope,
-} from "react-icons/fa";
+  FiFacebook,
+  FiInstagram,
+  FiMail,
+  FiPhone,
+  FiArrowUpRight,
+} from "react-icons/fi";
+import { FaWhatsapp } from "react-icons/fa";
 
 export default function Footer() {
+  const currentYear = new Date().getFullYear();
+
   return (
-    <footer className="bg-[#050505] text-white pt-20 pb-10 border-t border-white/10 relative overflow-hidden">
-      {/* Background glow */}
-      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full h-1/2 bg-gradient-to-t from-neonBlue/10 to-transparent pointer-events-none blur-2xl"></div>
+    <footer className="bg-darkBg text-white pt-24 pb-12 border-t border-white/5 relative overflow-hidden">
+      
+      {/* Subtle Bottom Glow */}
+      <div className="absolute bottom-0 left-0 w-full h-[300px] bg-brandBlue/5 blur-[120px] pointer-events-none"></div>
 
       <div className="max-w-7xl mx-auto px-6 relative z-10">
-
-        {/* GRID LAYOUT – 4 CLEAN COLUMNS */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
-
-          {/* BRAND COLUMN */}
-          <div>
-            <h3 className="text-3xl font-extrabold text-neonCyan text-glow">
-              MapMend Solution
-            </h3>
-            <p className="text-gray-400 mt-4 leading-relaxed">
-              Helping next-gen businesses grow with AI-driven websites, Google Maps
-              automation, and powerful visibility solutions.
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16 mb-20">
+          
+          {/* Brand Info */}
+          <div className="lg:col-span-1">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="bg-white/5 p-2 rounded-xl border border-white/10">
+                <img src="/logo-mapmend.png" alt="MapMend" className="h-8 w-auto" />
+              </div>
+              <h3 className="text-xl font-black tracking-tight flex gap-1.5">
+                <span className="text-brandBlue">MapMend</span>
+                <span className="text-brandOrange">Solution</span>
+              </h3>
+            </div>
+            <p className="text-slate-400 text-sm leading-relaxed mb-8">
+              Architecting high-performance digital infrastructure and strategic local SEO visibility for elite businesses.
             </p>
-          </div>
-
-          {/* LEGAL COLUMN */}
-          <div>
-            <h4 className="text-xl font-bold mb-4 text-white uppercase tracking-wide">
-              Legal
-            </h4>
-
-            <ul className="space-y-3 text-gray-400 text-sm">
-              <li>
-                <a
-                  href="/about-us"
-                  className="hover:text-neonPink transition flex items-center gap-2"
-                >
-                  <span className="w-1.5 h-1.5 bg-neonPink rounded-full shadow-[0_0_5px_#ec4899]"></span>
-                  About Us
+            <div className="flex gap-4">
+              {[FiFacebook, FiInstagram, FaWhatsapp].map((Icon, i) => (
+                <a key={i} href="#" className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-slate-400 hover:text-brandOrange hover:border-brandOrange/30 transition-all">
+                  <Icon className="text-lg" />
                 </a>
-              </li>
-
-              <li>
-                <a
-                  href="/refund-policy"
-                  className="hover:text-neonPink transition flex items-center gap-2"
-                >
-                  <span className="w-1.5 h-1.5 bg-neonPink rounded-full shadow-[0_0_5px_#ec4899]"></span>
-                  Refund Policy
-                </a>
-              </li>
-
-              <li>
-                <a
-                  href="/privacy-policy"
-                  className="hover:text-neonPink transition flex items-center gap-2"
-                >
-                  <span className="w-1.5 h-1.5 bg-neonPink rounded-full shadow-[0_0_5px_#ec4899]"></span>
-                  Privacy Policy
-                </a>
-              </li>
-
-              <li>
-                <a
-                  href="/terms-and-conditions"
-                  className="hover:text-neonPink transition flex items-center gap-2"
-                >
-                  <span className="w-1.5 h-1.5 bg-neonPink rounded-full shadow-[0_0_5px_#ec4899]"></span>
-                  Terms & Conditions
-                </a>
-              </li>
-
-              <li>
-                <a
-                  href="/cancellation-policy"
-                  className="hover:text-neonPink transition flex items-center gap-2"
-                >
-                  <span className="w-1.5 h-1.5 bg-neonPink rounded-full shadow-[0_0_5px_#ec4899]"></span>
-                  Cancellation Policy
-                </a>
-              </li>
-            </ul>
-          </div>
-
-          {/* QUICK LINKS COLUMN */}
-          <div>
-            <h4 className="text-xl font-bold mb-4 text-white uppercase tracking-wide">
-              Quick Links
-            </h4>
-
-            <ul className="space-y-3 text-gray-400 text-sm">
-              <li>
-                <a
-                  href="/#services"
-                  className="hover:text-neonCyan transition flex items-center gap-2"
-                >
-                  <span className="w-1.5 h-1.5 bg-neonCyan rounded-full shadow-[0_0_5px_#06b6d4]"></span>
-                  Services
-                </a>
-              </li>
-
-              <li>
-                <a
-                  href="/#pricing"
-                  className="hover:text-neonCyan transition flex items-center gap-2"
-                >
-                  <span className="w-1.5 h-1.5 bg-neonCyan rounded-full shadow-[0_0_5px_#06b6d4]"></span>
-                  Pricing
-                </a>
-              </li>
-
-              <li>
-                <a
-                  href="/blog"
-                  className="hover:text-neonCyan transition flex items-center gap-2"
-                >
-                  <span className="w-1.5 h-1.5 bg-neonCyan rounded-full shadow-[0_0_5px_#06b6d4]"></span>
-                  Blog
-                </a>
-              </li>
-
-              <li>
-                <a
-                  href="/#contact"
-                  className="hover:text-neonCyan transition flex items-center gap-2"
-                >
-                  <span className="w-1.5 h-1.5 bg-neonCyan rounded-full shadow-[0_0_5px_#06b6d4]"></span>
-                  Contact
-                </a>
-              </li>
-            </ul>
-          </div>
-
-          {/* CONTACT COLUMN */}
-          <div>
-            <h4 className="text-xl font-semibold mb-4 text-white">
-              Contact Us
-            </h4>
-
-            <div className="space-y-3 text-gray-400">
-
-              <p className="flex items-center gap-2">
-                <FaEnvelope className="text-neonPurple" />
-                <a
-                  href="mailto:infomapmendsolution@gmail.com"
-                  className="hover:text-neonPurple transition"
-                >
-                  infomapmendsolution@gmail.com
-                </a>
-              </p>
-
-              <p className="flex items-center gap-2">
-                <FaWhatsapp className="text-neonPurple" />
-                <a
-                  href="https://wa.me/917366890727?text=Hello%2C%20I%20want%20a%20free%20website%20%26%20Google%20Maps%20audit."
-                  className="hover:text-neonPurple transition"
-                >
-                  +91 73668 90727
-                </a>
-              </p>
-
-              <p className="text-gray-500 text-sm mt-3 border-l-2 border-neonPurple/50 pl-3">
-                Availability: 9 AM – 11 PM <br />(Automated & Human Reply)
-              </p>
-            </div>
-
-            <div className="flex gap-4 text-2xl mt-6">
-              <a href="#" className="text-gray-400 hover:text-neonCyan transition hover:scale-110">
-                <FaFacebook />
-              </a>
-              <a href="#" className="text-gray-400 hover:text-neonPink transition hover:scale-110">
-                <FaInstagram />
-              </a>
-              <a
-                href="https://wa.me/917366890727"
-                className="text-gray-400 hover:text-neonPurple transition hover:scale-110"
-              >
-                <FaWhatsapp />
-              </a>
+              ))}
             </div>
           </div>
 
+          {/* Infrastructure (Legal) */}
+          <div>
+            <h4 className="text-xs font-black uppercase tracking-[0.2em] text-brandOrange mb-8">Infrastructure</h4>
+            <ul className="space-y-4">
+              {[
+                { name: "About Us", href: "/about-us" },
+                { name: "Refund Policy", href: "/refund-policy" },
+                { name: "Privacy Protocol", href: "/privacy-policy" },
+                { name: "Terms of Service", href: "/terms-and-conditions" },
+                { name: "Cancellation", href: "/cancellation-policy" },
+              ].map((link) => (
+                <li key={link.name}>
+                  <a href={link.href} className="text-sm text-slate-400 hover:text-white transition-colors flex items-center gap-2 group">
+                    {link.name} <FiArrowUpRight className="opacity-0 group-hover:opacity-100 transition-opacity text-brandOrange" />
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Ecosystem (Quick Links) */}
+          <div>
+            <h4 className="text-xs font-black uppercase tracking-[0.2em] text-brandBlue mb-8">Ecosystem</h4>
+            <ul className="space-y-4">
+              {[
+                { name: "Core Services", href: "/#services" },
+                { name: "Growth Pricing", href: "/#pricing" },
+                { name: "Intelligence Blog", href: "/blog" },
+                { name: "Contact Node", href: "/#contact" },
+              ].map((link) => (
+                <li key={link.name}>
+                  <a href={link.href} className="text-sm text-slate-400 hover:text-white transition-colors flex items-center gap-2 group">
+                    {link.name} <FiArrowUpRight className="opacity-0 group-hover:opacity-100 transition-opacity text-brandBlue" />
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Operations (Contact) */}
+          <div>
+            <h4 className="text-xs font-black uppercase tracking-[0.2em] text-brandBlue mb-8">Operations</h4>
+            <div className="space-y-6">
+              <a href="mailto:infomapmendsolution@gmail.com" className="flex items-center gap-4 group">
+                <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-slate-400 group-hover:text-brandOrange transition-colors">
+                  <FiMail />
+                </div>
+                <div>
+                   <div className="text-[10px] text-slate-500 font-bold uppercase tracking-widest">Email Control</div>
+                   <div className="text-sm font-bold text-white group-hover:text-brandOrange transition-colors">infomapmendsolution@gmail.com</div>
+                </div>
+              </a>
+              
+              <a href="https://wa.me/917366890727" className="flex items-center gap-4 group">
+                <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-slate-400 group-hover:text-brandOrange transition-colors">
+                  <FiPhone />
+                </div>
+                <div>
+                   <div className="text-[10px] text-slate-500 font-bold uppercase tracking-widest">Real-time Support</div>
+                   <div className="text-sm font-bold text-white group-hover:text-brandOrange transition-colors">+91 73668 90727</div>
+                </div>
+              </a>
+            </div>
+          </div>
         </div>
 
-        {/* DIVIDER */}
-        <div className="border-t border-white/10 mt-16 pt-6"></div>
-
-        {/* COPYRIGHT */}
-        <div className="text-center text-gray-500 text-sm flex flex-col md:flex-row justify-center gap-2">
-          <span>© {new Date().getFullYear()} MapMend Solution.</span>
-          <span>Architecting Digital Visibility.</span>
+        {/* Bottom Bar */}
+        <div className="pt-10 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
+          <div className="text-xs font-bold text-slate-500 uppercase tracking-widest">
+            © {currentYear} MapMend Solution · Registered in Jharkhand, India
+          </div>
+          <div className="flex items-center gap-8 text-[10px] font-black uppercase tracking-widest text-slate-600">
+             <span>v2.0.4 Deployment</span>
+             <span className="flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-green-500"></span>
+                Systems Operational
+             </span>
+          </div>
         </div>
       </div>
     </footer>

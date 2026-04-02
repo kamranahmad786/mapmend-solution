@@ -1,3 +1,4 @@
+import React, { useEffect } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 
 import Navbar from "./components/Navbar";
@@ -43,6 +44,7 @@ import AboutPage from "./pages/AboutPage";
 
 // Interactive
 import Chatbot from "./components/Chatbot";
+import { ToastProvider } from "./components/Toast";
 
 // Admin System
 import AdminLogin from "./components/AdminLogin";
@@ -56,7 +58,7 @@ import AdminTestimonials from "./pages/admin/AdminTestimonials";
 
 // Scroll to top on route change
 function ScrollToTop() {
-  React.useEffect(() => window.scrollTo(0, 0));
+  useEffect(() => window.scrollTo(0, 0));
   return null;
 }
 
@@ -70,87 +72,89 @@ export default function App() {
   const hideNavbarFooter = isDashboard || isAdmin;
 
   return (
-    <div className="min-h-screen flex flex-col relative w-full overflow-hidden">
+    <ToastProvider>
+      <div className="min-h-screen flex flex-col relative w-full overflow-hidden">
 
-        {/* Navbar hidden on Dashboard + Admin */}
-        {!hideNavbarFooter && <Navbar />}
+          {/* Navbar hidden on Dashboard + Admin */}
+          {!hideNavbarFooter && <Navbar />}
 
-        <ScrollToTop />
+          <ScrollToTop />
 
-        <main className="flex-1">
-          <Routes>
+          <main className="flex-1">
+            <Routes>
 
-            {/* ---------------- HOME PAGE ---------------- */}
-            <Route
-              path="/"
-              element={
-                <>
-                  <Hero />
-                  <About />
-                  <WhyChooseUs />
-                  <Services />
-                  <Process />
-                  <Pricing />
-                  <Testimonials />
-                  <FAQ />
-                  <ContactForm />
-                </>
-              }
-            />
+              {/* ---------------- HOME PAGE ---------------- */}
+              <Route
+                path="/"
+                element={
+                  <>
+                    <Hero />
+                    <About />
+                    <WhyChooseUs />
+                    <Services />
+                    <Process />
+                    <Pricing />
+                    <Testimonials />
+                    <FAQ />
+                    <ContactForm />
+                  </>
+                }
+              />
 
-            {/* ---------------- AUTH ---------------- */}
-            <Route path="/register" element={<Register />} />
-            <Route path="/login" element={<Login />} />
+              {/* ---------------- AUTH ---------------- */}
+              <Route path="/register" element={<Register />} />
+              <Route path="/login" element={<Login />} />
 
-            {/* ---------------- DASHBOARD (Protected Layout) ---------------- */}
-            <Route path="/dashboard" element={<Dashboard />}>
-              <Route index element={<DashboardHome />} />
-              <Route path="ai" element={<AIAnalysis />} />
-              <Route path="websites" element={<MyWebsites />} />
-              <Route path="invoices" element={<Invoices />} />
-              <Route path="reviews" element={<UserReviews />} />
-              <Route path="account" element={<Account />} />
-            </Route>
+              {/* ---------------- DASHBOARD (Protected Layout) ---------------- */}
+              <Route path="/dashboard" element={<Dashboard />}>
+                <Route index element={<DashboardHome />} />
+                <Route path="ai" element={<AIAnalysis />} />
+                <Route path="websites" element={<MyWebsites />} />
+                <Route path="invoices" element={<Invoices />} />
+                <Route path="reviews" element={<UserReviews />} />
+                <Route path="account" element={<Account />} />
+              </Route>
 
-            {/* ---------------- ADMIN PANEL ---------------- */}
-            <Route path="/admin/login" element={<AdminLogin />} />
-            <Route path="/admin" element={<AdminPanel />}>
-              <Route index element={<AdminOverview />} />
-              <Route path="users" element={<AdminUsers />} />
-              <Route path="leads" element={<AdminLeads />} />
-              <Route path="payments" element={<AdminPayments />} />
-              <Route path="sites" element={<AdminSites />} />
-              <Route path="testimonials" element={<AdminTestimonials />} />
-            </Route>
+              {/* ---------------- ADMIN PANEL ---------------- */}
+              <Route path="/admin/login" element={<AdminLogin />} />
+              <Route path="/admin" element={<AdminPanel />}>
+                <Route index element={<AdminOverview />} />
+                <Route path="users" element={<AdminUsers />} />
+                <Route path="leads" element={<AdminLeads />} />
+                <Route path="payments" element={<AdminPayments />} />
+                <Route path="sites" element={<AdminSites />} />
+                <Route path="testimonials" element={<AdminTestimonials />} />
+              </Route>
 
-            {/* ---------------- BLOG ---------------- */}
-            <Route path="/blog" element={<BlogList />} />
-            <Route path="/blog/:slug" element={<PostPage />} />
+              {/* ---------------- BLOG ---------------- */}
+              <Route path="/blog" element={<BlogList />} />
+              <Route path="/blog/:slug" element={<PostPage />} />
 
-            {/* ---------------- CITY LANDING PAGES ---------------- */}
-            <Route path="/udaipur" element={<CityLanding city="Udaipur" />} />
-            <Route path="/jaipur" element={<CityLanding city="Jaipur" />} />
-            <Route path="/kota" element={<CityLanding city="Kota" />} />
-            <Route path="/delhi" element={<CityLanding city="Delhi" />} />
-            <Route path="/mumbai" element={<CityLanding city="Mumbai" />} />
+              {/* ---------------- CITY LANDING PAGES ---------------- */}
+              <Route path="/udaipur" element={<CityLanding city="Udaipur" />} />
+              <Route path="/jaipur" element={<CityLanding city="Jaipur" />} />
+              <Route path="/kota" element={<CityLanding city="Kota" />} />
+              <Route path="/delhi" element={<CityLanding city="Delhi" />} />
+              <Route path="/mumbai" element={<CityLanding city="Mumbai" />} />
 
-            {/* ---------------- POLICIES ---------------- */}
-            <Route path="/about-us" element={<AboutPage />} />
-            <Route path="/refund-policy" element={<RefundPolicy />} />
-            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-            <Route path="/terms-and-conditions" element={<TermsConditions />} />
-            <Route path="/cancellation-policy" element={<CancellationPolicy />} />
+              {/* ---------------- POLICIES ---------------- */}
+              <Route path="/about-us" element={<AboutPage />} />
+              <Route path="/refund-policy" element={<RefundPolicy />} />
+              <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+              <Route path="/terms-and-conditions" element={<TermsConditions />} />
+              <Route path="/cancellation-policy" element={<CancellationPolicy />} />
 
-          </Routes>
-        </main>
+            </Routes>
+          </main>
 
-        {/* Global Floating Chatbot & Footer */}
-        {!hideNavbarFooter && (
-          <>
-            <Chatbot />
-            <Footer />
-          </>
-        )}
-    </div>
+          {/* Global Floating Chatbot & Footer */}
+          {!hideNavbarFooter && (
+            <>
+              <Chatbot />
+              <Footer />
+            </>
+          )}
+      </div>
+    </ToastProvider>
   );
 }

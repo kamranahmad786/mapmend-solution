@@ -52,7 +52,7 @@ export default function Chatbot() {
 
     // Specific Service: Maps & SEO
     if (lower.includes("map") || lower.includes("seo") || lower.includes("rank") || lower.includes("google")) {
-      return "Our Deep AI-Powered Audit reviews your Google Maps and website completely! We correct categories, optimize SEO, and automate trust signals so the Google algorithm natively prioritizes you to increase real customers.";
+      return "Our Deep Performance Audit reviews your Google Maps and website completely! We correct categories, optimize SEO, and automate trust signals so the Google algorithm natively prioritizes you to increase real customers.";
     }
 
     // Specific Service: Speed
@@ -67,12 +67,12 @@ export default function Chatbot() {
 
     // Pricing & Costs (Using INR from Pricing.jsx)
     if (lower.includes("price") || lower.includes("cost") || lower.includes("fee") || lower.includes("plan")) {
-      return "We have three transparent One-Time Payment plans: 'Starter AI' (₹999) for a 1-page site & basic Maps fix, 'AI Business' (₹1,999) for a 3-page site & full Maps SEO, and 'Premium AI' (₹4,499) for a custom digital experience.";
+      return "We have three transparent One-Time Payment plans: 'Starter' (₹999) for a 1-page site & basic Maps fix, 'Business' (₹1,999) for a 3-page site & full Maps SEO, and 'Premium' (₹4,499) for a custom digital experience.";
     }
 
     // Speed of delivery / FAQs
     if (lower.includes("how fast") || lower.includes("how long") || lower.includes("time") || lower.includes("days")) {
-      return "Our smart AI-driven optimizations ensure initial delivery within 1–3 days! Most of our partners notice influxes in footfall within mere days of our updates taking effect.";
+      return "Our smart data-driven optimizations ensure initial delivery within 1–3 days! Most of our partners notice influxes in footfall within mere days of our updates taking effect.";
     }
     
     if (lower.includes("payment")) {
@@ -121,7 +121,7 @@ export default function Chatbot() {
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0, opacity: 0 }}
             transition={{ type: "spring", stiffness: 260, damping: 20 }}
-            className="fixed bottom-6 right-6 z-50 p-4 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-xl shadow-purple-900/30 hover:scale-110 transition-transform overflow-hidden group"
+            className="fixed bottom-6 right-6 z-50 p-4 rounded-full bg-brandBlue text-white shadow-xl shadow-brandBlue/30 hover:scale-110 transition-transform overflow-hidden group"
           >
             <span className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform rounded-full"></span>
             <FiMessageSquare className="w-6 h-6 relative z-10" />
@@ -144,9 +144,9 @@ export default function Chatbot() {
             className="fixed bottom-6 right-6 z-50 w-[350px] max-w-[calc(100vw-2rem)] h-[500px] max-h-[calc(100vh-4rem)] flex flex-col rounded-2xl overflow-hidden glass-card border border-white/10 shadow-2xl backdrop-blur-xl bg-black/60"
           >
             {/* Header */}
-            <div className="bg-gradient-to-r from-blue-900/80 to-purple-900/80 p-4 flex items-center justify-between border-b border-white/10 shrink-0">
+            <div className="bg-brandNavy p-4 flex items-center justify-between border-b border-white/10 shrink-0">
               <div className="flex items-center space-x-3">
-                <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-blue-500 to-purple-500 flex items-center justify-center p-[2px]">
+                <div className="w-10 h-10 rounded-full bg-brandBlue flex items-center justify-center p-[2px]">
                   <div className="w-full h-full bg-black/50 rounded-full flex items-center justify-center">
                     <FaRobot className="text-white text-lg" />
                   </div>
@@ -198,7 +198,7 @@ export default function Chatbot() {
                   <div
                     className={`max-w-[80%] rounded-2xl px-4 py-2 text-sm leading-relaxed ${
                       msg.sender === "user"
-                        ? "bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-tr-sm shadow-md"
+                        ? "bg-brandBlue text-white rounded-tr-sm shadow-md"
                         : "bg-white/10 text-gray-200 rounded-tl-sm border border-white/5"
                     }`}
                   >
@@ -233,12 +233,12 @@ export default function Chatbot() {
                 value={inputText}
                 onChange={(e) => setInputText(e.target.value)}
                 placeholder="Type your message..."
-                className="flex-1 bg-white/5 text-white placeholder-gray-400 border border-white/10 rounded-full px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all"
+                className="flex-1 bg-white/5 text-white placeholder-gray-400 border border-white/10 rounded-full px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-brandBlue/50 transition-all"
               />
               <button
                 type="submit"
                 disabled={!inputText.trim()}
-                className="bg-blue-600 hover:bg-blue-500 disabled:opacity-50 disabled:cursor-not-allowed text-white p-2.5 rounded-full shadow-lg transition-colors flex items-center justify-center"
+                className="bg-brandOrange hover:bg-orange-600 disabled:opacity-50 disabled:cursor-not-allowed text-white p-2.5 rounded-full shadow-lg transition-colors flex items-center justify-center"
               >
                 <FiSend className="w-4 h-4 ml-0.5" />
               </button>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import api from "../utils/api";
 import { useNavigate, Link } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -9,6 +9,14 @@ export default function AdminLogin() {
   const [err, setErr] = useState(null);
   const [status, setStatus] = useState("idle");
   const navigate = useNavigate();
+
+  // If already authenticated, redirect to the correct portal
+  useEffect(() => {
+    const token = localStorage.getItem("mapmend_token");
+    const role  = localStorage.getItem("mapmend_role");
+    if (token && role === "admin") navigate("/admin", { replace: true });
+    else if (token) navigate("/dashboard", { replace: true });
+  }, []);
 
   const submit = async (e) => {
     e.preventDefault();

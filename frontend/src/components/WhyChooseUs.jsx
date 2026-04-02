@@ -5,24 +5,24 @@ import { FaMapMarkerAlt, FaBolt, FaRupeeSign, FaThumbsUp } from "react-icons/fa"
 export default function WhyChooseUs() {
   const items = [
     {
-      icon: <FaMapMarkerAlt className="text-neonCyan text-3xl" />,
+      icon: <FaMapMarkerAlt className="text-brandBlue text-3xl" />,
       title: "Local Expertise",
-      desc: "We understand how customers search using AI in your city and optimize your Maps listing for maximum visibility."
+      desc: "We understand how customers search for businesses in your city and optimize your Maps listing for maximum visibility."
     },
     {
-      icon: <FaBolt className="text-neonPurple text-3xl" />,
+      icon: <FaBolt className="text-brandOrange text-3xl" />,
       title: "Lightning Fast Delivery",
       desc: "Most smart websites and Google Maps fixes are completed within 1–3 days so your business growth accelerates."
     },
     {
-      icon: <FaRupeeSign className="text-neonPink text-3xl" />,
-      title: "Accessible AI Pricing",
-      desc: "Premium AI-era quality at prices built for small and medium businesses — no hidden charges."
+      icon: <FaRupeeSign className="text-brandBlue text-3xl" />,
+      title: "Accessible Pricing",
+      desc: "Premium quality at prices built for small and medium businesses — no hidden charges."
     },
     {
-      icon: <FaThumbsUp className="text-neonBlue text-3xl" />,
+      icon: <FaThumbsUp className="text-brandOrange text-3xl" />,
       title: "Proven Results",
-      desc: "Our updates improve your digital footprint, trust, and AI ranking — leading to exponential footfall."
+      desc: "Our updates improve your digital footprint, trust, and search ranking — leading to exponential footfall."
     }
   ];
 
@@ -37,10 +37,10 @@ export default function WhyChooseUs() {
           viewport={{ once: true }}
         >
           <h2 className="text-4xl md:text-5xl font-extrabold text-white mb-4">
-            Why Forward-Thinkers Trust <span className="text-gradient hover-glow transition">MapMend Solution</span>
+            Why Forward-Thinkers Trust MapMend Solution
           </h2>
           <p className="text-gray-400 mb-16 max-w-2xl mx-auto text-lg leading-relaxed">
-            Leading businesses choose us because we deliver next-gen digital infrastructure — better AI footprint, unwavering trust, and tangible growth.
+            Leading businesses choose us because we deliver next-gen digital infrastructure — better presence, unwavering trust, and tangible growth.
           </p>
         </motion.div>
 
