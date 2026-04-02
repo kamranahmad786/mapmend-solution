@@ -49,8 +49,13 @@ export default function Hero() {
           {/* Social Proof */}
           <div className="mt-12 flex flex-col sm:flex-row items-center gap-6 justify-center lg:justify-start">
             <div className="flex -space-x-3 overflow-hidden">
-               {[1,2,3,4].map(i => (
-                 <div key={i} className="inline-block h-10 w-10 rounded-full ring-2 ring-darkBg bg-slate-800 flex items-center justify-center text-[10px] font-bold">Client</div>
+               {[
+                 "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=100",
+                 "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=100",
+                 "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=100",
+                 "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&q=80&w=100"
+               ].map((src, i) => (
+                 <img key={i} src={src} alt="Client" className="inline-block h-10 w-10 rounded-full ring-2 ring-darkBg object-cover" />
                ))}
             </div>
             <div className="text-sm">
