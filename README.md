@@ -1,4 +1,4 @@
-<![CDATA[<div align="center">
+<div align="center">
 
 # 🌐 MapMend Solution
 
@@ -622,4 +622,4 @@ This project is licensed under the **ISC License** — see the [LICENSE](LICENSE
 <div align="center">
   <sub>Built with ❤️ by MapMend Solution — Helping local businesses dominate the digital space.</sub>
 </div>
-]]>
+
