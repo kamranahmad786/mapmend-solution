@@ -124,8 +124,14 @@ export default function Pricing() {
       });
       rzp.open();
     } catch (err) {
-      showToast(err.response?.data?.error || err.message || "Payment could not start. Please try again.", "error");
-      console.error(err);
+      if (err.response?.status === 401) {
+        localStorage.removeItem("mapmend_token");
+        showToast("Your session has expired. Please log in again.", "info");
+        navigate("/login");
+      } else {
+        showToast(err.response?.data?.error || err.message || "Payment could not start. Please try again.", "error");
+        console.error(err);
+      }
       setLoading(null);
     }
   };
