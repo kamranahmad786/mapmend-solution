@@ -55,6 +55,20 @@ export default function Pricing() {
   const [loading, setLoading] = React.useState(null);
   const navigate = useNavigate();
   const { showToast } = useToast();
+  const loadRazorpay = () => {
+    return new Promise((resolve) => {
+      if (window.Razorpay) {
+        resolve(true);
+        return;
+      }
+      const script = document.createElement("script");
+      script.src = "https://checkout.razorpay.com/v1/checkout.js";
+      script.onload = () => resolve(true);
+      script.onerror = () => resolve(false);
+      document.body.appendChild(script);
+    });
+  };
+
   const purchase = async (plan) => {
     const token = localStorage.getItem("mapmend_token");
     if (!token) {
@@ -66,8 +80,19 @@ export default function Pricing() {
     if (loading) return;
     setLoading(plan.id);
     try {
+      const isLoaded = await loadRazorpay();
+      if (!isLoaded) {
+        showToast("Failed to load payment gateway. Please check your connection.", "error");
+        setLoading(null);
+        return;
+      }
+
       const res = await api.post("/api/payments/create-order", { planId: plan.id });
       const { orderId, keyId, amount } = res.data;
+
+      if (!keyId) {
+        throw new Error("Razorpay key is missing from backend.");
+      }
 
       const userName = localStorage.getItem("mapmend_user_name") || "";
       const userEmail = localStorage.getItem("mapmend_user_email") || "";
@@ -92,16 +117,14 @@ export default function Pricing() {
         theme: { color: "#F5841F" },
       };
 
-      if (!window.Razorpay) {
-        const s = document.createElement("script");
-        s.src = "https://checkout.razorpay.com/v1/checkout.js";
-        document.body.appendChild(s);
-        s.onload = () => { new window.Razorpay(options).open(); };
-      } else {
-        new window.Razorpay(options).open();
-      }
+      const rzp = new window.Razorpay(options);
+      rzp.on('payment.failed', function () {
+        showToast("Payment failed. Please try again.", "error");
+        setLoading(null);
+      });
+      rzp.open();
     } catch (err) {
-      showToast("Payment could not start. Please try again.", "error");
+      showToast(err.response?.data?.error || err.message || "Payment could not start. Please try again.", "error");
       console.error(err);
       setLoading(null);
     }
