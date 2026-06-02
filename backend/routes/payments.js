@@ -125,7 +125,8 @@ router.post("/create-order", authMiddleware, async (req, res) => {
     res.json({ orderId: order.id, keyId: process.env.RAZORPAY_KEY_ID, amount: plan.amount, paymentId: p._id });
   } catch (err) {
     console.error("[CREATE ORDER ERROR]", err);
-    res.status(500).json({ error: err.message || "Could not create Razorpay order" });
+    const errorMsg = err.error ? err.error.description : err.message;
+    res.status(500).json({ error: errorMsg || "Could not create Razorpay order" });
   }
 });
 
