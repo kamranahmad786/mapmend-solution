@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import api from "../utils/api";
-import { FiUser, FiMail, FiLock, FiCheckCircle, FiAlertCircle, FiSave, FiShield } from "react-icons/fi";
+import { FiUser, FiMail, FiLock, FiCheckCircle, FiAlertCircle, FiSave, FiShield, FiExternalLink } from "react-icons/fi";
 import { motion, AnimatePresence } from "framer-motion";
 
 function Toast({ message, type, onDone }) {
@@ -91,6 +91,7 @@ export default function Account() {
   };
 
   const initials = user?.name?.split(" ").map(w => w[0]).join("").slice(0, 2).toUpperCase() || "?";
+  const isGoogle = user?.authProvider === "google";
 
   if (loading) return (
     <div className="flex items-center justify-center min-h-[400px]">
@@ -108,59 +109,81 @@ export default function Account() {
 
       {/* HEADER */}
       <div>
-        <h1 className="text-3xl font-extrabold text-white flex items-center gap-3">
+        <h1 className="text-3xl font-extrabold text-slate-900 dark:text-white flex items-center gap-3">
           <FiUser className="text-neonPurple" /> Account Settings
         </h1>
-        <p className="text-gray-400 mt-1">Manage your profile, security, and account preferences.</p>
+        <p className="text-slate-600 dark:text-gray-400 mt-1">Manage your profile, security, and account preferences.</p>
       </div>
 
       <div className="grid md:grid-cols-3 gap-6">
 
         {/* AVATAR CARD */}
-        <div className="glass-card border border-white/10 rounded-3xl p-8 flex flex-col items-center gap-4 text-center md:row-span-2">
-          <div className="w-24 h-24 rounded-full bg-gradient-to-br from-neonCyan to-neonPurple flex items-center justify-center text-black font-extrabold text-3xl shadow-[0_0_30px_rgba(6,182,212,0.3)]">
-            {initials}
-          </div>
+        <div className="glass-card border border-slate-200 dark:border-white/10 rounded-3xl p-8 flex flex-col items-center gap-4 text-center md:row-span-2">
+          {isGoogle && user?.photoURL ? (
+            <img
+              src={user.photoURL}
+              alt={user.name}
+              className="w-24 h-24 rounded-full object-cover shadow-[0_0_30px_rgba(6,182,212,0.3)] border-2 border-neonCyan/30"
+              referrerPolicy="no-referrer"
+            />
+          ) : (
+            <div className="w-24 h-24 rounded-full bg-gradient-to-br from-neonCyan to-neonPurple flex items-center justify-center text-black font-extrabold text-3xl shadow-[0_0_30px_rgba(6,182,212,0.3)]">
+              {initials}
+            </div>
+          )}
           <div>
-            <div className="text-xl font-extrabold text-white">{user?.name || "—"}</div>
-            <div className="text-sm text-gray-500 mt-0.5">{user?.email}</div>
+            <div className="text-xl font-extrabold text-slate-900 dark:text-white">{user?.name || "—"}</div>
+            <div className="text-sm text-slate-500 dark:text-gray-500 mt-0.5">{user?.email}</div>
           </div>
           <span className="px-4 py-1.5 rounded-full text-xs font-bold bg-neonCyan/10 text-neonCyan border border-neonCyan/20 uppercase tracking-widest">
             {user?.role || "client"}
           </span>
-          <p className="text-xs text-gray-600 mt-2">Your avatar is auto-generated from your initials.</p>
+          {isGoogle && (
+            <span className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[10px] font-bold bg-slate-100 dark:bg-white/5 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-white/10 uppercase tracking-widest">
+              <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" fill="#4285F4"/>
+                <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+                <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
+                <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+              </svg>
+              Google Account
+            </span>
+          )}
+          <p className="text-xs text-slate-400 dark:text-gray-600 mt-2">
+            {isGoogle ? "Signed in with Google." : "Your avatar is auto-generated from your initials."}
+          </p>
         </div>
 
         {/* PROFILE FORM */}
-        <form onSubmit={saveProfile} className="md:col-span-2 glass-card border border-white/10 rounded-3xl p-8 space-y-5">
-          <h2 className="text-lg font-bold text-white flex items-center gap-2">
+        <form onSubmit={saveProfile} className="md:col-span-2 glass-card border border-slate-200 dark:border-white/10 rounded-3xl p-8 space-y-5">
+          <h2 className="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
             <FiUser className="text-neonCyan" /> Profile Information
           </h2>
 
           <div className="grid sm:grid-cols-2 gap-4">
             <div className="space-y-1.5">
-              <label className="text-xs text-gray-400 uppercase tracking-widest font-bold">Full Name</label>
-              <div className="flex items-center gap-2 bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus-within:border-neonCyan transition">
-                <FiUser className="text-gray-500 shrink-0" />
+              <label className="text-xs text-slate-600 dark:text-gray-400 uppercase tracking-widest font-bold">Full Name</label>
+              <div className="flex items-center gap-2 bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl px-4 py-3 focus-within:border-neonCyan transition">
+                <FiUser className="text-slate-500 dark:text-gray-500 shrink-0" />
                 <input
                   type="text"
                   value={profile.name}
                   onChange={e => setProfile({ ...profile, name: e.target.value })}
                   placeholder="Your full name"
-                  className="flex-1 bg-transparent outline-none text-white placeholder-gray-600 text-sm"
+                  className="flex-1 bg-transparent outline-none text-slate-900 dark:text-white placeholder-gray-600 text-sm"
                 />
               </div>
             </div>
             <div className="space-y-1.5">
-              <label className="text-xs text-gray-400 uppercase tracking-widest font-bold">Email Address</label>
-              <div className="flex items-center gap-2 bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus-within:border-neonCyan transition">
-                <FiMail className="text-gray-500 shrink-0" />
+              <label className="text-xs text-slate-600 dark:text-gray-400 uppercase tracking-widest font-bold">Email Address</label>
+              <div className="flex items-center gap-2 bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl px-4 py-3 focus-within:border-neonCyan transition">
+                <FiMail className="text-slate-500 dark:text-gray-500 shrink-0" />
                 <input
                   type="email"
                   value={profile.email}
                   onChange={e => setProfile({ ...profile, email: e.target.value })}
                   placeholder="your@email.com"
-                  className="flex-1 bg-transparent outline-none text-white placeholder-gray-600 text-sm"
+                  className="flex-1 bg-transparent outline-none text-slate-900 dark:text-white placeholder-gray-600 text-sm"
                 />
               </div>
             </div>
@@ -178,51 +201,79 @@ export default function Account() {
           </div>
         </form>
 
-        {/* PASSWORD FORM */}
-        <form onSubmit={savePassword} className="md:col-span-2 glass-card border border-white/10 rounded-3xl p-8 space-y-5">
-          <h2 className="text-lg font-bold text-white flex items-center gap-2">
-            <FiShield className="text-neonPurple" /> Change Password
-          </h2>
-
-          <div className="space-y-4">
-            {[
-              { key: "currentPassword", label: "Current Password",  placeholder: "Your current password" },
-              { key: "newPassword",     label: "New Password",      placeholder: "At least 6 characters" },
-              { key: "confirm",         label: "Confirm New Password", placeholder: "Re-enter new password" },
-            ].map(f => (
-              <div key={f.key} className="space-y-1.5">
-                <label className="text-xs text-gray-400 uppercase tracking-widest font-bold">{f.label}</label>
-                <div className="flex items-center gap-2 bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus-within:border-neonPurple transition">
-                  <FiLock className="text-gray-500 shrink-0" />
-                  <input
-                    type="password"
-                    value={passwords[f.key]}
-                    onChange={e => setPasswords({ ...passwords, [f.key]: e.target.value })}
-                    placeholder={f.placeholder}
-                    className="flex-1 bg-transparent outline-none text-white placeholder-gray-600 text-sm"
-                  />
-                </div>
+        {/* PASSWORD FORM — hidden for Google-auth users */}
+        {isGoogle ? (
+          <div className="md:col-span-2 glass-card border border-slate-200 dark:border-white/10 rounded-3xl p-8 space-y-4">
+            <h2 className="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
+              <FiShield className="text-neonPurple" /> Password Management
+            </h2>
+            <div className="flex items-start gap-3 bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl px-5 py-4">
+              <svg className="w-5 h-5 mt-0.5 shrink-0" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" fill="#4285F4"/>
+                <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+                <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
+                <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+              </svg>
+              <div>
+                <p className="text-sm text-slate-600 dark:text-slate-300 font-semibold">Authenticated via Google</p>
+                <p className="text-xs text-slate-500 mt-1">Your password is managed by your Google Account. To change it, visit your Google Account security settings.</p>
               </div>
-            ))}
-          </div>
-
-          {pwdError && (
-            <motion.div initial={{ opacity: 0, y: -5 }} animate={{ opacity: 1, y: 0 }}
-              className="flex items-center gap-2 bg-red-500/10 border border-red-500/20 text-red-400 text-sm px-4 py-3 rounded-xl"
+            </div>
+            <a
+              href="https://myaccount.google.com/security"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 text-neonPurple text-sm font-bold hover:underline"
             >
-              <FiAlertCircle /> {pwdError}
-            </motion.div>
-          )}
+              <FiExternalLink /> Manage Google Account Security
+            </a>
+          </div>
+        ) : (
+          <form onSubmit={savePassword} className="md:col-span-2 glass-card border border-slate-200 dark:border-white/10 rounded-3xl p-8 space-y-5">
+            <h2 className="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
+              <FiShield className="text-neonPurple" /> Change Password
+            </h2>
 
-          <button
-            type="submit"
-            disabled={savingPwd}
-            className="flex items-center gap-2 bg-neonPurple text-white font-extrabold px-6 py-3 rounded-xl hover:scale-[1.02] transition-all disabled:opacity-50 text-sm shadow-[0_0_15px_rgba(139,92,246,0.3)]"
-          >
-            {savingPwd ? <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" /> : <FiShield />}
-            {savingPwd ? "Updating..." : "Update Password"}
-          </button>
-        </form>
+            <div className="space-y-4">
+              {[
+                { key: "currentPassword", label: "Current Password",  placeholder: "Your current password" },
+                { key: "newPassword",     label: "New Password",      placeholder: "At least 6 characters" },
+                { key: "confirm",         label: "Confirm New Password", placeholder: "Re-enter new password" },
+              ].map(f => (
+                <div key={f.key} className="space-y-1.5">
+                  <label className="text-xs text-slate-600 dark:text-gray-400 uppercase tracking-widest font-bold">{f.label}</label>
+                  <div className="flex items-center gap-2 bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl px-4 py-3 focus-within:border-neonPurple transition">
+                    <FiLock className="text-slate-500 dark:text-gray-500 shrink-0" />
+                    <input
+                      type="password"
+                      value={passwords[f.key]}
+                      onChange={e => setPasswords({ ...passwords, [f.key]: e.target.value })}
+                      placeholder={f.placeholder}
+                      className="flex-1 bg-transparent outline-none text-slate-900 dark:text-white placeholder-gray-600 text-sm"
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {pwdError && (
+              <motion.div initial={{ opacity: 0, y: -5 }} animate={{ opacity: 1, y: 0 }}
+                className="flex items-center gap-2 bg-red-500/10 border border-red-500/20 text-red-400 text-sm px-4 py-3 rounded-xl"
+              >
+                <FiAlertCircle /> {pwdError}
+              </motion.div>
+            )}
+
+            <button
+              type="submit"
+              disabled={savingPwd}
+              className="flex items-center gap-2 bg-neonPurple text-white font-extrabold px-6 py-3 rounded-xl hover:scale-[1.02] transition-all disabled:opacity-50 text-sm shadow-[0_0_15px_rgba(139,92,246,0.3)]"
+            >
+              {savingPwd ? <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" /> : <FiShield />}
+              {savingPwd ? "Updating..." : "Update Password"}
+            </button>
+          </form>
+        )}
       </div>
     </div>
   );

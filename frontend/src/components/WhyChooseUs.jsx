@@ -27,7 +27,7 @@ export default function WhyChooseUs() {
   ];
 
   return (
-    <section id="why" className="py-24 bg-[#08080c] relative">
+    <section id="why" className="py-24 bg-slate-50 dark:bg-[#08080c] relative">
       <div className="max-w-7xl mx-auto px-6 text-center relative z-10">
 
         {/* HEADER */}
@@ -36,7 +36,7 @@ export default function WhyChooseUs() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
         >
-          <h2 className="text-4xl md:text-5xl font-extrabold text-white mb-4">
+          <h2 className="text-4xl md:text-5xl font-extrabold text-slate-900 dark:text-white mb-4">
             Why Forward-Thinkers Trust MapMend Solution
           </h2>
           <p className="text-gray-400 mb-16 max-w-2xl mx-auto text-lg leading-relaxed">
@@ -55,10 +55,10 @@ export default function WhyChooseUs() {
               key={i}
               className="glass-card p-8 rounded-3xl hover-glow transition transform hover:-translate-y-2 group"
             >
-              <div className="flex justify-center mb-6 w-16 h-16 mx-auto rounded-2xl bg-white/5 items-center group-hover:bg-white/10 transition">
+              <div className="flex justify-center mb-6 w-16 h-16 mx-auto rounded-2xl bg-slate-100 dark:bg-white/5 items-center group-hover:bg-slate-100 dark:bg-white/10 transition">
                 {it.icon}
               </div>
-              <h3 className="text-xl font-bold text-white mb-3">{it.title}</h3>
+              <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-3">{it.title}</h3>
               <p className="text-gray-400 text-sm leading-relaxed">{it.desc}</p>
             </motion.div>
           ))}
@@ -72,7 +72,7 @@ export default function WhyChooseUs() {
           transition={{ delay: 0.5 }}
           className="mt-16 text-sm text-gray-400"
         >
-          ⭐ Trusted by <span className="text-white font-bold text-glow">50+ next-gen businesses</span> across India
+          ⭐ Trusted by <span className="text-slate-900 dark:text-white font-bold text-glow">50+ next-gen businesses</span> across India
         </motion.div>
       </div>
     </section>

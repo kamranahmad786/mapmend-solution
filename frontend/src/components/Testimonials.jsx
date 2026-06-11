@@ -55,7 +55,7 @@ export default function Testimonials() {
   };
 
   return (
-    <section id="testimonials" className="py-32 bg-darkBg relative overflow-hidden">
+    <section id="testimonials" className="py-32 bg-lightBg dark:bg-darkBg relative overflow-hidden">
       
       {/* Subtle Background Decor */}
       <div className="absolute top-0 right-1/4 w-[500px] h-[500px] bg-brandBlue/5 rounded-full blur-[180px] pointer-events-none"></div>
@@ -95,14 +95,14 @@ export default function Testimonials() {
                 animate="center"
                 exit="exit"
                 transition={{ duration: 0.5, ease: "easeOut" }}
-                className="w-full relative glass-card p-12 md:p-20 rounded-[3rem] border border-white/5 shadow-2xl overflow-hidden group"
+                className="w-full relative glass-card p-12 md:p-20 rounded-[3rem] border border-slate-200 dark:border-white/5 shadow-2xl overflow-hidden group"
               >
                 <div className="flex flex-col lg:flex-row items-center gap-16 relative z-10">
                   
                   {/* Avatar & Verification */}
                   <div className="shrink-0 flex flex-col items-center">
                     <div className="relative">
-                      <div className="w-28 h-28 md:w-36 md:h-36 rounded-[2.5rem] bg-brandNavy border border-white/5 flex items-center justify-center text-4xl text-brandBlue shadow-2xl group-hover:scale-105 transition-transform duration-500">
+                      <div className="w-28 h-28 md:w-36 md:h-36 rounded-[2.5rem] bg-brandNavy border border-slate-200 dark:border-white/5 flex items-center justify-center text-4xl text-brandBlue shadow-2xl group-hover:scale-105 transition-transform duration-500">
                          <FiUser />
                       </div>
                       <div className="absolute -bottom-2 -right-2 bg-brandBlue text-white p-2 rounded-full border-4 border-darkBg shadow-xl">
@@ -120,11 +120,11 @@ export default function Testimonials() {
                   {/* Review Content */}
                   <div className="flex-1 text-center lg:text-left">
                     <div className="text-3xl text-slate-500 font-serif leading-none opacity-20 h-0 -translate-y-4">“</div>
-                    <p className="text-white text-xl md:text-3xl leading-[1.4] tracking-tight font-medium mb-10">
+                    <p className="text-slate-900 dark:text-white text-xl md:text-3xl leading-[1.4] tracking-tight font-medium mb-10">
                       {list[currentIndex].review}
                     </p>
                     <div>
-                      <div className="font-black text-2xl text-white tracking-widest uppercase mb-1">{list[currentIndex].name}</div>
+                      <div className="font-black text-2xl text-slate-900 dark:text-white tracking-widest uppercase mb-1">{list[currentIndex].name}</div>
                       <div className="text-brandBlue text-[10px] font-black uppercase tracking-[0.2em]">
                          {list[currentIndex].role || "Enterprise Partner"} · Verified Listing
                       </div>
@@ -150,7 +150,7 @@ export default function Testimonials() {
           <div className="absolute -bottom-20 left-0 right-0 flex items-center justify-center gap-6">
             <button 
               onClick={moveBack}
-              className="w-14 h-14 rounded-2xl glass-card border border-white/5 text-white flex items-center justify-center hover:bg-brandNavy hover:border-brandOrange/30 transition-all shadow-xl active:scale-95"
+              className="w-14 h-14 rounded-2xl glass-card border border-slate-200 dark:border-white/5 text-slate-900 dark:text-white flex items-center justify-center hover:bg-brandNavy hover:border-brandOrange/30 transition-all shadow-xl active:scale-95"
             >
               <FiChevronLeft size={24} />
             </button>
@@ -163,14 +163,14 @@ export default function Testimonials() {
                      setDirection(i > currentIndex ? 1 : -1);
                      setCurrentIndex(i);
                    }}
-                   className={`h-1.5 transition-all duration-300 rounded-full ${i === currentIndex ? 'w-8 bg-brandBlue' : 'w-2 bg-white/10'}`}
+                   className={`h-1.5 transition-all duration-300 rounded-full ${i === currentIndex ? 'w-8 bg-brandBlue' : 'w-2 bg-slate-100 dark:bg-white/10'}`}
                  />
                ))}
             </div>
 
             <button 
               onClick={moveNext}
-              className="w-14 h-14 rounded-2xl glass-card border border-white/5 text-white flex items-center justify-center hover:bg-brandNavy hover:border-brandOrange/30 transition-all shadow-xl active:scale-95"
+              className="w-14 h-14 rounded-2xl glass-card border border-slate-200 dark:border-white/5 text-slate-900 dark:text-white flex items-center justify-center hover:bg-brandNavy hover:border-brandOrange/30 transition-all shadow-xl active:scale-95"
             >
               <FiChevronRight size={24} />
             </button>

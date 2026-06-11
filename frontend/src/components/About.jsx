@@ -9,7 +9,7 @@ const fadeUp = {
 
 export default function About() {
   return (
-    <section id="about" className="py-24 bg-[#08080c] relative">
+    <section id="about" className="py-24 bg-slate-50 dark:bg-[#08080c] relative">
       <div className="absolute top-1/2 left-0 w-[400px] h-[400px] bg-neonPink/10 rounded-full blur-[100px] mix-blend-screen pointer-events-none"></div>
 
       <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-16 items-center relative z-10">
@@ -31,13 +31,13 @@ export default function About() {
              ABOUT MAPMEND SOLUTION
           </motion.span>
 
-          <motion.h3 variants={fadeUp} className="text-4xl md:text-5xl font-extrabold text-white leading-tight">
+          <motion.h3 variants={fadeUp} className="text-4xl md:text-5xl font-extrabold text-slate-900 dark:text-white leading-tight">
             Fix Your Online Presence & Grow Effortlessly
           </motion.h3>
 
-          <motion.p variants={fadeUp} className="text-gray-400 text-lg leading-relaxed">
+          <motion.p variants={fadeUp} className="text-slate-600 dark:text-gray-400 text-lg leading-relaxed">
             Most local businesses lose customers simply because their
-            <strong className="text-white"> Google Maps listing is incorrect </strong>  
+            <strong className="text-slate-900 dark:text-white"> Google Maps listing is incorrect </strong>  
             or their website looks outdated.  
             <br /><br />
             <span className="font-semibold text-neonPurple">
@@ -56,8 +56,8 @@ export default function About() {
                 <FaSearch />
               </div>
               <div>
-                <h4 className="text-lg font-semibold text-white">Deep Performance Audit</h4>
-                <p className="text-gray-400 text-sm mt-1">
+                <h4 className="text-lg font-semibold text-slate-900 dark:text-white">Deep Performance Audit</h4>
+                <p className="text-slate-600 dark:text-gray-400 text-sm mt-1">
                   We review Maps, website, categories, contact info, images & more — nothing gets missed.
                 </p>
               </div>
@@ -69,8 +69,8 @@ export default function About() {
                 <FaTools />
               </div>
               <div>
-                <h4 className="text-lg font-semibold text-white">Complete Professional Fix</h4>
-                <p className="text-gray-400 text-sm mt-1">
+                <h4 className="text-lg font-semibold text-slate-900 dark:text-white">Complete Professional Fix</h4>
+                <p className="text-slate-600 dark:text-gray-400 text-sm mt-1">
                   We update your Maps profile, optimize SEO, refresh design & boost online trust — all within 1–3 days.
                 </p>
               </div>
@@ -82,8 +82,8 @@ export default function About() {
                 <FaRocket />
               </div>
               <div>
-                <h4 className="text-lg font-semibold text-white">Increase Real Customers</h4>
-                <p className="text-gray-400 text-sm mt-1">
+                <h4 className="text-lg font-semibold text-slate-900 dark:text-white">Increase Real Customers</h4>
+                <p className="text-slate-600 dark:text-gray-400 text-sm mt-1">
                   A strong digital presence instantly increases calls, enquiries & store visits in this competitive era.
                 </p>
               </div>
@@ -104,7 +104,7 @@ export default function About() {
           {/* Subtle background glow for the card */}
           <div className="absolute inset-0 bg-gradient-to-br from-neonBlue to-neonPink opacity-20 blur-3xl rounded-[3rem]"></div>
 
-          <div className="w-full max-w-md glass-card rounded-[2rem] p-8 relative overflow-hidden border border-white/10 group">
+          <div className="w-full max-w-md glass-card rounded-[2rem] p-8 relative overflow-hidden border border-slate-200 dark:border-white/10 group">
 
             {/* Decorative Top Blur */}
             <div className="absolute top-0 right-0 w-32 h-32 bg-neonCyan/30 rounded-full blur-2xl"></div>
@@ -115,16 +115,16 @@ export default function About() {
               className="w-56 mx-auto mb-6 rounded-2xl mix-blend-screen opacity-90 transition-transform duration-500 group-hover:scale-105"
             />
 
-            <h4 className="text-2xl font-bold text-white mb-3 text-center">
+            <h4 className="text-2xl font-bold text-slate-900 dark:text-white mb-3 text-center">
               We Make Your Business <span className="text-neonCyan text-glow">Discoverable</span>
             </h4>
 
-            <p className="text-gray-400 text-center text-base leading-relaxed mb-6">
+            <p className="text-slate-600 dark:text-gray-400 text-center text-base leading-relaxed mb-6">
               Whether customers search on Google Maps or visit your website,
               your business must look professional & trustworthy.
             </p>
 
-            <ul className="space-y-3 text-gray-300 text-sm">
+            <ul className="space-y-3 text-slate-700 dark:text-gray-300 text-sm">
               <li className="flex items-center gap-3">
                 <div className="w-6 h-6 rounded-full bg-white/10 flex items-center justify-center text-neonCyan text-xs"><FaCheckCircle /></div> Accurate Maps categories
               </li>
@@ -138,7 +138,7 @@ export default function About() {
 
             <a
               href="#contact"
-              className="block text-center mt-8 bg-white text-black px-6 py-4 rounded-xl font-bold hover:scale-105 transition shadow-[0_0_20px_rgba(255,255,255,0.2)]"
+              className="block text-center mt-8 bg-slate-900 dark:bg-white text-white dark:text-black px-6 py-4 rounded-xl font-bold hover:scale-105 transition shadow-[0_0_20px_rgba(255,255,255,0.2)]"
             >
               Request My Audit → 
             </a>

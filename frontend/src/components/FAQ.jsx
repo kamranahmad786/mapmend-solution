@@ -29,7 +29,7 @@ export default function FAQ() {
   const [open, setOpen] = useState(null);
 
   return (
-    <section id="faq" className="min-h-[80vh] flex items-center py-32 bg-darkBg relative overflow-hidden">
+    <section id="faq" className="min-h-[80vh] flex items-center py-32 bg-lightBg dark:bg-darkBg relative overflow-hidden">
       
       {/* Subtle Background Accent */}
       <div className="absolute bottom-1/4 left-1/4 w-[500px] h-[500px] bg-brandOrange/5 rounded-full blur-[180px] pointer-events-none"></div>
@@ -62,7 +62,7 @@ export default function FAQ() {
               viewport={{ once: true }}
               key={i}
               className={`group glass-card rounded-[2rem] border transition-all duration-500 overflow-hidden ${
-                open === i ? "border-brandOrange/30 bg-brandNavy/30" : "border-white/5 hover:border-white/10"
+                open === i ? "border-brandOrange/30 bg-white dark:bg-brandNavy/30" : "border-slate-200 dark:border-white/5 hover:border-slate-200 dark:border-white/10"
               }`}
             >
               <button
@@ -71,7 +71,7 @@ export default function FAQ() {
               >
                 <div className="flex items-center gap-6">
                    <div className={`w-10 h-10 rounded-xl border flex items-center justify-center transition-all duration-500 ${
-                     open === i ? "bg-brandOrange text-white border-brandOrange shadow-xl shadow-brandOrange/20" : "bg-white/5 text-slate-500 border-white/10"
+                     open === i ? "bg-brandOrange text-white border-brandOrange shadow-xl shadow-brandOrange/20" : "bg-slate-100 dark:bg-white/5 text-slate-500 border-slate-200 dark:border-white/10"
                    }`}>
                       <FiHelpCircle />
                    </div>
@@ -97,7 +97,7 @@ export default function FAQ() {
                     exit={{ height: 0, opacity: 0 }}
                     transition={{ duration: 0.4, ease: "easeInOut" }}
                   >
-                    <div className="px-10 pb-10 md:pl-24 text-slate-400 text-sm md:text-lg leading-loose font-medium border-t border-white/5 pt-8 mx-10 sm:mx-0">
+                    <div className="px-10 pb-10 md:pl-24 text-slate-600 dark:text-slate-400 text-sm md:text-lg leading-loose font-medium border-t border-slate-200 dark:border-white/5 pt-8 mx-10 sm:mx-0">
                       {f.a}
                     </div>
                   </motion.div>
@@ -108,9 +108,9 @@ export default function FAQ() {
         </div>
 
         {/* Support Section Footer */}
-        <div className="mt-20 pt-16 border-t border-white/5 text-center flex flex-col md:flex-row items-center justify-between gap-8">
+        <div className="mt-20 pt-16 border-t border-slate-200 dark:border-white/5 text-center flex flex-col md:flex-row items-center justify-between gap-8">
            <div className="text-xs text-slate-500 font-black uppercase tracking-widest">Global Support Node Available 24/7</div>
-           <a href="#contact" className="text-xs font-black uppercase tracking-widest text-brandOrange hover:text-white transition-colors flex items-center gap-2">
+           <a href="#contact" className="text-xs font-black uppercase tracking-widest text-brandOrange hover:text-slate-900 dark:text-white transition-colors flex items-center gap-2">
               Speak With Engineering <FiPlus />
            </a>
         </div>

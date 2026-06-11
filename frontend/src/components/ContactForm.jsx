@@ -37,7 +37,7 @@ export default function ContactForm() {
 
         {/* Heading */}
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-extrabold text-white mb-4">
+          <h2 className="text-4xl md:text-5xl font-extrabold text-slate-900 dark:text-white mb-4">
             Start Your Digital Transformation
           </h2>
           <p className="text-gray-400 text-lg max-w-xl mx-auto">
@@ -48,7 +48,7 @@ export default function ContactForm() {
         {/* Form Card */}
         <form
           onSubmit={submit}
-          className="grid gap-6 md:grid-cols-2 glass-card p-10 rounded-[2rem] border border-white/10 relative overflow-hidden"
+          className="grid gap-6 md:grid-cols-2 glass-card p-10 rounded-[2rem] border border-slate-200 dark:border-white/10 relative overflow-hidden"
         >
           {/* Subtle overlay glow */}
           <div className="absolute inset-0 bg-gradient-to-br from-brandBlue/5 to-brandOrange/5 pointer-events-none"></div>
@@ -61,7 +61,7 @@ export default function ContactForm() {
               value={form.name}
               onChange={(e) => setForm({ ...form, name: e.target.value })}
               placeholder="Your Name"
-              className="pl-12 p-3 w-full bg-[#0a0a0f]/50 border border-white/10 rounded-xl focus:border-brandBlue focus:shadow-[0_0_10px_rgba(59,141,212,0.2)] outline-none text-white placeholder-gray-500 transition-all"
+              className="pl-12 p-3 w-full bg-[#0a0a0f]/50 border border-slate-200 dark:border-white/10 rounded-xl focus:border-brandBlue focus:shadow-[0_0_10px_rgba(59,141,212,0.2)] outline-none text-slate-900 dark:text-white placeholder-gray-500 transition-all"
             />
           </div>
 
@@ -72,7 +72,7 @@ export default function ContactForm() {
               value={form.business}
               onChange={(e) => setForm({ ...form, business: e.target.value })}
               placeholder="Business Name (optional)"
-              className="pl-12 p-3 w-full bg-[#0a0a0f]/50 border border-white/10 rounded-xl focus:border-brandBlue focus:shadow-[0_0_10px_rgba(59,141,212,0.2)] outline-none text-white placeholder-gray-500 transition-all"
+              className="pl-12 p-3 w-full bg-[#0a0a0f]/50 border border-slate-200 dark:border-white/10 rounded-xl focus:border-brandBlue focus:shadow-[0_0_10px_rgba(59,141,212,0.2)] outline-none text-slate-900 dark:text-white placeholder-gray-500 transition-all"
             />
           </div>
 
@@ -83,7 +83,7 @@ export default function ContactForm() {
               value={form.email}
               onChange={(e) => setForm({ ...form, email: e.target.value })}
               placeholder="Email Address (optional)"
-              className="pl-12 p-3 w-full bg-[#0a0a0f]/50 border border-white/10 rounded-xl focus:border-brandBlue focus:shadow-[0_0_10px_rgba(59,141,212,0.2)] outline-none text-white placeholder-gray-500 transition-all"
+              className="pl-12 p-3 w-full bg-[#0a0a0f]/50 border border-slate-200 dark:border-white/10 rounded-xl focus:border-brandBlue focus:shadow-[0_0_10px_rgba(59,141,212,0.2)] outline-none text-slate-900 dark:text-white placeholder-gray-500 transition-all"
             />
           </div>
 
@@ -95,7 +95,7 @@ export default function ContactForm() {
               value={form.phone}
               onChange={(e) => setForm({ ...form, phone: e.target.value })}
               placeholder="Phone / WhatsApp Number"
-              className="pl-12 p-3 w-full bg-[#0a0a0f]/50 border border-white/10 rounded-xl focus:border-brandBlue focus:shadow-[0_0_10px_rgba(59,141,212,0.2)] outline-none text-white placeholder-gray-500 transition-all"
+              className="pl-12 p-3 w-full bg-[#0a0a0f]/50 border border-slate-200 dark:border-white/10 rounded-xl focus:border-brandBlue focus:shadow-[0_0_10px_rgba(59,141,212,0.2)] outline-none text-slate-900 dark:text-white placeholder-gray-500 transition-all"
             />
           </div>
 
@@ -107,7 +107,7 @@ export default function ContactForm() {
               value={form.message}
               onChange={(e) => setForm({ ...form, message: e.target.value })}
               placeholder="Tell us your requirements"
-              className="pl-12 p-3 w-full bg-[#0a0a0f]/50 border border-white/10 rounded-xl focus:border-brandBlue focus:shadow-[0_0_10px_rgba(59,141,212,0.2)] outline-none text-white placeholder-gray-500 transition-all"
+              className="pl-12 p-3 w-full bg-[#0a0a0f]/50 border border-slate-200 dark:border-white/10 rounded-xl focus:border-brandBlue focus:shadow-[0_0_10px_rgba(59,141,212,0.2)] outline-none text-slate-900 dark:text-white placeholder-gray-500 transition-all"
               rows="5"
             ></textarea>
           </div>

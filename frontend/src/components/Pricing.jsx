@@ -137,7 +137,7 @@ export default function Pricing() {
   };
 
   return (
-    <section id="pricing" className="py-32 bg-darkBg relative overflow-hidden">
+    <section id="pricing" className="py-32 bg-lightBg dark:bg-darkBg relative overflow-hidden">
       
       {/* Background Decor */}
       <div className="absolute top-1/2 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-white/5 to-transparent"></div>
@@ -161,7 +161,7 @@ export default function Pricing() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.1 }}
-              className={`relative glass-card rounded-3xl p-10 flex flex-col items-start text-left border border-white/5 hover:border-white/10 transition-all duration-300 ${
+              className={`relative glass-card rounded-3xl p-10 flex flex-col items-start text-left border border-slate-200 dark:border-white/5 hover:border-slate-200 dark:border-white/10 transition-all duration-300 ${
                 p.tag ? 'ring-2 ring-brandOrange shadow-2xl scale-105 z-10' : ''
               }`}
             >
@@ -171,11 +171,11 @@ export default function Pricing() {
                 </div>
               )}
 
-              <h3 className="text-xl font-black text-white uppercase tracking-tight">{p.title}</h3>
+              <h3 className="text-xl font-black text-slate-900 dark:text-white uppercase tracking-tight">{p.title}</h3>
               <p className="text-slate-500 text-sm mt-1">{p.subtitle}</p>
 
               <div className="my-10">
-                <span className="text-5xl font-black text-white tracking-tight">
+                <span className="text-5xl font-black text-slate-900 dark:text-white tracking-tight">
                   ₹{(p.price / 100).toLocaleString("en-IN")}
                 </span>
                 <div className="mt-2 text-brandOrange text-[10px] font-black uppercase tracking-[0.2em]">
@@ -183,11 +183,11 @@ export default function Pricing() {
                 </div>
               </div>
 
-              <div className="w-full h-px bg-white/5 mb-10"></div>
+              <div className="w-full h-px bg-slate-100 dark:bg-white/5 mb-10"></div>
 
               <ul className="space-y-4 mb-12 flex-1 w-full text-left">
                 {p.bullets.map((b, idx) => (
-                  <li key={idx} className="flex items-center gap-3 text-slate-300 text-sm font-medium">
+                  <li key={idx} className="flex items-center gap-3 text-slate-600 dark:text-slate-300 text-sm font-medium">
                     <div className="w-5 h-5 rounded-full bg-brandBlue/10 flex items-center justify-center border border-brandBlue/20">
                        <FiCheck className="text-brandBlue text-[10px] stroke-[4]" />
                     </div>

@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, Link } from "react-router-dom";
-import { FaTimes, FaBars } from "react-icons/fa";
+import { FaTimes, FaBars, FaSun, FaMoon } from "react-icons/fa";
 import { FiArrowRight } from "react-icons/fi";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [active, setActive] = useState("hero");
+  
+  // Theme state
+  const [theme, setTheme] = useState(localStorage.getItem("theme") || "dark");
+
   const location = useLocation();
 
   const isLoggedIn = !!localStorage.getItem("mapmend_token");
@@ -31,6 +35,21 @@ export default function Navbar() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  // Theme Sync logic
+  useEffect(() => {
+    const root = window.document.documentElement;
+    if (theme === "dark") {
+      root.classList.add("dark");
+    } else {
+      root.classList.remove("dark");
+    }
+    localStorage.setItem("theme", theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme((prev) => (prev === "dark" ? "light" : "dark"));
+  };
 
   const goToSection = (section) => {
     if (location.pathname !== "/") {
@@ -66,8 +85,8 @@ export default function Navbar() {
             className="flex items-center gap-3 cursor-pointer group"
             onClick={() => (window.location.href = "/")}
           >
-            <div className="bg-white/5 p-2 rounded-xl border border-white/10 group-hover:border-brandOrange/30 transition-colors">
-              <img src="/logo-mapmend.png" alt="MapMend" className="h-8 w-auto object-contain" />
+            <div className="bg-slate-200 dark:bg-white/5 p-2 rounded-xl border border-slate-300 dark:border-white/10 group-hover:border-brandOrange/30 transition-colors">
+              <img src="/logo-mapmend.png" alt="MapMend" className="h-8 w-auto object-contain dark:invert-0" style={{ filter: theme === 'light' ? 'brightness(0.2)' : 'none' }} />
             </div>
             <div className="hidden sm:block leading-tight">
               <h1 className="text-xl font-black tracking-tight flex gap-1.5">
@@ -108,6 +127,14 @@ export default function Navbar() {
             <div className="h-4 w-px bg-white/10 mx-2"></div>
 
             <div className="flex items-center gap-6">
+              {/* Theme Toggle Button (Desktop Right Side) */}
+              <button
+                onClick={toggleTheme}
+                className="p-2.5 rounded-full bg-slate-200 dark:bg-white/5 text-slate-700 dark:text-yellow-400 border border-slate-300 dark:border-white/10 hover:bg-slate-300 dark:hover:bg-white/10 transition-all active:scale-95 shadow-sm"
+                aria-label="Toggle Theme"
+              >
+                {theme === "dark" ? <FaSun size={16} /> : <FaMoon size={16} />}
+              </button>
               {!isLoggedIn ? (
                 <>
                   <Link to="/login" className="text-sm font-bold text-slate-300 hover:text-white transition-colors">
@@ -138,10 +165,18 @@ export default function Navbar() {
             </div>
           </div>
 
-          {/* Mobile Trigger */}
-          <button className="lg:hidden text-2xl text-white outline-none" onClick={() => setOpen(true)}>
-            <FaBars />
-          </button>
+          {/* Mobile Right Side: Toggle + Menu Trigger */}
+          <div className="flex items-center gap-4 lg:hidden">
+            <button
+              onClick={toggleTheme}
+              className="p-2 rounded-full bg-slate-200 dark:bg-white/5 text-slate-700 dark:text-yellow-400 border border-slate-300 dark:border-white/10"
+            >
+              {theme === "dark" ? <FaSun size={14} /> : <FaMoon size={14} />}
+            </button>
+            <button className="text-2xl text-slate-800 dark:text-white outline-none" onClick={() => setOpen(true)}>
+              <FaBars />
+            </button>
+          </div>
         </div>
       </nav>
 

@@ -46,7 +46,7 @@ export default function Process() {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-extrabold text-white mb-4">
+          <h2 className="text-4xl md:text-5xl font-extrabold text-slate-900 dark:text-white mb-4">
             Our Simple 4-Step Process
           </h2>
           <p className="text-gray-400 max-w-2xl mx-auto text-lg">
@@ -63,7 +63,7 @@ export default function Process() {
               viewport={{ once: true }}
               transition={{ delay: index * 0.15, duration: 0.6 }}
               key={s.step}
-              className="relative glass-card p-8 rounded-[2rem] hover-glow transition transform group text-center min-h-[300px] flex flex-col justify-start border border-white/5"
+              className="relative glass-card p-8 rounded-[2rem] hover-glow transition transform group text-center min-h-[300px] flex flex-col justify-start border border-slate-200 dark:border-white/5"
             >
               {/* Step Badge */}
               <div className="absolute -top-5 left-1/2 -translate-x-1/2 
@@ -73,14 +73,14 @@ export default function Process() {
               </div>
 
               {/* Icon */}
-              <div className="mt-8 w-16 h-16 mx-auto rounded-2xl bg-white/5 
+              <div className="mt-8 w-16 h-16 mx-auto rounded-2xl bg-slate-100 dark:bg-white/5 
                               flex items-center justify-center text-brandOrange 
                               group-hover:scale-110 group-hover:shadow-[0_0_15px_rgba(245,132,31,0.4)] transition-all duration-300">
                 {s.icon}
               </div>
 
               {/* Title */}
-              <h3 className="mt-6 text-xl font-bold text-white">{s.title}</h3>
+              <h3 className="mt-6 text-xl font-bold text-slate-900 dark:text-white">{s.title}</h3>
 
               {/* Description */}
               <p className="mt-3 text-gray-400 text-sm leading-relaxed">

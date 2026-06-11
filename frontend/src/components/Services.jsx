@@ -64,10 +64,10 @@ const cardVariants = {
 
 export default function Services() {
   return (
-    <section id="services" className="py-32 bg-darkBg relative overflow-hidden">
+    <section id="services" className="py-32 bg-lightBg dark:bg-darkBg relative overflow-hidden">
       
       {/* Decorative vertical line */}
-      <div className="absolute left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-white/5 to-transparent -translate-x-1/2"></div>
+      <div className="absolute left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-slate-200 dark:via-white/5 to-transparent -translate-x-1/2"></div>
       
       <div className="max-w-7xl mx-auto px-6 relative z-10">
 
@@ -100,7 +100,7 @@ export default function Services() {
             <motion.div
               variants={cardVariants}
               key={it.title}
-              className="group relative p-10 bg-brandNavy/30 border border-white/5 rounded-3xl hover:border-brandOrange/20 transition-all duration-500 hover:bg-brandNavy/50"
+              className="group relative p-10 bg-white dark:bg-brandNavy/30 border border-slate-200 dark:border-white/5 rounded-3xl hover:border-brandOrange/20 transition-all duration-500 hover:bg-slate-50 dark:hover:bg-brandNavy/50 shadow-sm dark:shadow-none"
             >
               {/* Subtle Label */}
               <div className="text-[10px] text-slate-500 font-extrabold uppercase tracking-widest mb-6 block">
@@ -113,15 +113,15 @@ export default function Services() {
               </div>
 
               {/* Content */}
-              <h3 className="text-xl font-black text-white tracking-tight mb-4 group-hover:text-brandOrange transition-colors">
+              <h3 className="text-xl font-black text-slate-900 dark:text-white tracking-tight mb-4 group-hover:text-brandOrange transition-colors">
                 {it.title}
               </h3>
-              <p className="text-slate-400 text-sm leading-relaxed mb-8 flex-1">
+              <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mb-8 flex-1">
                 {it.desc}
               </p>
 
               {/* Action Link (Subtle) */}
-              <div className="flex items-center gap-2 text-xs font-black text-white uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              <div className="flex items-center gap-2 text-xs font-black text-slate-900 dark:text-white uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                 Larn More <FiArrowRight className="text-brandBlue" />
               </div>
 

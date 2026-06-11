@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 
 export default function Hero() {
   return (
-    <section className="min-h-screen flex items-center bg-darkBg text-white relative overflow-hidden pt-32 pb-20">
+    <section className="min-h-screen flex items-center bg-lightBg dark:bg-darkBg text-slate-900 dark:text-white relative overflow-hidden pt-32 pb-20">
 
       {/* Professional Gradient Overlays (Subtle) */}
       <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-brandBlue/5 rounded-full blur-[180px] pointer-events-none"></div>
@@ -27,7 +27,7 @@ export default function Hero() {
             Trusted Digital Infrastructure
           </div>
 
-          <h1 className="text-5xl md:text-7xl font-black leading-[1.1] tracking-tight text-white mb-6">
+          <h1 className="text-5xl md:text-7xl font-black leading-[1.1] tracking-tight text-slate-900 dark:text-white mb-6">
             The New Standard For <br />
             Business Growth
           </h1>
@@ -55,11 +55,11 @@ export default function Hero() {
                  "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=100",
                  "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&q=80&w=100"
                ].map((src, i) => (
-                 <img key={i} src={src} alt="Client" className="inline-block h-10 w-10 rounded-full ring-2 ring-darkBg object-cover" />
+                 <img key={i} src={src} alt="Client" className="inline-block h-10 w-10 rounded-full ring-2 ring-white dark:ring-slate-900 object-cover" />
                ))}
             </div>
             <div className="text-sm">
-              <span className="text-white font-bold block">50+ Local Partners</span>
+              <span className="text-slate-900 dark:text-white font-bold block">50+ Local Partners</span>
               <span className="text-slate-500">Trusted across 12+ states in India</span>
             </div>
           </div>
@@ -79,13 +79,13 @@ export default function Hero() {
               className="w-full h-auto object-cover grayscale-[20%] group-hover:grayscale-0 transition-all duration-700 scale-105 group-hover:scale-110"
             />
             {/* Professional Overlay */}
-            <div className="absolute inset-0 bg-gradient-to-t from-darkBg via-darkBg/10 to-transparent"></div>
+            <div className="absolute inset-0 bg-gradient-to-t from-white dark:from-darkBg via-white/10 dark:via-darkBg/10 to-transparent"></div>
             
             {/* Interactive Badge */}
             <div className="absolute bottom-6 left-6 right-6 p-6 glass-card rounded-2xl border-brandOrange/10 flex items-center justify-between animate-fadeIn">
                <div>
                   <div className="text-[10px] text-brandOrange font-bold uppercase tracking-widest">Live Optimization</div>
-                  <div className="text-sm font-bold text-white mt-1">G-Maps Rank #1</div>
+                  <div className="text-sm font-bold text-slate-900 dark:text-white mt-1">G-Maps Rank #1</div>
                </div>
                <div className="flex items-center gap-1 text-green-400 text-sm font-bold">
                   <FiCheckCircle /> Verified
