@@ -33,7 +33,7 @@ export default function Process() {
   return (
     <section
       id="process"
-      className="min-h-screen flex items-center py-24 bg-[#050505] relative"
+      className="min-h-screen flex items-center py-24 bg-slate-50 dark:bg-[#050505] relative"
     >
       <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-brandBlue/10 rounded-full blur-[120px] mix-blend-screen pointer-events-none"></div>
 
@@ -49,7 +49,7 @@ export default function Process() {
           <h2 className="text-4xl md:text-5xl font-extrabold text-slate-900 dark:text-white mb-4">
             Our Simple 4-Step Process
           </h2>
-          <p className="text-gray-400 max-w-2xl mx-auto text-lg">
+          <p className="text-slate-600 dark:text-gray-400 max-w-2xl mx-auto text-lg">
             A fast, transparent process designed to deliver next-gen results quickly and professionally.
           </p>
         </motion.div>
@@ -83,7 +83,7 @@ export default function Process() {
               <h3 className="mt-6 text-xl font-bold text-slate-900 dark:text-white">{s.title}</h3>
 
               {/* Description */}
-              <p className="mt-3 text-gray-400 text-sm leading-relaxed">
+              <p className="mt-3 text-slate-600 dark:text-gray-400 text-sm leading-relaxed">
                 {s.desc}
               </p>
 

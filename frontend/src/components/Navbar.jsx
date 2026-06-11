@@ -86,7 +86,7 @@ export default function Navbar() {
             onClick={() => (window.location.href = "/")}
           >
             <div className="bg-slate-200 dark:bg-white/5 p-2 rounded-xl border border-slate-300 dark:border-white/10 group-hover:border-brandOrange/30 transition-colors">
-              <img src="/logo-mapmend.png" alt="MapMend" className="h-8 w-auto object-contain dark:invert-0" style={{ filter: theme === 'light' ? 'brightness(0.2)' : 'none' }} />
+              <img src="/logo-mapmend.png" alt="MapMend" className="h-8 w-auto object-contain" />
             </div>
             <div className="hidden sm:block leading-tight">
               <h1 className="text-xl font-black tracking-tight flex gap-1.5">
@@ -97,15 +97,15 @@ export default function Navbar() {
           </div>
 
           {/* Desktop Nav */}
-          <div className="hidden lg:flex items-center gap-10">
+          <div className="hidden lg:flex items-center gap-4">
             {!location.pathname.startsWith("/dashboard") && (
               <div className="flex items-center gap-8">
-                {["services", "testimonials", "contact"].map((sec) => (
+                {["services", "pricing", "testimonials", "contact"].map((sec) => (
                   <button
                     key={sec}
                     onClick={() => goToSection(sec)}
                     className={`text-sm font-bold tracking-wide uppercase transition-all duration-300 ${
-                      active === sec ? "text-brandOrange" : "text-slate-400 hover:text-white"
+                      active === sec ? "text-brandOrange" : "text-slate-600 hover:text-brandOrange dark:text-slate-400 dark:hover:text-white"
                     }`}
                   >
                     {sec}
@@ -116,7 +116,7 @@ export default function Navbar() {
                 <Link 
                   to="/blog"
                   className={`text-sm font-bold tracking-wide uppercase transition-all duration-300 ${
-                    location.pathname.startsWith("/blog") ? "text-brandOrange" : "text-slate-400 hover:text-white"
+                    location.pathname.startsWith("/blog") ? "text-brandOrange" : "text-slate-600 hover:text-brandOrange dark:text-slate-400 dark:hover:text-white"
                   }`}
                 >
                   Blog
@@ -124,20 +124,20 @@ export default function Navbar() {
               </div>
             )}
             
-            <div className="h-4 w-px bg-white/10 mx-2"></div>
+            <div className="h-4 w-px bg-slate-300 dark:bg-white/10"></div>
 
-            <div className="flex items-center gap-6">
+            <div className="flex items-center gap-4">
               {/* Theme Toggle Button (Desktop Right Side) */}
               <button
                 onClick={toggleTheme}
-                className="p-2.5 rounded-full bg-slate-200 dark:bg-white/5 text-slate-700 dark:text-yellow-400 border border-slate-300 dark:border-white/10 hover:bg-slate-300 dark:hover:bg-white/10 transition-all active:scale-95 shadow-sm"
+                className="p-2 text-slate-500 hover:text-brandOrange dark:text-slate-400 dark:hover:text-yellow-400 transition-colors"
                 aria-label="Toggle Theme"
               >
                 {theme === "dark" ? <FaSun size={16} /> : <FaMoon size={16} />}
               </button>
               {!isLoggedIn ? (
                 <>
-                  <Link to="/login" className="text-sm font-bold text-slate-300 hover:text-white transition-colors">
+                  <Link to="/login" className="text-sm font-bold text-slate-700 hover:text-brandOrange dark:text-slate-300 dark:hover:text-white transition-colors">
                     Login
                   </Link>
                   <Link to="/register" className="btn-primary py-1.5 px-4 text-xs font-black">
@@ -158,7 +158,7 @@ export default function Navbar() {
               <a 
                 href="https://wa.me/917366890727"
                 target="_blank"
-                className="flex items-center gap-2 text-xs font-black bg-white/5 border border-white/10 px-4 py-2 rounded-lg text-white hover:bg-white/10 transition-all uppercase tracking-widest shadow-xl"
+                className="flex items-center gap-2 text-xs font-black bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 px-4 py-2 rounded-lg text-slate-900 dark:text-white hover:bg-slate-200 dark:hover:bg-white/10 transition-all uppercase tracking-widest shadow-sm dark:shadow-xl"
               >
                 Free Audit <FiArrowRight className="text-brandOrange" />
               </a>
@@ -169,7 +169,7 @@ export default function Navbar() {
           <div className="flex items-center gap-4 lg:hidden">
             <button
               onClick={toggleTheme}
-              className="p-2 rounded-full bg-slate-200 dark:bg-white/5 text-slate-700 dark:text-yellow-400 border border-slate-300 dark:border-white/10"
+              className="p-2 text-slate-500 hover:text-brandOrange dark:text-slate-400 dark:hover:text-yellow-400 transition-colors"
             >
               {theme === "dark" ? <FaSun size={14} /> : <FaMoon size={14} />}
             </button>
@@ -203,7 +203,7 @@ export default function Navbar() {
           <nav className="flex flex-col gap-8 flex-1">
             {!location.pathname.startsWith("/dashboard") && (
               <>
-                {["services", "testimonials", "contact"].map((sec) => (
+                {["services", "pricing", "testimonials", "contact"].map((sec) => (
                   <button
                     key={sec}
                     onClick={() => goToSection(sec)}

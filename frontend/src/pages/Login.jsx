@@ -85,7 +85,7 @@ export default function Login() {
         <div className="hidden lg:flex flex-col justify-center bg-slate-50 dark:bg-brandNavy/50 border-r border-slate-200 dark:border-white/5 p-16 relative overflow-hidden">
           <div className="flex items-center gap-4 mb-12 relative z-10">
             <div className="bg-slate-200 dark:bg-white/5 border border-slate-300 dark:border-white/10 p-2.5 rounded-2xl">
-              <img src="/logo-mapmend.png" alt="Logo" className="h-9 w-9 object-contain brightness-[0.2] dark:brightness-100" />
+              <img src="/logo-mapmend.png" alt="Logo" className="h-9 w-9 object-contain" />
             </div>
             <div>
               <h1 className="text-2xl font-black tracking-tight text-slate-900 dark:text-white">MapMend</h1>

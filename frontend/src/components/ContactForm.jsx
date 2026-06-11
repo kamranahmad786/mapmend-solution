@@ -29,7 +29,7 @@ export default function ContactForm() {
   return (
     <section
       id="contact"
-      className="min-h-screen flex items-center py-24 bg-[#050505] relative"
+      className="min-h-screen flex items-center py-24 bg-slate-100 dark:bg-[#050505] relative"
     >
       <div className="absolute top-0 right-1/4 w-[500px] h-[500px] bg-brandOrange/5 rounded-full blur-[120px] pointer-events-none"></div>
 
@@ -40,7 +40,7 @@ export default function ContactForm() {
           <h2 className="text-4xl md:text-5xl font-extrabold text-slate-900 dark:text-white mb-4">
             Start Your Digital Transformation
           </h2>
-          <p className="text-gray-400 text-lg max-w-xl mx-auto">
+          <p className="text-slate-600 dark:text-gray-400 text-lg max-w-xl mx-auto">
             Fill out the form below for a free website audit. Our strategic team will contact you shortly.
           </p>
         </div>
@@ -61,7 +61,7 @@ export default function ContactForm() {
               value={form.name}
               onChange={(e) => setForm({ ...form, name: e.target.value })}
               placeholder="Your Name"
-              className="pl-12 p-3 w-full bg-[#0a0a0f]/50 border border-slate-200 dark:border-white/10 rounded-xl focus:border-brandBlue focus:shadow-[0_0_10px_rgba(59,141,212,0.2)] outline-none text-slate-900 dark:text-white placeholder-gray-500 transition-all"
+              className="pl-12 p-3 w-full bg-white dark:bg-[#0a0a0f]/50 border border-slate-200 dark:border-white/10 rounded-xl focus:border-brandBlue focus:shadow-[0_0_10px_rgba(59,141,212,0.2)] outline-none text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-gray-500 transition-all"
             />
           </div>
 
@@ -72,7 +72,7 @@ export default function ContactForm() {
               value={form.business}
               onChange={(e) => setForm({ ...form, business: e.target.value })}
               placeholder="Business Name (optional)"
-              className="pl-12 p-3 w-full bg-[#0a0a0f]/50 border border-slate-200 dark:border-white/10 rounded-xl focus:border-brandBlue focus:shadow-[0_0_10px_rgba(59,141,212,0.2)] outline-none text-slate-900 dark:text-white placeholder-gray-500 transition-all"
+              className="pl-12 p-3 w-full bg-white dark:bg-[#0a0a0f]/50 border border-slate-200 dark:border-white/10 rounded-xl focus:border-brandBlue focus:shadow-[0_0_10px_rgba(59,141,212,0.2)] outline-none text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-gray-500 transition-all"
             />
           </div>
 
@@ -83,7 +83,7 @@ export default function ContactForm() {
               value={form.email}
               onChange={(e) => setForm({ ...form, email: e.target.value })}
               placeholder="Email Address (optional)"
-              className="pl-12 p-3 w-full bg-[#0a0a0f]/50 border border-slate-200 dark:border-white/10 rounded-xl focus:border-brandBlue focus:shadow-[0_0_10px_rgba(59,141,212,0.2)] outline-none text-slate-900 dark:text-white placeholder-gray-500 transition-all"
+              className="pl-12 p-3 w-full bg-white dark:bg-[#0a0a0f]/50 border border-slate-200 dark:border-white/10 rounded-xl focus:border-brandBlue focus:shadow-[0_0_10px_rgba(59,141,212,0.2)] outline-none text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-gray-500 transition-all"
             />
           </div>
 
@@ -95,7 +95,7 @@ export default function ContactForm() {
               value={form.phone}
               onChange={(e) => setForm({ ...form, phone: e.target.value })}
               placeholder="Phone / WhatsApp Number"
-              className="pl-12 p-3 w-full bg-[#0a0a0f]/50 border border-slate-200 dark:border-white/10 rounded-xl focus:border-brandBlue focus:shadow-[0_0_10px_rgba(59,141,212,0.2)] outline-none text-slate-900 dark:text-white placeholder-gray-500 transition-all"
+              className="pl-12 p-3 w-full bg-white dark:bg-[#0a0a0f]/50 border border-slate-200 dark:border-white/10 rounded-xl focus:border-brandBlue focus:shadow-[0_0_10px_rgba(59,141,212,0.2)] outline-none text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-gray-500 transition-all"
             />
           </div>
 
@@ -107,7 +107,7 @@ export default function ContactForm() {
               value={form.message}
               onChange={(e) => setForm({ ...form, message: e.target.value })}
               placeholder="Tell us your requirements"
-              className="pl-12 p-3 w-full bg-[#0a0a0f]/50 border border-slate-200 dark:border-white/10 rounded-xl focus:border-brandBlue focus:shadow-[0_0_10px_rgba(59,141,212,0.2)] outline-none text-slate-900 dark:text-white placeholder-gray-500 transition-all"
+              className="pl-12 p-3 w-full bg-white dark:bg-[#0a0a0f]/50 border border-slate-200 dark:border-white/10 rounded-xl focus:border-brandBlue focus:shadow-[0_0_10px_rgba(59,141,212,0.2)] outline-none text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-gray-500 transition-all"
               rows="5"
             ></textarea>
           </div>

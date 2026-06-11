@@ -93,7 +93,7 @@ export default function PostPage() {
         schema={schema}
         publishedTime={post.date}
       />
-      <main className="min-h-screen bg-darkBg text-white pb-32">
+      <main className="min-h-screen bg-slate-50 dark:bg-darkBg text-slate-900 dark:text-white pb-32">
         
         {/* Header Section */}
         <div className="pt-32 pb-16 max-w-[1000px] mx-auto px-6">
@@ -111,21 +111,21 @@ export default function PostPage() {
               </span>
             </div>
             
-            <h1 className="text-4xl md:text-7xl font-black text-white mb-8 leading-[1.05] tracking-tight">
+            <h1 className="text-4xl md:text-7xl font-black text-slate-900 dark:text-white mb-8 leading-[1.05] tracking-tight">
               {post.title}
             </h1>
             
-            <p className="text-xl md:text-2xl text-slate-400 mb-12 leading-relaxed font-medium max-w-4xl">
+            <p className="text-xl md:text-2xl text-slate-600 dark:text-slate-400 mb-12 leading-relaxed font-medium max-w-4xl">
               {post.excerpt}
             </p>
             
-            <div className="flex items-center gap-6 py-8 border-y border-white/5 mb-16">
-              <div className="w-14 h-14 rounded-[1.25rem] bg-brandNavy border border-white/5 flex items-center justify-center text-xl text-brandBlue shadow-2xl">
+            <div className="flex items-center gap-6 py-8 border-y border-slate-200 dark:border-white/5 mb-16">
+              <div className="w-14 h-14 rounded-[1.25rem] bg-white dark:bg-brandNavy border border-slate-200 dark:border-white/5 flex items-center justify-center text-xl text-brandBlue shadow-sm dark:shadow-2xl">
                 <FiUser />
               </div>
               <div>
                 <div className="flex items-center gap-2">
-                   <p className="font-black text-sm text-white uppercase tracking-tight">{post.author}</p>
+                   <p className="font-black text-sm text-slate-900 dark:text-white uppercase tracking-tight">{post.author}</p>
                    <FiCheckCircle className="text-brandBlue" />
                 </div>
                 <p className="text-xs text-slate-500 font-bold uppercase tracking-widest mt-1">MapMend Strategy Operations</p>
@@ -141,14 +141,14 @@ export default function PostPage() {
           transition={{ delay: 0.2, duration: 1 }}
           className="max-w-[1400px] mx-auto px-6 mb-24"
         >
-          <div className="relative rounded-[3rem] overflow-hidden aspect-[21/9] bg-brandNavy border border-white/5 shadow-2xl">
+          <div className="relative rounded-[3rem] overflow-hidden aspect-[21/9] bg-slate-200 dark:bg-brandNavy border border-slate-200 dark:border-white/5 shadow-md dark:shadow-2xl">
             <img 
               src={post.img} 
               alt={post.title} 
               className="w-full h-full object-cover opacity-60 group-hover:scale-105 transition-transform duration-1000 grayscale-[20%]"
             />
             {/* Professional Vignette */}
-            <div className="absolute inset-0 bg-gradient-to-t from-darkBg/60 to-transparent"></div>
+            <div className="absolute inset-0 bg-gradient-to-t from-white/60 dark:from-darkBg/60 to-transparent"></div>
           </div>
         </motion.div>
 
@@ -160,24 +160,24 @@ export default function PostPage() {
             viewport={{ once: true }} 
             transition={{ duration: 0.8 }}
             className="
-              prose prose-invert prose-lg md:prose-xl max-w-none 
-              prose-headings:font-black prose-headings:text-white prose-headings:tracking-tight 
+              prose dark:prose-invert prose-lg md:prose-xl max-w-none 
+              prose-headings:font-black prose-headings:text-slate-900 dark:prose-headings:text-white prose-headings:tracking-tight 
               prose-h2:text-3xl prose-h2:mt-20 prose-h2:mb-8 prose-h2:border-l-4 prose-h2:border-brandBlue prose-h2:pl-6
               prose-h3:text-2xl prose-h3:mt-12 prose-h3:mb-6
-              prose-p:text-slate-300 prose-p:leading-[1.8] prose-p:mb-10 prose-p:font-medium
+              prose-p:text-slate-700 dark:prose-p:text-slate-300 prose-p:leading-[1.8] prose-p:mb-10 prose-p:font-medium
               prose-a:text-brandBlue prose-a:font-black prose-a:no-underline hover:prose-a:underline
-              prose-strong:text-white prose-strong:font-black
-              prose-ul:text-slate-400 prose-ul:my-10 prose-li:my-4 prose-li:font-medium
-              prose-blockquote:border-brandBlue prose-blockquote:bg-brandNavy/30 prose-blockquote:px-10 prose-blockquote:py-6 prose-blockquote:rounded-3xl prose-blockquote:text-slate-300 prose-blockquote:font-bold prose-blockquote:not-italic prose-blockquote:shadow-2xl prose-blockquote:border-l-4
+              prose-strong:text-slate-900 dark:prose-strong:text-white prose-strong:font-black
+              prose-ul:text-slate-600 dark:prose-ul:text-slate-400 prose-ul:my-10 prose-li:my-4 prose-li:font-medium
+              prose-blockquote:border-brandBlue prose-blockquote:bg-slate-100 dark:prose-blockquote:bg-brandNavy/30 prose-blockquote:px-10 prose-blockquote:py-6 prose-blockquote:rounded-3xl prose-blockquote:text-slate-700 dark:prose-blockquote:text-slate-300 prose-blockquote:font-bold prose-blockquote:not-italic prose-blockquote:shadow-md dark:prose-blockquote:shadow-2xl prose-blockquote:border-l-4
             "
           >
             <ReactMarkdown remarkPlugins={[remarkGfm]}>{post.content}</ReactMarkdown>
           </motion.div>
           
-          <div className="mt-20 pt-16 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-8">
+          <div className="mt-20 pt-16 border-t border-slate-200 dark:border-white/5 flex flex-col sm:flex-row items-center justify-between gap-8">
              <div className="text-xs text-slate-500 font-black uppercase tracking-widest">End of Intelligence Feed</div>
              <div className="flex gap-4">
-                <button className="px-6 py-3 bg-white/5 border border-white/10 rounded-xl text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-white hover:border-white/20 transition-all">Share Report</button>
+                <button className="px-6 py-3 bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl text-[10px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-400 hover:text-brandBlue dark:hover:text-white hover:border-brandBlue/30 dark:hover:border-white/20 transition-all">Share Report</button>
                 <Link to="/blog" className="px-6 py-3 bg-brandBlue text-white rounded-xl text-[10px] font-black uppercase tracking-widest shadow-xl shadow-brandBlue/20 hover:bg-blue-600 transition-all">Next Entry</Link>
              </div>
           </div>
