@@ -18,11 +18,13 @@ import ContactForm from "./components/ContactForm";
 // Blog Pages
 import BlogList from "./pages/BlogList";
 import PostPage from "./pages/PostPage";
+import SubmitBlog from "./pages/SubmitBlog";
 
 // City Pages
 import CityLanding from "./components/CityLanding";
 
 // Auth
+import ProtectedRoute from "./components/ProtectedRoute";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 
@@ -129,6 +131,14 @@ export default function App() {
               {/* ---------------- BLOG ---------------- */}
               <Route path="/blog" element={<BlogList />} />
               <Route path="/blog/:slug" element={<PostPage />} />
+              <Route 
+                path="/submit-blog" 
+                element={
+                  <ProtectedRoute>
+                    <SubmitBlog />
+                  </ProtectedRoute>
+                } 
+              />
 
               {/* ---------------- CITY LANDING PAGES ---------------- */}
               <Route path="/udaipur" element={<CityLanding city="Udaipur" />} />

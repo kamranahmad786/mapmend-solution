@@ -58,7 +58,7 @@ export default function About() {
               <div>
                 <h4 className="text-lg font-semibold text-slate-900 dark:text-white">Deep Performance Audit</h4>
                 <p className="text-slate-600 dark:text-gray-400 text-sm mt-1">
-                  We review Maps, website, categories, contact info, images & more — nothing gets missed.
+                  We review Maps, website, categories, contact info, images & more nothing gets missed.
                 </p>
               </div>
             </div>
@@ -71,7 +71,7 @@ export default function About() {
               <div>
                 <h4 className="text-lg font-semibold text-slate-900 dark:text-white">Complete Professional Fix</h4>
                 <p className="text-slate-600 dark:text-gray-400 text-sm mt-1">
-                  We update your Maps profile, optimize SEO, refresh design & boost online trust — all within 1–3 days.
+                  We update your Maps profile, optimize SEO, refresh design & boost online trust all within 1–3 days.
                 </p>
               </div>
             </div>
@@ -93,7 +93,7 @@ export default function About() {
 
         </motion.div>
 
-        {/* RIGHT — PREMIUM ILLUSTRATION CARD */}
+        {/* RIGHT PREMIUM ILLUSTRATION CARD */}
         <motion.div 
           initial={{ opacity: 0, scale: 0.9 }}
           whileInView={{ opacity: 1, scale: 1 }}

@@ -11,9 +11,9 @@ const STATUS_CONFIG = {
 };
 
 const PLAN_COLORS = {
-  starter:  "from-neonBlue/20 to-neonCyan/10 border-neonBlue/20",
-  business: "from-neonPurple/20 to-neonPink/10 border-neonPurple/20",
-  premium:  "from-amber-500/20 to-brandOrange/10 border-amber-500/20",
+  starter:  "from-brandBlue/10 dark:from-neonBlue/20 to-accentCyan/5 dark:to-neonCyan/10 border-brandBlue/20 dark:border-neonBlue/20",
+  business: "from-brandOrange/10 dark:from-neonPurple/20 to-neonPink/5 dark:to-neonPink/10 border-brandOrange/20 dark:border-neonPurple/20",
+  premium:  "from-amber-500/10 dark:from-amber-500/20 to-brandOrange/5 dark:to-brandOrange/10 border-amber-500/20",
 };
 
 export default function Invoices() {
@@ -50,28 +50,28 @@ export default function Invoices() {
 
       {/* HEADER */}
       <div>
-        <h1 className="text-3xl font-extrabold text-white flex items-center gap-3">
-          <FiFileText className="text-neonPurple" /> Invoices
+        <h1 className="text-3xl font-extrabold text-slate-900 dark:text-white flex items-center gap-3">
+          <FiFileText className="text-brandOrange dark:text-neonPurple" /> Invoices
         </h1>
-        <p className="text-gray-400 mt-1">Track your payment history and download invoices.</p>
+        <p className="text-slate-600 dark:text-gray-400 mt-1">Track your payment history and download invoices.</p>
       </div>
 
       {/* EMPTY STATE */}
       {invoices.length === 0 && (
         <motion.div
           initial={{ opacity: 0, scale: 0.97 }} animate={{ opacity: 1, scale: 1 }}
-          className="glass-card border border-white/10 rounded-3xl p-16 text-center flex flex-col items-center"
+          className="glass-card border border-slate-200 dark:border-white/10 rounded-3xl p-16 text-center flex flex-col items-center"
         >
-          <div className="w-20 h-20 rounded-full bg-neonPurple/10 border border-neonPurple/20 flex items-center justify-center mb-6 shadow-[0_0_30px_rgba(139,92,246,0.2)]">
-            <FiCreditCard className="text-3xl text-neonPurple" />
+          <div className="w-20 h-20 rounded-full bg-brandOrange/10 dark:bg-neonPurple/10 border border-brandOrange/20 dark:border-neonPurple/20 flex items-center justify-center mb-6 shadow-[0_0_30px_rgba(139,92,246,0.2)]">
+            <FiCreditCard className="text-3xl text-brandOrange dark:text-neonPurple" />
           </div>
-          <h3 className="text-2xl font-extrabold text-white mb-2">No Invoices Yet</h3>
-          <p className="text-gray-400 max-w-md mb-8">
+          <h3 className="text-2xl font-extrabold text-slate-900 dark:text-white mb-2">No Invoices Yet</h3>
+          <p className="text-slate-500 dark:text-gray-400 max-w-md mb-8">
             Once you purchase a MapMend plan, your invoices will appear here with full download options.
           </p>
           <a
             href="/#pricing"
-            className="inline-block bg-white text-black font-bold px-8 py-3 rounded-xl hover:scale-105 transition-transform shadow-[0_0_20px_rgba(255,255,255,0.15)]"
+            className="inline-block bg-slate-900 dark:bg-white text-white dark:text-black font-bold px-8 py-3 rounded-xl hover:scale-105 transition-transform shadow-[0_0_20px_rgba(0,0,0,0.1)] dark:shadow-[0_0_20px_rgba(255,255,255,0.15)]"
           >
             View Pricing Plans →
           </a>
@@ -87,25 +87,25 @@ export default function Invoices() {
                 label: "Total Paid",
                 value: `₹${(totalPaid / 100).toLocaleString("en-IN")}`,
                 icon:  <FiCreditCard />,
-                color: "from-neonCyan/20 to-neonBlue/10 border-neonCyan/20",
-                iconCls: "text-neonCyan",
-                glow: "shadow-[0_0_20px_rgba(6,182,212,0.1)]",
+                color: "from-brandBlue/10 dark:from-neonCyan/20 to-accentCyan/5 dark:to-neonBlue/10 border-brandBlue/20 dark:border-neonCyan/20",
+                iconCls: "text-brandBlue dark:text-neonCyan",
+                glow: "shadow-md dark:shadow-[0_0_20px_rgba(6,182,212,0.1)]",
               },
               {
                 label: "Total Invoices",
                 value: totalCount,
                 icon:  <FiFileText />,
-                color: "from-neonPurple/20 to-neonPink/10 border-neonPurple/20",
-                iconCls: "text-neonPurple",
-                glow: "shadow-[0_0_20px_rgba(139,92,246,0.1)]",
+                color: "from-brandOrange/10 dark:from-neonPurple/20 to-neonPink/5 dark:to-neonPink/10 border-brandOrange/20 dark:border-neonPurple/20",
+                iconCls: "text-brandOrange dark:text-neonPurple",
+                glow: "shadow-md dark:shadow-[0_0_20px_rgba(139,92,246,0.1)]",
               },
               {
                 label: "Completed Payments",
                 value: paidCount,
                 icon:  <FiCheckCircle />,
-                color: "from-neonBlue/20 to-neonCyan/10 border-neonBlue/20",
-                iconCls: "text-neonBlue",
-                glow: "shadow-[0_0_20px_rgba(59,130,246,0.1)]",
+                color: "from-brandBlue/10 dark:from-neonBlue/20 to-accentCyan/5 dark:to-neonCyan/10 border-brandBlue/20 dark:border-neonBlue/20",
+                iconCls: "text-brandBlue dark:text-neonBlue",
+                glow: "shadow-md dark:shadow-[0_0_20px_rgba(59,130,246,0.1)]",
               },
             ].map((card, i) => (
               <motion.div
@@ -115,12 +115,12 @@ export default function Invoices() {
                 transition={{ delay: i * 0.08 }}
                 className={`bg-gradient-to-br ${card.color} border rounded-2xl p-5 flex items-center gap-4 ${card.glow}`}
               >
-                <div className={`w-11 h-11 rounded-xl bg-white/5 flex items-center justify-center text-xl ${card.iconCls}`}>
+                <div className={`w-11 h-11 rounded-xl bg-slate-100 dark:bg-white/5 flex items-center justify-center text-xl ${card.iconCls}`}>
                   {card.icon}
                 </div>
                 <div>
-                  <div className="text-xs text-gray-400 uppercase tracking-widest font-bold mb-0.5">{card.label}</div>
-                  <div className="text-2xl font-extrabold text-white">{card.value}</div>
+                  <div className="text-xs text-slate-500 dark:text-gray-400 uppercase tracking-widest font-bold mb-0.5">{card.label}</div>
+                  <div className="text-2xl font-extrabold text-slate-900 dark:text-white">{card.value}</div>
                 </div>
               </motion.div>
             ))}
@@ -130,7 +130,7 @@ export default function Invoices() {
           <div className="space-y-3">
             {invoices.map((inv, i) => {
               const st = STATUS_CONFIG[inv.status] || STATUS_CONFIG.pending;
-              const planColor = PLAN_COLORS[inv.planId] || "from-white/5 to-white/5 border-white/10";
+              const planColor = PLAN_COLORS[inv.planId] || "from-slate-100 dark:from-white/5 to-slate-50 dark:to-white/5 border-slate-200 dark:border-white/10";
 
               return (
                 <motion.div
@@ -138,20 +138,20 @@ export default function Invoices() {
                   initial={{ opacity: 0, y: 16 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.2 + i * 0.07 }}
-                  className={`bg-gradient-to-br ${planColor} border rounded-2xl p-5 hover:border-white/20 transition-all duration-300 hover-glow`}
+                  className={`bg-gradient-to-br ${planColor} border rounded-2xl p-5 hover:border-brandBlue/30 dark:hover:border-white/20 transition-all duration-300 hover-glow`}
                 >
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
 
-                    {/* LEFT — Plan info */}
+                    {/* LEFT Plan info */}
                     <div className="flex items-center gap-4">
-                      <div className="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center shrink-0">
-                        <FiFileText className="text-xl text-gray-400" />
+                      <div className="w-12 h-12 rounded-xl bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 flex items-center justify-center shrink-0">
+                        <FiFileText className="text-xl text-slate-500 dark:text-gray-400" />
                       </div>
                       <div>
-                        <div className="font-bold text-white text-base">
+                        <div className="font-bold text-slate-900 dark:text-white text-base">
                           {inv.planTitle || "MapMend Plan"}
                         </div>
-                        <div className="text-xs text-gray-500 font-mono mt-0.5 truncate max-w-[200px]">
+                        <div className="text-xs text-slate-500 dark:text-gray-500 font-mono mt-0.5 truncate max-w-[200px]">
                           {inv.razorpayOrderId || `INV-${inv._id?.slice(-6).toUpperCase()}`}
                         </div>
                         <div className="flex items-center gap-3 mt-2">
@@ -161,7 +161,7 @@ export default function Invoices() {
                             {st.label}
                           </span>
                           {/* Date */}
-                          <span className="flex items-center gap-1 text-xs text-gray-500">
+                          <span className="flex items-center gap-1 text-xs text-slate-500 dark:text-gray-500">
                             <FiCalendar className="text-[10px]" />
                             {new Date(inv.createdAt).toLocaleDateString("en-IN", {
                               day: "numeric", month: "short", year: "numeric"
@@ -171,15 +171,15 @@ export default function Invoices() {
                       </div>
                     </div>
 
-                    {/* RIGHT — Amount + Download */}
+                    {/* RIGHT Amount + Download */}
                     <div className="flex items-center gap-5 sm:flex-col sm:items-end sm:gap-2">
-                      <div className="text-2xl font-extrabold text-white">
+                      <div className="text-2xl font-extrabold text-slate-900 dark:text-white">
                         ₹{(inv.amount / 100).toLocaleString("en-IN")}
                       </div>
                       {inv.status === "paid" && (
                         <button
                           onClick={() => downloadInvoice(inv._id)}
-                          className="flex items-center gap-2 bg-white/5 hover:bg-neonCyan hover:text-black text-neonCyan border border-neonCyan/20 hover:border-neonCyan px-4 py-2 rounded-xl text-xs font-bold transition-all duration-200 group"
+                          className="flex items-center gap-2 bg-slate-100 dark:bg-white/5 hover:bg-brandBlue dark:hover:bg-neonCyan hover:text-white dark:hover:text-black text-brandBlue dark:text-neonCyan border border-brandBlue/20 dark:border-neonCyan/20 hover:border-brandBlue dark:hover:border-neonCyan px-4 py-2 rounded-xl text-xs font-bold transition-all duration-200 group"
                         >
                           <FiDownload className="group-hover:scale-110 transition-transform" />
                           PDF Invoice
@@ -193,13 +193,13 @@ export default function Invoices() {
           </div>
 
           {/* FOOTER NOTE */}
-          <p className="text-center text-xs text-gray-600 pb-4">
+          <p className="text-center text-xs text-slate-500 dark:text-gray-600 pb-4">
             Need help with a payment? Contact us on{" "}
             <a
               href="https://wa.me/917366890727"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-neonCyan hover:underline font-semibold"
+              className="text-brandBlue dark:text-neonCyan hover:underline font-semibold"
             >
               WhatsApp
             </a>

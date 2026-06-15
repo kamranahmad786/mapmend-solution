@@ -32,7 +32,7 @@ export default function Footer() {
               </h3>
             </div>
             <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mb-8">
-              Architecting high-performance digital infrastructure and strategic local SEO visibility for elite businesses.
+              Architecting high performance digital infrastructure and strategic local SEO visibility for elite businesses.
             </p>
             <div className="flex gap-4">
               {[FiFacebook, FiInstagram, FaWhatsapp].map((Icon, i) => (
@@ -101,7 +101,7 @@ export default function Footer() {
                   <FiPhone />
                 </div>
                 <div>
-                   <div className="text-[10px] text-slate-500 font-bold uppercase tracking-widest">Real-time Support</div>
+                   <div className="text-[10px] text-slate-500 font-bold uppercase tracking-widest">Real time Support</div>
                    <div className="text-sm font-bold text-slate-900 dark:text-white group-hover:text-brandOrange transition-colors">+91 73668 90727</div>
                 </div>
               </a>

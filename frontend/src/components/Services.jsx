@@ -17,7 +17,7 @@ const items = [
     title: "Strategic Web Design",
     desc: "Enterprise-grade, mobile-first architectures designed for high conversions and user trust.",
     label: "Core Service",
-    details: "Our Strategic Web Design service goes beyond aesthetics. We build scalable, high-performance web applications tailored to your business goals. Utilizing cutting-edge frameworks, we ensure your site is lightning-fast, mobile-responsive, and optimized for maximum conversions. We handle everything from UI/UX prototyping to full-stack development and deployment.",
+    details: "Our Strategic Web Design service goes beyond aesthetics. We build scalable, high performance web applications tailored to your business goals. Utilizing cutting edge frameworks, we ensure your site is lightning-fast, mobile responsive, and optimized for maximum conversions. We handle everything from UI/UX prototyping to full stack development and deployment.",
   },
   {
     icon: <FiMapPin />,
@@ -29,9 +29,9 @@ const items = [
   {
     icon: <FiLayers />,
     title: "Architecture Redesign",
-    desc: "Modernizing legacy digital assets with high-performance frameworks and clean UI/UX standards.",
+    desc: "Modernizing legacy digital assets with high performance frameworks and clean UI/UX standards.",
     label: "Legacy Support",
-    details: "Is your current website slow, outdated, or difficult to maintain? Our Architecture Redesign service completely revamps legacy systems. We migrate your digital assets to modern, high-performance stacks like React and Node.js, ensuring better security, faster load times, and a completely refreshed, highly intuitive user experience.",
+    details: "Is your current website slow, outdated, or difficult to maintain? Our Architecture Redesign service completely revamps legacy systems. We migrate your digital assets to modern, high performance stacks like React and Node.js, ensuring better security, faster load times, and a completely refreshed, highly intuitive user experience.",
   },
   {
     icon: <FiZap />,

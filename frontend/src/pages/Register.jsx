@@ -66,7 +66,7 @@ export default function Register() {
         className="max-w-5xl w-full bg-white/80 dark:bg-brandNavy/40 backdrop-blur-3xl border border-slate-200 dark:border-white/5 rounded-[2.5rem] overflow-hidden grid lg:grid-cols-2 relative z-10 shadow-2xl"
       >
 
-        {/* LEFT — BRAND PANEL */}
+        {/* LEFT BRAND PANEL */}
         <div className="hidden lg:flex flex-col justify-center bg-slate-50 dark:bg-brandNavy/50 border-r border-slate-200 dark:border-white/5 p-16 relative overflow-hidden">
           <div className="flex items-center gap-4 mb-12 relative z-10">
             <div className="bg-slate-200 dark:bg-white/5 border border-slate-300 dark:border-white/10 p-2.5 rounded-2xl">
@@ -100,7 +100,7 @@ export default function Register() {
           </ul>
         </div>
 
-        {/* RIGHT — REGISTRATION FORM */}
+        {/* RIGHT REGISTRATION FORM */}
         <div className="p-10 lg:p-16 flex flex-col justify-center relative font-inter">
           
           <div className="mb-10 text-center lg:text-left">

@@ -9,7 +9,7 @@ export default function RefundPolicy() {
     <div className="min-h-screen bg-[#050505] relative overflow-hidden pt-32 pb-20">
       <SEO 
         title="Refund Policy"
-        description="Refund policy for MapMend Solution — transparency, fair refund rules, and customer-first practices."
+        description="Refund policy for MapMend Solution transparency, fair refund rules, and customer-first practices."
         url="https://mapmendsolution.com/refund-policy"
       />
 

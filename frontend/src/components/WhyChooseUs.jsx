@@ -17,12 +17,12 @@ export default function WhyChooseUs() {
     {
       icon: <FaRupeeSign className="text-brandBlue text-3xl" />,
       title: "Accessible Pricing",
-      desc: "Premium quality at prices built for small and medium businesses — no hidden charges."
+      desc: "Premium quality at prices built for small and medium businesses no hidden charges."
     },
     {
       icon: <FaThumbsUp className="text-brandOrange text-3xl" />,
       title: "Proven Results",
-      desc: "Our updates improve your digital footprint, trust, and search ranking — leading to exponential footfall."
+      desc: "Our updates improve your digital footprint, trust, and search ranking leading to exponential footfall."
     }
   ];
 
@@ -40,7 +40,7 @@ export default function WhyChooseUs() {
             Why Forward-Thinkers Trust MapMend Solution
           </h2>
           <p className="text-gray-400 mb-16 max-w-2xl mx-auto text-lg leading-relaxed">
-            Leading businesses choose us because we deliver next-gen digital infrastructure — better presence, unwavering trust, and tangible growth.
+            Leading businesses choose us because we deliver next gen digital infrastructure better presence, unwavering trust, and tangible growth.
           </p>
         </motion.div>
 
@@ -72,7 +72,7 @@ export default function WhyChooseUs() {
           transition={{ delay: 0.5 }}
           className="mt-16 text-sm text-gray-400"
         >
-          ⭐ Trusted by <span className="text-slate-900 dark:text-white font-bold text-glow">50+ next-gen businesses</span> across India
+          ⭐ Trusted by <span className="text-slate-900 dark:text-white font-bold text-glow">50+ next gen businesses</span> across India
         </motion.div>
       </div>
     </section>

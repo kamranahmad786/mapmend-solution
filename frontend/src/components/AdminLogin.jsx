@@ -63,7 +63,7 @@ export default function AdminLogin() {
         className="max-w-4xl w-full glass-card border border-white/10 rounded-3xl overflow-hidden grid md:grid-cols-2 relative z-10 shadow-[0_0_50px_rgba(0,0,0,0.8)] bg-[#08080c]/90 backdrop-blur-3xl"
       >
 
-        {/* LEFT — SECURE SERVER TERMINAL */}
+        {/* LEFT SECURE SERVER TERMINAL */}
         <div className="hidden md:flex flex-col justify-center bg-[#0a0a0f] border-r border-white/5 p-12 relative overflow-hidden">
           
           <div className="flex items-center gap-4 mb-10 relative z-10">
@@ -91,7 +91,7 @@ export default function AdminLogin() {
           </div>
         </div>
 
-        {/* RIGHT — AUTH PORTAL */}
+        {/* RIGHT AUTH PORTAL */}
         <div className="p-10 md:p-12 flex flex-col justify-center relative bg-[#08080c]">
           
           <h2 className="text-3xl font-extrabold text-white mb-2 text-center md:text-left flex items-center gap-3 justify-center md:justify-start">

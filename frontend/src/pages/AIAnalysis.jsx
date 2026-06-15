@@ -12,7 +12,7 @@ function ScoreRing({ score, color, label }) {
     <div className="flex flex-col items-center gap-2">
       <div className="relative w-24 h-24">
         <svg className="w-full h-full -rotate-90" viewBox="0 0 80 80">
-          <circle cx="40" cy="40" r="36" fill="none" stroke="rgba(255,255,255,0.05)" strokeWidth="6" />
+          <circle cx="40" cy="40" r="36" fill="none" className="stroke-slate-200 dark:stroke-white/5" strokeWidth="6" />
           <circle
             cx="40" cy="40" r="36" fill="none"
             stroke={color} strokeWidth="6"
@@ -23,10 +23,10 @@ function ScoreRing({ score, color, label }) {
           />
         </svg>
         <div className="absolute inset-0 flex items-center justify-center">
-          <span className="text-2xl font-extrabold text-white">{pct}</span>
+          <span className="text-2xl font-extrabold text-slate-900 dark:text-white">{pct}</span>
         </div>
       </div>
-      <span className="text-xs text-gray-400 uppercase tracking-widest font-bold">{label}</span>
+      <span className="text-xs text-slate-500 dark:text-gray-400 uppercase tracking-widest font-bold">{label}</span>
     </div>
   );
 }
@@ -53,15 +53,15 @@ export default function AIAnalysis() {
       {/* HEADER */}
       <div className="flex items-start justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-extrabold text-white flex items-center gap-3">
+          <h1 className="text-3xl font-extrabold text-slate-900 dark:text-white flex items-center gap-3">
             <FiCpu className="text-brandBlue" /> Performance Analysis
           </h1>
-          <p className="text-gray-400 mt-1">Strategic audit engine — real-time insights for your digital presence.</p>
+          <p className="text-slate-600 dark:text-gray-400 mt-1">Strategic audit engine real time insights for your digital presence.</p>
         </div>
         <button
           onClick={runAnalysis}
           disabled={loading}
-          className="flex items-center gap-2 glass-card border border-neonCyan/30 text-neonCyan px-5 py-2.5 rounded-xl font-bold text-sm hover:bg-neonCyan/10 transition disabled:opacity-50"
+          className="flex items-center gap-2 glass-card border border-brandBlue/30 dark:border-neonCyan/30 text-brandBlue dark:text-neonCyan px-5 py-2.5 rounded-xl font-bold text-sm hover:bg-brandBlue/10 dark:hover:bg-neonCyan/10 transition disabled:opacity-50"
         >
           <FiRefreshCw className={loading ? "animate-spin" : ""} />
           {loading ? "Analyzing..." : "Re-Run"}
@@ -71,7 +71,7 @@ export default function AIAnalysis() {
       <AnimatePresence mode="wait">
         {loading && (
           <motion.div key="loading" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-            className="glass-card border border-white/10 rounded-3xl p-16 flex flex-col items-center gap-6"
+            className="glass-card border border-slate-200 dark:border-white/10 rounded-3xl p-16 flex flex-col items-center gap-6"
           >
             <div className="relative">
               <div className="w-20 h-20 border-4 border-neonCyan/20 border-t-neonCyan rounded-full animate-spin shadow-[0_0_20px_rgba(6,182,212,0.4)]" />
@@ -80,7 +80,7 @@ export default function AIAnalysis() {
             <p className="text-brandBlue font-bold tracking-widest text-sm animate-pulse uppercase">
               Audit Engine Processing…
             </p>
-            <p className="text-gray-500 text-sm text-center max-w-sm">
+            <p className="text-slate-500 dark:text-gray-500 text-sm text-center max-w-sm">
               Gemini is analyzing your website performance, SEO signals, and Google Maps visibility.
             </p>
           </motion.div>
@@ -92,7 +92,7 @@ export default function AIAnalysis() {
           >
             <FiAlertTriangle className="text-red-400 text-3xl mx-auto mb-3" />
             <p className="text-red-400 font-semibold">{error}</p>
-            <button onClick={runAnalysis} className="mt-4 text-sm text-neonCyan underline">Try again</button>
+            <button onClick={runAnalysis} className="mt-4 text-sm text-brandBlue dark:text-neonCyan underline">Try again</button>
           </motion.div>
         )}
 
@@ -100,9 +100,9 @@ export default function AIAnalysis() {
           <motion.div key="data" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="space-y-6">
 
             {/* SCORE RINGS */}
-            <div className="glass-card border border-white/10 rounded-3xl p-8">
-              <h2 className="text-lg font-bold text-white mb-8 flex items-center gap-2">
-                <FiTrendingUp className="text-neonCyan" /> Performance Scores
+            <div className="glass-card border border-slate-200 dark:border-white/10 rounded-3xl p-8">
+              <h2 className="text-lg font-bold text-slate-900 dark:text-white mb-8 flex items-center gap-2">
+                <FiTrendingUp className="text-brandBlue dark:text-neonCyan" /> Performance Scores
               </h2>
               <div className="flex flex-wrap gap-12 justify-center">
                 <ScoreRing score={data.seoScore}   color="#3B8DD4" label="SEO" />
@@ -112,29 +112,29 @@ export default function AIAnalysis() {
             </div>
 
             {/* SUMMARY */}
-            <div className="glass-card border border-neonCyan/20 rounded-3xl p-8 bg-neonCyan/5">
-              <h2 className="text-lg font-bold text-white mb-3 flex items-center gap-2">
+            <div className="glass-card border border-brandBlue/20 dark:border-neonCyan/20 rounded-3xl p-8 bg-brandBlue/5 dark:bg-neonCyan/5">
+              <h2 className="text-lg font-bold text-slate-900 dark:text-white mb-3 flex items-center gap-2">
                 <FiCpu className="text-brandBlue" /> Strategic Summary
               </h2>
-              <p className="text-gray-300 leading-relaxed text-base">{data.summary}</p>
+              <p className="text-slate-700 dark:text-gray-300 leading-relaxed text-base">{data.summary}</p>
             </div>
 
             {/* RECOMMENDATIONS + STRENGTHS/OPPS */}
             <div className="grid md:grid-cols-2 gap-6">
 
               {/* RECOMMENDATIONS */}
-              <div className="glass-card border border-white/10 rounded-3xl p-6">
-                <h2 className="text-base font-bold text-white mb-4 flex items-center gap-2">
-                  <FiCheckCircle className="text-neonCyan" /> Recommendations
+              <div className="glass-card border border-slate-200 dark:border-white/10 rounded-3xl p-6">
+                <h2 className="text-base font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
+                  <FiCheckCircle className="text-brandBlue dark:text-neonCyan" /> Recommendations
                 </h2>
                 <ul className="space-y-3">
                   {(data.recommendations || []).map((r, i) => (
                     <motion.li
                       key={i} initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: i * 0.1 }}
-                      className="flex items-start gap-3 text-sm text-gray-300"
+                      className="flex items-start gap-3 text-sm text-slate-700 dark:text-gray-300"
                     >
-                      <span className="mt-0.5 w-5 h-5 shrink-0 rounded-full bg-neonCyan/10 border border-neonCyan/30 flex items-center justify-center text-neonCyan text-xs font-bold">
+                      <span className="mt-0.5 w-5 h-5 shrink-0 rounded-full bg-brandBlue/10 dark:bg-neonCyan/10 border border-brandBlue/30 dark:border-neonCyan/30 flex items-center justify-center text-brandBlue dark:text-neonCyan text-xs font-bold">
                         {i + 1}
                       </span>
                       {r}
@@ -146,12 +146,12 @@ export default function AIAnalysis() {
               <div className="space-y-4">
                 {/* STRENGTHS */}
                 {data.strengths?.length > 0 && (
-                  <div className="glass-card border border-neonPurple/20 rounded-3xl p-5 bg-neonPurple/5">
-                    <h3 className="text-sm font-bold text-neonPurple mb-3 uppercase tracking-widest">Strengths</h3>
+                  <div className="glass-card border border-brandOrange/20 dark:border-neonPurple/20 rounded-3xl p-5 bg-brandOrange/5 dark:bg-neonPurple/5">
+                    <h3 className="text-sm font-bold text-brandOrange dark:text-neonPurple mb-3 uppercase tracking-widest">Strengths</h3>
                     <ul className="space-y-2">
                       {data.strengths.map((s, i) => (
-                        <li key={i} className="flex items-center gap-2 text-sm text-gray-300">
-                          <span className="text-neonPurple">✓</span> {s}
+                        <li key={i} className="flex items-center gap-2 text-sm text-slate-700 dark:text-gray-300">
+                          <span className="text-brandOrange dark:text-neonPurple">✓</span> {s}
                         </li>
                       ))}
                     </ul>
@@ -164,7 +164,7 @@ export default function AIAnalysis() {
                     <h3 className="text-sm font-bold text-neonPink mb-3 uppercase tracking-widest">Opportunities</h3>
                     <ul className="space-y-2">
                       {data.opportunities.map((o, i) => (
-                        <li key={i} className="flex items-center gap-2 text-sm text-gray-300">
+                        <li key={i} className="flex items-center gap-2 text-sm text-slate-700 dark:text-gray-300">
                           <span className="text-neonPink">→</span> {o}
                         </li>
                       ))}
@@ -176,13 +176,13 @@ export default function AIAnalysis() {
 
             {/* KEYWORDS */}
             {data.keywords?.length > 0 && (
-              <div className="glass-card border border-white/10 rounded-3xl p-6">
-                <h2 className="text-base font-bold text-white mb-4 flex items-center gap-2">
-                  <FiMap className="text-neonBlue" /> Target Keywords
+              <div className="glass-card border border-slate-200 dark:border-white/10 rounded-3xl p-6">
+                <h2 className="text-base font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
+                  <FiMap className="text-brandBlue dark:text-neonBlue" /> Target Keywords
                 </h2>
                 <div className="flex flex-wrap gap-2">
                   {data.keywords.map((k, i) => (
-                    <span key={i} className="px-4 py-1.5 text-sm font-semibold rounded-full bg-neonBlue/10 text-neonBlue border border-neonBlue/20">
+                    <span key={i} className="px-4 py-1.5 text-sm font-semibold rounded-full bg-brandBlue/10 dark:bg-neonBlue/10 text-brandBlue dark:text-neonBlue border border-brandBlue/20 dark:border-neonBlue/20">
                       {k}
                     </span>
                   ))}

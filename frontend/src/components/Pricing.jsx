@@ -12,7 +12,7 @@ const plans = [
     subtitle: "Essential infrastructure for growth",
     price: 259900,
     bullets: [
-      "1-Page Professional Website",
+      "1 Page Professional Website",
       "Free Domain & SSL Certificate",
       "Free Lifetime Maintenance",
       "Google Maps Baseline Fix",
@@ -25,7 +25,7 @@ const plans = [
     subtitle: "Advanced local SEO dominance",
     price: 499900,
     bullets: [
-      "3-Page High-Performance Site",
+      "3 Page High-Performance Site",
       "Free Domain & SSL Certificate",
       "Free Lifetime Maintenance",
       "Advanced Local SEO Engine",
@@ -40,10 +40,10 @@ const plans = [
     subtitle: "Comprehensive digital authority",
     price: 759900,
     bullets: [
-      "Custom Multi-Page Infrastructure",
+      "Custom Multi Page Infrastructure",
       "Free Domain & SSL Certificate",
       "Free Lifetime Maintenance",
-      "AI-Powered Content Feed",
+      "AI Powered Content Feed",
       "Advanced Local SEO Engine",
       "Professional Email Suite",
       "24/7 Priority Support",
@@ -149,7 +149,7 @@ export default function Pricing() {
             Premium Digital Infrastructure
           </h2>
           <p className="section-subheading">
-            Elite online presence with built-in maintenance, global hosting, and strategic local SEO.
+            Elite online presence with built in maintenance, global hosting, and strategic local SEO.
           </p>
         </motion.div>
 

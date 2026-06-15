@@ -1,118 +1,252 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { FiMessageSquare, FiX, FiSend, FiMinimize2 } from "react-icons/fi";
+import {
+  FiMessageSquare,
+  FiSend,
+  FiMinimize2,
+  FiCopy,
+  FiCheck,
+  FiZap,
+  FiChevronDown,
+} from "react-icons/fi";
 import { FaRobot, FaWhatsapp } from "react-icons/fa";
+import api from "../utils/api";
 
+// ─── Helpers ──────────────────────────────────────────────────────────────────
+function getTimeGreeting() {
+  const h = new Date().getHours();
+  if (h < 12) return "Good morning";
+  if (h < 17) return "Good afternoon";
+  return "Good evening";
+}
+
+function formatTime(ts) {
+  return new Date(ts).toLocaleTimeString("en-IN", {
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: true,
+  });
+}
+
+// Simple markdown-lite renderer: **bold**, bullet points (•), and clickable links
+function renderMarkdown(text) {
+  if (!text) return null;
+  const lines = text.split("\n");
+  return lines.map((line, i) => {
+    // Process bold
+    const parts = line.split(/(\*\*[^*]+\*\*)/g).map((part, j) => {
+      if (part.startsWith("**") && part.endsWith("**")) {
+        return (
+          <strong key={j} className="font-bold text-slate-900 dark:text-white">
+            {part.slice(2, -2)}
+          </strong>
+        );
+      }
+      // Process links in text
+      const linkParts = part.split(/(https?:\/\/[^\s,)]+|\/[a-z-]+(?:\/[a-z-]+)*)/gi);
+      return linkParts.map((lp, k) => {
+        if (lp.match(/^https?:\/\//)) {
+          return (
+            <a
+              key={`${j}-${k}`}
+              href={lp}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-brandBlue dark:text-neonCyan underline underline-offset-2 hover:opacity-80"
+            >
+              {lp}
+            </a>
+          );
+        }
+        if (lp.match(/^\/[a-z-]+/)) {
+          return (
+            <a
+              key={`${j}-${k}`}
+              href={lp}
+              className="text-brandBlue dark:text-neonCyan underline underline-offset-2 hover:opacity-80"
+            >
+              {lp}
+            </a>
+          );
+        }
+        return lp;
+      });
+    });
+
+    return (
+      <span key={i}>
+        {parts}
+        {i < lines.length - 1 && <br />}
+      </span>
+    );
+  });
+}
+
+// ─── Main Component ───────────────────────────────────────────────────────────
 export default function Chatbot() {
-  // Replace with your actual WhatsApp business number
-  const phoneNumber = "919999999999"; 
-  const whatsappMsg = encodeURIComponent("Hi MapMend Solution! I'm interested in your digital services.");
+  const phoneNumber = "917366890727";
+  const whatsappMsg = encodeURIComponent(
+    "Hi MapMend Solution! I'm interested in your digital services."
+  );
   const whatsappUrl = `https://wa.me/${phoneNumber}?text=${whatsappMsg}`;
 
   const [isOpen, setIsOpen] = useState(false);
-  const [messages, setMessages] = useState([
-    {
-      id: 1,
-      sender: "bot",
-      text: "👋 Hi there! I'm the MapMend Assistant. How can I help you modernize your digital presence today?",
-    },
-  ]);
+  const [messages, setMessages] = useState([]);
   const [inputText, setInputText] = useState("");
   const [isTyping, setIsTyping] = useState(false);
-  
-  const messagesEndRef = useRef(null);
+  const [suggestions, setSuggestions] = useState([]);
+  const [unreadCount, setUnreadCount] = useState(0);
+  const [copiedId, setCopiedId] = useState(null);
+  const [hasAutoOpened, setHasAutoOpened] = useState(false);
 
-  // Auto-scroll to bottom of chat
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  const messagesEndRef = useRef(null);
+  const inputRef = useRef(null);
+  const chatContainerRef = useRef(null);
+
+  // Initial greeting message
+  const initialMessage = {
+    id: 1,
+    sender: "bot",
+    text: `${getTimeGreeting()}! 👋 I'm the MapMend AI Assistant. I can help you with our services, pricing, delivery timelines, and more. What would you like to know?`,
+    timestamp: Date.now(),
   };
-  
+
+  const initialSuggestions = [
+    "View Pricing Plans",
+    "Our Services",
+    "Book Free Audit",
+    "Contact Us",
+  ];
+
+  // Initialize messages on first render
+  useEffect(() => {
+    setMessages([initialMessage]);
+    setSuggestions(initialSuggestions);
+  }, []);
+
+  // Auto-scroll
+  const scrollToBottom = useCallback(() => {
+    setTimeout(() => {
+      messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    }, 100);
+  }, []);
+
   useEffect(() => {
     scrollToBottom();
-  }, [messages, isTyping]);
+  }, [messages, isTyping, scrollToBottom]);
 
-  // Comprehensive knowledge-base logic based on website copy
-  const generateBotResponse = (userMessage) => {
-    const lower = userMessage.toLowerCase();
-    
-    // Greeting
-    if (lower.match(/^(hi|hello|hey|greetings|hola)/)) {
-      return "Hello there! I can help you with our Services, Pricing, FAQs, or put you in touch with our team. What exactly are you looking to improve for your business today?";
+  // Focus input when chat opens
+  useEffect(() => {
+    if (isOpen) {
+      setTimeout(() => inputRef.current?.focus(), 300);
+      setUnreadCount(0);
     }
-    
-    // Core Services Overview
-    if (lower.includes("service") || lower.includes("offer") || lower.includes("what do you do")) {
-      return "We offer 6 premium services: Website Creation, Google Maps Optimization, Website Redesign, Speed Optimization, Business Digitization, and custom Landing Pages. Which one are you interested in?";
-    }
+  }, [isOpen]);
 
-    // Specific Service: Website Creation
-    if (lower.includes("website") && (lower.includes("create") || lower.includes("build") || lower.includes("make"))) {
-      return "We build modern, mobile-friendly websites designed for trust & conversions! We also do redesigns if you have an old site. Would you like to know our pricing?";
-    }
+  // Auto-open after 30s on first visit
+  useEffect(() => {
+    const alreadyOpened = sessionStorage.getItem("chatbot_auto_opened");
+    if (alreadyOpened || hasAutoOpened) return;
 
-    // Specific Service: Maps & SEO
-    if (lower.includes("map") || lower.includes("seo") || lower.includes("rank") || lower.includes("google")) {
-      return "Our Deep Performance Audit reviews your Google Maps and website completely! We correct categories, optimize SEO, and automate trust signals so the Google algorithm natively prioritizes you to increase real customers.";
-    }
+    const timer = setTimeout(() => {
+      if (!isOpen) {
+        setUnreadCount(1);
+        setHasAutoOpened(true);
+        sessionStorage.setItem("chatbot_auto_opened", "true");
+      }
+    }, 30000);
 
-    // Specific Service: Speed
-    if (lower.includes("speed") || lower.includes("slow") || lower.includes("fast")) {
-      return "We offer Speed Optimization starting from ₹999. We fix slow websites with compression and code cleanup to give you a significantly faster loading experience.";
-    }
+    return () => clearTimeout(timer);
+  }, [isOpen, hasAutoOpened]);
 
-    // Specific Service: Landing Pages
-    if (lower.includes("landing") || lower.includes("ad")) {
-      return "Our Landing Pages start at ₹1,499! We build high-conversion pages strictly designed for ads, leads, and promotions.";
-    }
+  // Copy message handler
+  const copyMessage = (text, id) => {
+    navigator.clipboard?.writeText(text.replace(/\*\*/g, ""));
+    setCopiedId(id);
+    setTimeout(() => setCopiedId(null), 2000);
+  };
 
-    // Pricing & Costs (Using INR from Pricing.jsx)
-    if (lower.includes("price") || lower.includes("cost") || lower.includes("fee") || lower.includes("plan")) {
-      return "We have three transparent One-Time Payment plans: 'Starter Digital' (₹2,599), 'Business Pro' (₹4,999), and 'Enterprise Elite' (₹7,599). All plans include free domain, SSL, and maintenance!";
-    }
+  // ─── Send Message ───────────────────────────────────────────────────────────
+  const sendMessage = async (text) => {
+    const trimmed = (text || inputText).trim();
+    if (!trimmed || isTyping) return;
 
-    // Speed of delivery / FAQs
-    if (lower.includes("how fast") || lower.includes("how long") || lower.includes("time") || lower.includes("days")) {
-      return "Our smart data-driven optimizations ensure initial delivery within 1–3 days! Most of our partners notice influxes in footfall within mere days of our updates taking effect.";
-    }
-    
-    if (lower.includes("payment")) {
-      return "Payments are made securely using unified gateways. You can initiate the project with 50% down! Just hit a 'Choose Plan' button on the Pricing section.";
-    }
+    const userMsg = {
+      id: Date.now(),
+      sender: "user",
+      text: trimmed,
+      timestamp: Date.now(),
+    };
 
-    // Contact & Support
-    if (lower.includes("contact") || lower.includes("support") || lower.includes("help") || lower.includes("email") || lower.includes("call") || lower.includes("whatsapp")) {
-      return "You can reach our team via the Contact form on the homepage, or simply click the green WhatsApp icon at the top of this chat to message us directly!";
-    }
+    setMessages((prev) => [...prev, userMsg]);
+    setInputText("");
+    setSuggestions([]);
+    setIsTyping(true);
 
-    // Default Fallback
-    return "That's a great question! While I am just the smart assistant, our human experts can give you a deeper answer. Feel free to click the WhatsApp icon above to chat with us, or send an email to info@mapmendsolution.com.";
+    try {
+      // Build history for context (exclude the initial greeting and current message)
+      const history = messages
+        .filter((m) => m.id !== 1)
+        .slice(-10)
+        .map((m) => ({ sender: m.sender, text: m.text }));
+
+      const res = await api.post("/api/chat", {
+        message: trimmed,
+        history,
+      });
+
+      const { reply, suggestions: newSuggestions } = res.data;
+
+      const botMsg = {
+        id: Date.now() + 1,
+        sender: "bot",
+        text: reply || "I'm sorry, I couldn't process that. Please try again or contact us on WhatsApp!",
+        timestamp: Date.now(),
+      };
+
+      setIsTyping(false);
+      setMessages((prev) => [...prev, botMsg]);
+      setSuggestions(
+        Array.isArray(newSuggestions) && newSuggestions.length > 0
+          ? newSuggestions.slice(0, 3)
+          : ["View pricing plans", "Our services", "Contact us"]
+      );
+
+      if (!isOpen) setUnreadCount((c) => c + 1);
+    } catch {
+      setIsTyping(false);
+      const errorMsg = {
+        id: Date.now() + 1,
+        sender: "bot",
+        text: "I'm having trouble connecting right now. You can reach our team directly on **WhatsApp at +91 7366890727** or try again in a moment! 🙏",
+        timestamp: Date.now(),
+      };
+      setMessages((prev) => [...prev, errorMsg]);
+      setSuggestions(["Try again", "Contact on WhatsApp", "View pricing"]);
+    }
   };
 
   const handleSend = (e) => {
     e.preventDefault();
-    if (!inputText.trim()) return;
+    sendMessage();
+  };
 
-    // Add user message
-    const newMsg = { id: Date.now(), sender: "user", text: inputText.trim() };
-    setMessages((prev) => [...prev, newMsg]);
-    setInputText("");
-    setIsTyping(true);
+  const handleChipClick = (text) => {
+    sendMessage(text);
+  };
 
-    // Simulate bot thinking
-    setTimeout(() => {
-      setIsTyping(false);
-      const reply = {
-        id: Date.now() + 1,
-        sender: "bot",
-        text: generateBotResponse(newMsg.text),
-      };
-      setMessages((prev) => [...prev, reply]);
-    }, 1200);
+  // ─── Scroll-to-bottom FAB (shows when scrolled up) ─────────────────────────
+  const [showScrollBtn, setShowScrollBtn] = useState(false);
+
+  const handleChatScroll = () => {
+    if (!chatContainerRef.current) return;
+    const { scrollTop, scrollHeight, clientHeight } = chatContainerRef.current;
+    setShowScrollBtn(scrollHeight - scrollTop - clientHeight > 100);
   };
 
   return (
     <>
-      {/* Trigger Button */}
+      {/* ─── Trigger Button ─────────────────────────────────────────────── */}
       <AnimatePresence>
         {!isOpen && (
           <motion.button
@@ -121,19 +255,30 @@ export default function Chatbot() {
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0, opacity: 0 }}
             transition={{ type: "spring", stiffness: 260, damping: 20 }}
-            className="fixed bottom-6 right-6 z-50 p-4 rounded-full bg-brandBlue text-white shadow-xl shadow-brandBlue/30 hover:scale-110 transition-transform overflow-hidden group"
+            className="fixed bottom-6 right-6 z-50 p-4 rounded-full bg-gradient-to-br from-brandBlue to-brandOrange text-white shadow-xl shadow-brandBlue/30 hover:shadow-2xl hover:shadow-brandOrange/30 hover:scale-110 transition-all duration-300 overflow-hidden group"
+            aria-label="Open chat"
           >
-            <span className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform rounded-full"></span>
+            <span className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform rounded-full" />
             <FiMessageSquare className="w-6 h-6 relative z-10" />
-            
-            {/* Ping indicator */}
-            <span className="absolute top-0 right-0 w-3 h-3 bg-red-500 rounded-full animate-ping"></span>
-            <span className="absolute top-0 right-0 w-3 h-3 bg-red-500 rounded-full"></span>
+
+            {/* Unread badge */}
+            {unreadCount > 0 && (
+              <motion.span
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 rounded-full flex items-center justify-center text-[10px] font-black text-white z-20 border-2 border-white dark:border-darkBg"
+              >
+                {unreadCount > 9 ? "9+" : unreadCount}
+              </motion.span>
+            )}
+
+            {/* Pulse ring */}
+            <span className="absolute inset-0 rounded-full animate-ping bg-brandBlue/30 pointer-events-none" />
           </motion.button>
         )}
       </AnimatePresence>
 
-      {/* Chat Window */}
+      {/* ─── Chat Window ────────────────────────────────────────────────── */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -141,108 +286,245 @@ export default function Chatbot() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 50, scale: 0.9 }}
             transition={{ type: "spring", bounce: 0.3, duration: 0.6 }}
-            className="fixed bottom-6 right-6 z-50 w-[350px] max-w-[calc(100vw-2rem)] h-[500px] max-h-[calc(100vh-4rem)] flex flex-col rounded-2xl overflow-hidden glass-card border border-white/10 shadow-2xl backdrop-blur-xl bg-black/60"
+            className="fixed bottom-6 right-6 z-50 w-[380px] max-w-[calc(100vw-2rem)] h-[550px] max-h-[calc(100vh-4rem)] flex flex-col rounded-3xl overflow-hidden border border-slate-200 dark:border-white/10 shadow-2xl dark:shadow-[0_0_60px_rgba(0,0,0,0.6)] transition-colors duration-500"
           >
-            {/* Header */}
-            <div className="bg-brandNavy p-4 flex items-center justify-between border-b border-white/10 shrink-0">
-              <div className="flex items-center space-x-3">
-                <div className="w-10 h-10 rounded-full bg-brandBlue flex items-center justify-center p-[2px]">
-                  <div className="w-full h-full bg-black/50 rounded-full flex items-center justify-center">
-                    <FaRobot className="text-white text-lg" />
-                  </div>
+            {/* ─── Header ─────────────────────────────────────────────── */}
+            <div className="bg-gradient-to-r from-brandBlue to-brandOrange p-4 flex items-center justify-between shrink-0 relative overflow-hidden">
+              {/* Subtle pattern overlay */}
+              <div className="absolute inset-0 opacity-10">
+                <div className="absolute top-0 right-0 w-32 h-32 bg-white rounded-full -translate-y-1/2 translate-x-1/2" />
+                <div className="absolute bottom-0 left-0 w-20 h-20 bg-white rounded-full translate-y-1/2 -translate-x-1/2" />
+              </div>
+
+              <div className="flex items-center space-x-3 relative z-10">
+                <div className="w-11 h-11 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center border border-white/30 shadow-inner">
+                  <FaRobot className="text-white text-lg" />
                 </div>
                 <div>
-                  <h3 className="text-white font-semibold text-sm">MapMend Assistant</h3>
+                  <h3 className="text-white font-bold text-sm">
+                    MapMend AI Assistant
+                  </h3>
                   <div className="flex items-center space-x-1.5">
-                    <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
-                    <span className="text-xs text-blue-200">Online</span>
+                    <span className="w-2 h-2 rounded-full bg-green-300 animate-pulse shadow-[0_0_6px_rgba(74,222,128,0.6)]" />
+                    <span className="text-[11px] text-white/80 font-medium">
+                      {isTyping ? "Thinking..." : "Online"}
+                    </span>
                   </div>
                 </div>
               </div>
-              <div className="flex items-center space-x-1">
+
+              <div className="flex items-center space-x-1 relative z-10">
                 <a
                   href={whatsappUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-green-400 hover:text-green-300 p-2 hover:bg-white/10 rounded-full transition-colors group relative"
+                  className="text-white hover:bg-white/20 p-2 rounded-full transition-colors group relative"
                   aria-label="Chat on WhatsApp"
-                  title="Direct WhatsApp Reach"
+                  title="Direct WhatsApp"
                 >
                   <FaWhatsapp className="w-5 h-5 group-hover:scale-110 transition-transform" />
-                  <span className="absolute -top-1 -right-1 flex h-2.5 w-2.5">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                    <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500"></span>
-                  </span>
                 </a>
                 <button
                   onClick={() => setIsOpen(false)}
-                  className="text-white/70 hover:text-white p-2 hover:bg-white/10 rounded-full transition-colors"
-                  aria-label="Close Chat"
+                  className="text-white/80 hover:text-white hover:bg-white/20 p-2 rounded-full transition-colors"
+                  aria-label="Minimize Chat"
                 >
-                  <FiMinimize2 className="w-5 h-5" />
+                  <FiMinimize2 className="w-4 h-4" />
                 </button>
               </div>
             </div>
 
-            {/* Messages Area */}
-            <div className="flex-1 overflow-y-auto p-4 space-y-4 custom-scrollbar bg-black/20">
+            {/* ─── Messages Area ──────────────────────────────────────── */}
+            <div
+              ref={chatContainerRef}
+              onScroll={handleChatScroll}
+              className="flex-1 overflow-y-auto p-4 space-y-4 bg-slate-50 dark:bg-[#0a0a0f] transition-colors duration-500 relative"
+              style={{ scrollbarWidth: "thin" }}
+            >
               {messages.map((msg) => (
                 <motion.div
                   key={msg.id}
-                  initial={{ opacity: 0, x: msg.sender === "user" ? 20 : -20 }}
-                  animate={{ opacity: 1, x: 0 }}
+                  initial={{ opacity: 0, y: 12, scale: 0.95 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  transition={{ duration: 0.3 }}
                   className={`flex ${
                     msg.sender === "user" ? "justify-end" : "justify-start"
                   }`}
                 >
-                  <div
-                    className={`max-w-[80%] rounded-2xl px-4 py-2 text-sm leading-relaxed ${
-                      msg.sender === "user"
-                        ? "bg-brandBlue text-white rounded-tr-sm shadow-md"
-                        : "bg-white/10 text-gray-200 rounded-tl-sm border border-white/5"
-                    }`}
-                  >
-                    {msg.text}
+                  <div className="flex flex-col max-w-[85%] group">
+                    {/* Bot avatar */}
+                    {msg.sender === "bot" && (
+                      <div className="flex items-center gap-2 mb-1.5">
+                        <div className="w-5 h-5 rounded-full bg-gradient-to-br from-brandBlue to-brandOrange flex items-center justify-center shadow-sm">
+                          <FaRobot className="text-white text-[8px]" />
+                        </div>
+                        <span className="text-[10px] text-slate-400 dark:text-gray-500 font-medium">
+                          AI Assistant
+                        </span>
+                      </div>
+                    )}
+
+                    {/* Message bubble */}
+                    <div
+                      className={`rounded-2xl px-4 py-3 text-sm leading-relaxed relative ${
+                        msg.sender === "user"
+                          ? "bg-gradient-to-br from-brandBlue to-brandBlue/90 text-white rounded-tr-md shadow-md shadow-brandBlue/20"
+                          : "bg-white dark:bg-white/[0.06] text-slate-700 dark:text-gray-200 rounded-tl-md border border-slate-200 dark:border-white/10 shadow-sm"
+                      }`}
+                    >
+                      {msg.sender === "bot"
+                        ? renderMarkdown(msg.text)
+                        : msg.text}
+
+                      {/* Copy button (bot messages only) */}
+                      {msg.sender === "bot" && (
+                        <button
+                          onClick={() => copyMessage(msg.text, msg.id)}
+                          className="absolute -bottom-3 right-2 opacity-0 group-hover:opacity-100 transition-opacity bg-white dark:bg-slate-800 border border-slate-200 dark:border-white/10 rounded-full p-1 shadow-sm"
+                          title="Copy message"
+                        >
+                          {copiedId === msg.id ? (
+                            <FiCheck className="w-3 h-3 text-green-500" />
+                          ) : (
+                            <FiCopy className="w-3 h-3 text-slate-400" />
+                          )}
+                        </button>
+                      )}
+                    </div>
+
+                    {/* Timestamp */}
+                    <span
+                      className={`text-[10px] mt-1 ${
+                        msg.sender === "user"
+                          ? "text-right text-slate-400 dark:text-gray-600"
+                          : "text-slate-400 dark:text-gray-600"
+                      }`}
+                    >
+                      {formatTime(msg.timestamp)}
+                    </span>
                   </div>
                 </motion.div>
               ))}
-              
+
+              {/* Typing indicator */}
               {isTyping && (
                 <motion.div
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   className="flex justify-start"
                 >
-                  <div className="bg-white/10 text-gray-300 rounded-2xl rounded-tl-sm px-4 py-3 flex space-x-1.5 border border-white/5 w-fit">
-                    <motion.div animate={{ y: [0, -5, 0] }} transition={{ repeat: Infinity, duration: 0.8, delay: 0 }} className="w-2 h-2 bg-gray-400 rounded-full" />
-                    <motion.div animate={{ y: [0, -5, 0] }} transition={{ repeat: Infinity, duration: 0.8, delay: 0.2 }} className="w-2 h-2 bg-gray-400 rounded-full" />
-                    <motion.div animate={{ y: [0, -5, 0] }} transition={{ repeat: Infinity, duration: 0.8, delay: 0.4 }} className="w-2 h-2 bg-gray-400 rounded-full" />
+                  <div className="flex flex-col">
+                    <div className="flex items-center gap-2 mb-1.5">
+                      <div className="w-5 h-5 rounded-full bg-gradient-to-br from-brandBlue to-brandOrange flex items-center justify-center">
+                        <FaRobot className="text-white text-[8px]" />
+                      </div>
+                      <span className="text-[10px] text-slate-400 dark:text-gray-500 font-medium">
+                        AI is thinking...
+                      </span>
+                    </div>
+                    <div className="bg-white dark:bg-white/[0.06] text-slate-500 rounded-2xl rounded-tl-md px-4 py-3 flex space-x-1.5 border border-slate-200 dark:border-white/10 shadow-sm w-fit">
+                      <motion.div
+                        animate={{ y: [0, -6, 0] }}
+                        transition={{ repeat: Infinity, duration: 0.7, delay: 0 }}
+                        className="w-2 h-2 bg-brandBlue/60 dark:bg-neonCyan/60 rounded-full"
+                      />
+                      <motion.div
+                        animate={{ y: [0, -6, 0] }}
+                        transition={{ repeat: Infinity, duration: 0.7, delay: 0.15 }}
+                        className="w-2 h-2 bg-brandBlue/60 dark:bg-neonCyan/60 rounded-full"
+                      />
+                      <motion.div
+                        animate={{ y: [0, -6, 0] }}
+                        transition={{ repeat: Infinity, duration: 0.7, delay: 0.3 }}
+                        className="w-2 h-2 bg-brandBlue/60 dark:bg-neonCyan/60 rounded-full"
+                      />
+                    </div>
                   </div>
                 </motion.div>
               )}
+
               <div ref={messagesEndRef} />
             </div>
 
-            {/* Input Area */}
+            {/* Scroll-to-bottom button */}
+            <AnimatePresence>
+              {showScrollBtn && (
+                <motion.button
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.8 }}
+                  onClick={scrollToBottom}
+                  className="absolute bottom-[140px] right-4 z-10 w-8 h-8 rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-white/10 shadow-lg flex items-center justify-center text-slate-500 dark:text-gray-400 hover:text-brandBlue dark:hover:text-neonCyan transition-colors"
+                >
+                  <FiChevronDown className="w-4 h-4" />
+                </motion.button>
+              )}
+            </AnimatePresence>
+
+            {/* ─── quick reply Chips ──────────────────────────────────── */}
+            <AnimatePresence>
+              {suggestions.length > 0 && !isTyping && (
+                <motion.div
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: "auto" }}
+                  exit={{ opacity: 0, height: 0 }}
+                  className="bg-slate-50 dark:bg-[#0a0a0f] border-t border-slate-100 dark:border-white/5 px-3 py-2 overflow-hidden transition-colors duration-500"
+                >
+                  <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-hide">
+                    {suggestions.map((s, i) => (
+                      <motion.button
+                        key={`${s}-${i}`}
+                        initial={{ opacity: 0, y: 8 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: i * 0.08 }}
+                        onClick={() => handleChipClick(s)}
+                        className="shrink-0 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-white dark:bg-white/[0.06] border border-slate-200 dark:border-white/10 text-slate-600 dark:text-gray-300 hover:bg-brandBlue/10 dark:hover:bg-neonCyan/10 hover:text-brandBlue dark:hover:text-neonCyan hover:border-brandBlue/30 dark:hover:border-neonCyan/30 transition-all duration-200 active:scale-95"
+                      >
+                        {s}
+                      </motion.button>
+                    ))}
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+
+            {/* ─── Input Area ────────────────────────────────────────── */}
             <form
               onSubmit={handleSend}
-              className="p-3 bg-black/40 border-t border-white/10 flex items-center space-x-2 shrink-0"
+              className="p-3 bg-white dark:bg-[#0d0d14] border-t border-slate-200 dark:border-white/10 flex items-center space-x-2 shrink-0 transition-colors duration-500"
             >
-              <input
-                type="text"
-                value={inputText}
-                onChange={(e) => setInputText(e.target.value)}
-                placeholder="Type your message..."
-                className="flex-1 bg-white/5 text-white placeholder-gray-400 border border-white/10 rounded-full px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-brandBlue/50 transition-all"
-              />
+              <div className="flex-1 relative">
+                <input
+                  ref={inputRef}
+                  type="text"
+                  value={inputText}
+                  onChange={(e) => setInputText(e.target.value.slice(0, 500))}
+                  placeholder="Ask me anything..."
+                  className="w-full bg-slate-100 dark:bg-white/5 text-slate-800 dark:text-white placeholder-slate-400 dark:placeholder-gray-500 border border-slate-200 dark:border-white/10 rounded-full px-4 py-2.5 pr-10 text-sm focus:outline-none focus:ring-2 focus:ring-brandBlue/40 dark:focus:ring-neonCyan/40 focus:border-brandBlue dark:focus:border-neonCyan transition-all duration-300"
+                  disabled={isTyping}
+                />
+                {inputText.length > 0 && (
+                  <span className="absolute right-3 top-1/2 -translate-y-1/2 text-[9px] text-slate-400 dark:text-gray-600 font-mono">
+                    {inputText.length}/500
+                  </span>
+                )}
+              </div>
               <button
                 type="submit"
-                disabled={!inputText.trim()}
-                className="bg-brandOrange hover:bg-orange-600 disabled:opacity-50 disabled:cursor-not-allowed text-white p-2.5 rounded-full shadow-lg transition-colors flex items-center justify-center"
+                disabled={!inputText.trim() || isTyping}
+                className="bg-gradient-to-br from-brandBlue to-brandOrange hover:shadow-lg hover:shadow-brandOrange/20 disabled:opacity-40 disabled:cursor-not-allowed text-white p-2.5 rounded-full shadow-md transition-all duration-300 flex items-center justify-center active:scale-90"
               >
-                <FiSend className="w-4 h-4 ml-0.5" />
+                <FiSend className="w-4 h-4" />
               </button>
             </form>
+
+            {/* ─── Footer Badge ──────────────────────────────────────── */}
+            <div className="bg-white dark:bg-[#0d0d14] px-3 py-1.5 flex items-center justify-center gap-1.5 border-t border-slate-100 dark:border-white/5 transition-colors duration-500">
+              <FiZap className="w-3 h-3 text-brandOrange" />
+              <span className="text-[9px] text-slate-400 dark:text-gray-600 font-semibold uppercase tracking-widest">
+                Powered by AI • MapMend Solution
+              </span>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>

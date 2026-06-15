@@ -201,7 +201,7 @@ export default function Account() {
           </div>
         </form>
 
-        {/* PASSWORD FORM — hidden for Google-auth users */}
+        {/* PASSWORD FORM hidden for Google-auth users */}
         {isGoogle ? (
           <div className="md:col-span-2 glass-card border border-slate-200 dark:border-white/10 rounded-3xl p-8 space-y-4">
             <h2 className="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">

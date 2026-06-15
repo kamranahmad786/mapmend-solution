@@ -5,7 +5,7 @@ import { FiPlus, FiMinus, FiHelpCircle } from "react-icons/fi";
 const faqs = [
   {
     q: "How fast is the digital transformation?",
-    a: "Our smart data-driven optimizations ensure initial delivery within 1–3 business days. Custom architectural work scales according to project scope."
+    a: "Our smart data driven optimizations ensure initial delivery within 1–3 business days. Custom architectural work scales according to project scope."
   },
   {
     q: "Will my maps ranking genuinely improve?",
@@ -13,15 +13,15 @@ const faqs = [
   },
   {
     q: "How does the pricing and transaction work?",
-    a: "We offer completely transparent, flat-fee pricing. Payments are made securely through our unified gateways. All projects require 50% mobilization to initiate."
+    a: "We offer completely transparent, flat fee pricing. Payments are made securely through our unified gateways. All projects require 50% mobilization to initiate."
   },
   {
-    q: "Do you offer post-setup automation and monitoring?",
+    q: "Do you offer post setup automation and monitoring?",
     a: "Yes. Post-launch maintenance ensures continuous uptime, automated security patches, and localized SEO monitoring to maintain ranking dominance."
   },
   {
     q: "How quickly will I see footfall and leads increase?",
-    a: "By feeding search algorithms correct, rich metadata about your business, the platform natively prioritizes you. Most partners notice influxes within 10-14 activity cycles."
+    a: "By feeding search algorithms correct, rich metadata about your business, the platform natively prioritizes you. Most partners notice influxes within 10 to 14 activity cycles."
   }
 ];
 
@@ -30,7 +30,7 @@ export default function FAQ() {
 
   return (
     <section id="faq" className="min-h-[80vh] flex items-center py-32 bg-lightBg dark:bg-darkBg relative overflow-hidden">
-      
+
       {/* Subtle Background Accent */}
       <div className="absolute bottom-1/4 left-1/4 w-[500px] h-[500px] bg-brandOrange/5 rounded-full blur-[180px] pointer-events-none"></div>
 
@@ -45,7 +45,7 @@ export default function FAQ() {
         >
           <div className="text-brandOrange font-black uppercase tracking-[0.3em] text-xs mb-4">Support & Documentation</div>
           <h2 className="section-heading">
-            Operational Knowledge Base
+            Frequently Asked Questions
           </h2>
           <p className="section-subheading">
             Technical clarity regarding our optimization methodologies and digital infrastructure deployment.
@@ -61,31 +61,27 @@ export default function FAQ() {
               transition={{ delay: i * 0.05 }}
               viewport={{ once: true }}
               key={i}
-              className={`group glass-card rounded-[2rem] border transition-all duration-500 overflow-hidden ${
-                open === i ? "border-brandOrange/30 bg-white dark:bg-brandNavy/30" : "border-slate-200 dark:border-white/5 hover:border-slate-200 dark:border-white/10"
-              }`}
+              className={`group glass-card rounded-[2rem] border transition-all duration-500 overflow-hidden ${open === i ? "border-brandOrange/30 bg-white dark:bg-brandNavy/30" : "border-slate-200 dark:border-white/5 hover:border-slate-200 dark:border-white/10"
+                }`}
             >
               <button
                 onClick={() => setOpen(open === i ? null : i)}
                 className="w-full text-left p-8 md:p-10 flex justify-between items-center group outline-none"
               >
                 <div className="flex items-center gap-6">
-                   <div className={`w-10 h-10 rounded-xl border flex items-center justify-center transition-all duration-500 ${
-                     open === i ? "bg-brandOrange text-white border-brandOrange shadow-xl shadow-brandOrange/20" : "bg-slate-100 dark:bg-white/5 text-slate-500 border-slate-200 dark:border-white/10"
-                   }`}>
-                      <FiHelpCircle />
-                   </div>
-                   <span className={`text-lg md:text-xl font-black tracking-tight transition-colors duration-500 ${
-                     open === i ? "text-white" : "text-slate-300 group-hover:text-white"
-                   }`}>
-                      {f.q}
-                   </span>
+                  <div className={`w-10 h-10 rounded-xl border flex items-center justify-center transition-all duration-500 ${open === i ? "bg-brandOrange text-white border-brandOrange shadow-xl shadow-brandOrange/20" : "bg-slate-100 dark:bg-white/5 text-slate-500 border-slate-200 dark:border-white/10"
+                    }`}>
+                    <FiHelpCircle />
+                  </div>
+                  <span className={`text-lg md:text-xl font-black tracking-tight transition-colors duration-500 ${open === i ? "text-slate-900 dark:text-white" : "text-slate-700 dark:text-slate-300 group-hover:text-slate-900 dark:group-hover:text-white"
+                    }`}>
+                    {f.q}
+                  </span>
                 </div>
-                
-                <div className={`text-xl transition-all duration-500 ${
-                  open === i ? "text-brandOrange rotate-180" : "text-slate-600 group-hover:text-slate-100"
-                }`}>
-                   {open === i ? <FiMinus /> : <FiPlus />}
+
+                <div className={`text-xl transition-all duration-500 ${open === i ? "text-brandOrange rotate-180" : "text-slate-400 dark:text-slate-600 group-hover:text-brandOrange dark:group-hover:text-slate-100"
+                  }`}>
+                  {open === i ? <FiMinus /> : <FiPlus />}
                 </div>
               </button>
 
@@ -109,10 +105,10 @@ export default function FAQ() {
 
         {/* Support Section Footer */}
         <div className="mt-20 pt-16 border-t border-slate-200 dark:border-white/5 text-center flex flex-col md:flex-row items-center justify-between gap-8">
-           <div className="text-xs text-slate-500 font-black uppercase tracking-widest">Global Support Node Available 24/7</div>
-           <a href="#contact" className="text-xs font-black uppercase tracking-widest text-brandOrange hover:text-slate-900 dark:text-white transition-colors flex items-center gap-2">
-              Speak With Engineering <FiPlus />
-           </a>
+          <div className="text-xs text-slate-500 font-black uppercase tracking-widest">Global Support Node Available 24/7</div>
+          <a href="#contact" className="text-xs font-black uppercase tracking-widest text-brandOrange hover:text-slate-900 dark:text-white transition-colors flex items-center gap-2">
+            Speak With Engineering <FiPlus />
+          </a>
         </div>
       </div>
     </section>

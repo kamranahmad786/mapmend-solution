@@ -4,11 +4,7 @@
 
 body { 
   font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif; 
-  @apply bg-lightBg text-slate-800 antialiased overflow-x-hidden transition-colors duration-500;
-}
-
-.dark body {
-  @apply bg-darkBg text-slate-300;
+  @apply bg-lightBg dark:bg-darkBg text-slate-800 dark:text-slate-300 antialiased overflow-x-hidden transition-colors duration-500;
 }
 
 @layer utilities {

@@ -81,7 +81,7 @@ export default function Login() {
         className="max-w-5xl w-full bg-white/80 dark:bg-brandNavy/40 backdrop-blur-3xl border border-slate-200 dark:border-white/5 rounded-[2.5rem] overflow-hidden grid lg:grid-cols-2 relative z-10 shadow-2xl"
       >
 
-        {/* LEFT — BRAND PANEL */}
+        {/* LEFT BRAND PANEL */}
         <div className="hidden lg:flex flex-col justify-center bg-slate-50 dark:bg-brandNavy/50 border-r border-slate-200 dark:border-white/5 p-16 relative overflow-hidden">
           <div className="flex items-center gap-4 mb-12 relative z-10">
             <div className="bg-slate-200 dark:bg-white/5 border border-slate-300 dark:border-white/10 p-2.5 rounded-2xl">
@@ -104,7 +104,7 @@ export default function Login() {
 
           <ul className="space-y-6 text-slate-600 dark:text-slate-300 text-sm font-bold uppercase tracking-widest relative z-10">
              <li className="flex items-center gap-4 opacity-70">
-                <span className="w-1.5 h-1.5 rounded-full bg-brandBlue"></span> Real-time Network Monitoring
+                <span className="w-1.5 h-1.5 rounded-full bg-brandBlue"></span> Real time Network Monitoring
              </li>
              <li className="flex items-center gap-4 opacity-70">
                 <span className="w-1.5 h-1.5 rounded-full bg-brandBlue"></span> Algorithmic SEO Audits
@@ -115,7 +115,7 @@ export default function Login() {
           </ul>
         </div>
 
-        {/* RIGHT — LOGIN FORM */}
+        {/* RIGHT LOGIN FORM */}
         <div className="p-10 lg:p-16 flex flex-col justify-center relative">
           <div className="mb-10 text-center lg:text-left">
              <h2 className="text-3xl font-black text-slate-900 dark:text-white tracking-tight mb-2">Systems Login</h2>

@@ -29,7 +29,7 @@ export default function PrivacyPolicy() {
             Privacy <span className="text-gradient">Policy</span>
           </h1>
           <p className="text-gray-400 mt-4 max-w-2xl mx-auto">
-            Your trust is our most valuable asset. Learn how we handle and protect your information with state-of-the-art security.
+            Your trust is our most valuable asset. Learn how we handle and protect your information with State of the art security.
           </p>
         </motion.div>
 

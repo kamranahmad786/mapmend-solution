@@ -329,7 +329,7 @@ export default function AdminSites() {
       {/* EDIT SITE MODAL */}
       <AnimatePresence>
         {editSite && (
-          <Modal title={`✏️ Edit — ${editSite.domain}`} onClose={() => setEditSite(null)}>
+          <Modal title={`✏️ Edit ${editSite.domain}`} onClose={() => setEditSite(null)}>
             <form onSubmit={saveEdit} className="space-y-4">
               <Field label="Domain">
                 <Input value={editForm.domain} onChange={e => setEditForm({ ...editForm, domain: e.target.value })} placeholder="domain.com" />

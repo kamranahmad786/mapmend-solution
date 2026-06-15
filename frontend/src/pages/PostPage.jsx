@@ -6,6 +6,7 @@ import remarkGfm from "remark-gfm";
 import { motion } from "framer-motion";
 import { FiArrowLeft, FiClock, FiLayers, FiUser, FiCheckCircle } from "react-icons/fi";
 import SEO from "../components/SEO";
+import api from "../utils/api";
 
 const MOCK_POSTS = {
   "why-local-business-needs-website-2025": {
@@ -14,7 +15,7 @@ const MOCK_POSTS = {
     category: "Architecture",
     author: "MapMend Team",
     img: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2000&auto=format&fit=crop",
-    excerpt: "Modern customers query AI and search engines first — here’s why your digital footprint matters.",
+    excerpt: "Modern customers query AI and search engines first here’s why your digital footprint matters.",
     content: `
 ## The Era of AI-Driven Search
 
@@ -63,9 +64,16 @@ export default function PostPage() {
   const [post, setPost] = useState(null);
 
   useEffect(() => {
-    const found = MOCK_POSTS[slug] || MOCK_POSTS["why-local-business-needs-website-2025"];
-    setPost(found);
     window.scrollTo(0, 0);
+    api.get(`/api/blogs/${slug}`)
+      .then((res) => {
+        setPost(res.data);
+      })
+      .catch((err) => {
+        console.error("API Fetch failed, falling back to mock:", err);
+        const found = MOCK_POSTS[slug] || MOCK_POSTS["why-local-business-needs-website-2025"];
+        setPost(found);
+      });
   }, [slug]);
 
   if (!post) return <div className="min-h-screen bg-darkBg flex justify-center items-center text-brandBlue font-black uppercase tracking-widest animate-pulse">Initializing Data Node...</div>;
@@ -119,16 +127,20 @@ export default function PostPage() {
               {post.excerpt}
             </p>
             
-            <div className="flex items-center gap-6 py-8 border-y border-slate-200 dark:border-white/5 mb-16">
-              <div className="w-14 h-14 rounded-[1.25rem] bg-white dark:bg-brandNavy border border-slate-200 dark:border-white/5 flex items-center justify-center text-xl text-brandBlue shadow-sm dark:shadow-2xl">
-                <FiUser />
+              <div className="flex items-center gap-6 py-8 border-y border-slate-200 dark:border-white/5 mb-16">
+              <div className="w-14 h-14 rounded-[1.25rem] bg-white dark:bg-brandNavy border border-slate-200 dark:border-white/5 flex items-center justify-center text-xl text-brandBlue shadow-sm dark:shadow-2xl overflow-hidden">
+                {post.authorImg ? (
+                  <img src={post.authorImg} alt={post.authorName || post.author} className="w-full h-full object-cover" />
+                ) : (
+                  <FiUser />
+                )}
               </div>
               <div>
                 <div className="flex items-center gap-2">
-                   <p className="font-black text-sm text-slate-900 dark:text-white uppercase tracking-tight">{post.author}</p>
+                   <p className="font-black text-sm text-slate-900 dark:text-white uppercase tracking-tight">{post.authorName || post.author}</p>
                    <FiCheckCircle className="text-brandBlue" />
                 </div>
-                <p className="text-xs text-slate-500 font-bold uppercase tracking-widest mt-1">MapMend Strategy Operations</p>
+                <p className="text-xs text-slate-500 font-bold uppercase tracking-widest mt-1">{post.authorRole || "MapMend Strategy Operations"}</p>
               </div>
             </div>
           </motion.div>

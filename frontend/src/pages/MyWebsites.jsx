@@ -32,28 +32,28 @@ export default function MyWebsites() {
 
       {/* HEADER */}
       <div>
-        <h1 className="text-3xl font-extrabold text-white flex items-center gap-3">
-          <FiGlobe className="text-neonBlue" /> My Websites
+        <h1 className="text-3xl font-extrabold text-slate-900 dark:text-white flex items-center gap-3">
+          <FiGlobe className="text-brandBlue dark:text-neonBlue" /> My Websites
         </h1>
-        <p className="text-gray-400 mt-1">Status, analytical performance, and delivery metrics for your MapMend projects.</p>
+        <p className="text-slate-600 dark:text-gray-400 mt-1">Status, analytical performance, and delivery metrics for your MapMend projects.</p>
       </div>
 
       {/* EMPTY STATE */}
       {sites.length === 0 && (
         <motion.div
           initial={{ opacity: 0, scale: 0.97 }} animate={{ opacity: 1, scale: 1 }}
-          className="glass-card border border-white/10 rounded-3xl p-16 text-center flex flex-col items-center"
+          className="glass-card border border-slate-200 dark:border-white/10 rounded-3xl p-16 text-center flex flex-col items-center"
         >
-          <div className="w-20 h-20 rounded-full bg-neonBlue/10 border border-neonBlue/20 flex items-center justify-center mb-6 shadow-[0_0_30px_rgba(59,130,246,0.2)]">
-            <FiAlertCircle className="text-3xl text-neonBlue" />
+          <div className="w-20 h-20 rounded-full bg-brandBlue/10 dark:bg-neonBlue/10 border border-brandBlue/20 dark:border-neonBlue/20 flex items-center justify-center mb-6 shadow-[0_0_30px_rgba(59,130,246,0.2)]">
+            <FiAlertCircle className="text-3xl text-brandBlue dark:text-neonBlue" />
           </div>
-          <h3 className="text-2xl font-extrabold text-white mb-2">No Websites Yet</h3>
-          <p className="text-gray-400 max-w-md mb-8">
+          <h3 className="text-2xl font-extrabold text-slate-900 dark:text-white mb-2">No Websites Yet</h3>
+          <p className="text-slate-500 dark:text-gray-400 max-w-md mb-8">
             Once you purchase a plan or our team starts your audit, your website will appear here with live tracking.
           </p>
           <Link
             to="/#pricing"
-            className="inline-block bg-white text-black font-bold px-8 py-3 rounded-xl hover:scale-105 transition-transform shadow-[0_0_20px_rgba(255,255,255,0.2)]"
+            className="inline-block bg-slate-900 dark:bg-white text-white dark:text-black font-bold px-8 py-3 rounded-xl hover:scale-105 transition-transform shadow-[0_0_20px_rgba(0,0,0,0.1)] dark:shadow-[0_0_20px_rgba(255,255,255,0.2)]"
           >
             Get Your Website @ ₹2,599 →
           </Link>
@@ -75,27 +75,27 @@ export default function MyWebsites() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.07 }}
-                className="glass-card border border-white/10 rounded-2xl p-6 hover:border-white/20 transition-all duration-300 hover-glow"
+                className="glass-card border border-slate-200 dark:border-white/10 rounded-2xl p-6 hover:border-brandBlue/30 dark:hover:border-white/20 transition-all duration-300 hover-glow"
               >
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6">
 
                   {/* LEFT */}
                   <div className="flex items-center gap-4">
-                    <div className="w-14 h-14 rounded-2xl bg-neonBlue/10 border border-neonBlue/20 flex items-center justify-center shadow-[0_0_15px_rgba(59,130,246,0.15)] relative overflow-hidden group">
-                      <FiGlobe className="text-2xl text-neonBlue relative z-10" />
-                      <div className="absolute inset-0 bg-gradient-to-tr from-neonBlue/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                    <div className="w-14 h-14 rounded-2xl bg-brandBlue/10 dark:bg-neonBlue/10 border border-brandBlue/20 dark:border-neonBlue/20 flex items-center justify-center shadow-[0_0_15px_rgba(59,130,246,0.15)] relative overflow-hidden group">
+                      <FiGlobe className="text-2xl text-brandBlue dark:text-neonBlue relative z-10" />
+                      <div className="absolute inset-0 bg-gradient-to-tr from-brandBlue/20 dark:from-neonBlue/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                     </div>
                     <div>
-                      <div className="text-white font-bold text-lg flex items-center gap-2">
+                      <div className="text-slate-900 dark:text-white font-bold text-lg flex items-center gap-2">
                         {site.domain || "Domain Pending"}
                         <span className={`text-[9px] font-bold px-2 py-0.5 rounded-full border ${st.cls}`}>
                           {st.label}
                         </span>
                       </div>
-                      <div className="text-gray-400 text-sm font-medium">{site.name || "Project in progress"}</div>
+                      <div className="text-slate-500 dark:text-gray-400 text-sm font-medium">{site.name || "Project in progress"}</div>
                       
                       {handoverFormatted && (
-                        <div className="mt-2 flex items-center gap-2 text-xs font-bold text-neonCyan">
+                        <div className="mt-2 flex items-center gap-2 text-xs font-bold text-brandBlue dark:text-neonCyan">
                           <FiCalendar className="text-sm" /> Handover: {handoverFormatted}
                         </div>
                       )}
@@ -107,18 +107,18 @@ export default function MyWebsites() {
                     <div className="flex items-center gap-6">
                       {site.seoScore && (
                         <div className="text-center">
-                          <div className="flex items-center gap-1 text-neonCyan text-sm font-extrabold uppercase tracking-tight">
+                          <div className="flex items-center gap-1 text-brandBlue dark:text-neonCyan text-sm font-extrabold uppercase tracking-tight">
                             <FiTrendingUp /> {site.seoScore}
                           </div>
-                          <div className="text-[10px] text-gray-500 font-bold uppercase tracking-widest">SEO Audit</div>
+                          <div className="text-[10px] text-slate-500 dark:text-gray-500 font-bold uppercase tracking-widest">SEO Audit</div>
                         </div>
                       )}
                       {site.pagespeedScore && (
                         <div className="text-center">
-                          <div className="flex items-center gap-1 text-neonPurple text-sm font-extrabold uppercase tracking-tight">
+                          <div className="flex items-center gap-1 text-brandOrange dark:text-neonPurple text-sm font-extrabold uppercase tracking-tight">
                             <FiZap /> {site.pagespeedScore}
                           </div>
-                          <div className="text-[10px] text-gray-500 font-bold uppercase tracking-widest">Speed</div>
+                          <div className="text-[10px] text-slate-500 dark:text-gray-500 font-bold uppercase tracking-widest">Speed</div>
                         </div>
                       )}
                     </div>
@@ -128,7 +128,7 @@ export default function MyWebsites() {
                         href={`https://${site.domain.replace(/^https?:\/\//,"")}`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center gap-2 bg-white text-black px-6 py-2.5 rounded-xl text-sm font-extrabold hover:scale-105 transition-all shadow-[0_0_20px_rgba(255,255,255,0.1)]"
+                        className="flex items-center gap-2 bg-slate-900 dark:bg-white text-white dark:text-black px-6 py-2.5 rounded-xl text-sm font-extrabold hover:scale-105 transition-all shadow-[0_0_20px_rgba(0,0,0,0.1)] dark:shadow-[0_0_20px_rgba(255,255,255,0.1)]"
                       >
                         Visit Site <FiExternalLink />
                       </a>
@@ -145,8 +145,8 @@ export default function MyWebsites() {
       <div className="glass-card border border-brandOrange/20 rounded-2xl p-8 bg-brandOrange/5 flex flex-col sm:flex-row items-center justify-between gap-6 relative overflow-hidden">
         <div className="absolute -right-20 -bottom-20 w-64 h-64 bg-brandOrange/10 rounded-full blur-[100px] pointer-events-none" />
         <div className="relative z-10">
-          <div className="font-extrabold text-xl text-white">Need an Upgrade?</div>
-          <p className="text-sm text-gray-400 mt-1 max-w-lg">Scale your digital presence with MapMend Pro. Advanced Google Maps optimization, automated performance blogs, and 24/7 technical support.</p>
+          <div className="font-extrabold text-xl text-slate-900 dark:text-white">Need an Upgrade?</div>
+          <p className="text-sm text-slate-500 dark:text-gray-400 mt-1 max-w-lg">Scale your digital presence with MapMend Pro. Advanced Google Maps optimization, automated performance blogs, and 24/7 technical support.</p>
         </div>
         <a
           href="https://wa.me/917366890727?text=Hello,%20I%20want%20to%20upgrade%20my%20MapMend%20plan."

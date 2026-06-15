@@ -26,7 +26,7 @@ export default function Process() {
       step: "4",
       icon: <FaRocket className="text-2xl" />,
       title: "Review & Launch",
-      desc: "You review the final work, request tweaks, and we launch your next-gen digital front.",
+      desc: "You review the final work, request tweaks, and we launch your next gen digital front.",
     },
   ];
 
@@ -50,7 +50,7 @@ export default function Process() {
             Our Simple 4-Step Process
           </h2>
           <p className="text-slate-600 dark:text-gray-400 max-w-2xl mx-auto text-lg">
-            A fast, transparent process designed to deliver next-gen results quickly and professionally.
+            A fast, transparent process designed to deliver next gen results quickly and professionally.
           </p>
         </motion.div>
 

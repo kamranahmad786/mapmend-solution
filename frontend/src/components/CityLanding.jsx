@@ -30,7 +30,7 @@ export default function CityLanding({ city = "Udaipur" }) {
 
             <div className="bg-white p-6 rounded-2xl shadow">
               <h3 className="text-xl font-semibold mb-2">Fast Delivery</h3>
-              <p>Most projects done in 1–3 days with clear updates — perfect for local shops & services.</p>
+              <p>Most projects done in 1–3 days with clear updates perfect for local shops & services.</p>
             </div>
           </div>
 

@@ -12,7 +12,7 @@ export default function Dashboard() {
   const impersonateId   = localStorage.getItem("impersonate_user_id");
   const impersonateName = localStorage.getItem("impersonate_user_name");
 
-  // Verify session — allow admins only if they are in impersonation mode
+  // Verify session allow admins only if they are in impersonation mode
   useEffect(() => {
     const token         = localStorage.getItem("mapmend_token");
     const role          = localStorage.getItem("mapmend_role");
@@ -45,7 +45,7 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="bg-[#050505] min-h-screen flex text-white overflow-hidden">
+    <div className="bg-lightBg dark:bg-[#050505] min-h-screen flex text-slate-800 dark:text-white overflow-hidden transition-colors duration-500">
 
       {/* SIDEBAR */}
       <div className="w-64 shrink-0 fixed left-0 top-0 h-full z-40">
@@ -77,7 +77,7 @@ export default function Dashboard() {
 
           {/* FULL-SCREEN LOADER */}
           {loading && (
-            <div className="fixed inset-0 bg-[#050505] flex items-center justify-center z-[999]">
+            <div className="fixed inset-0 bg-lightBg dark:bg-[#050505] flex items-center justify-center z-[999] transition-colors duration-500">
               <div className="flex flex-col items-center">
                 <div className="w-14 h-14 border-4 border-neonCyan/20 border-t-neonCyan rounded-full animate-spin shadow-[0_0_20px_rgba(6,182,212,0.4)]" />
                 <p className="mt-5 text-neonCyan font-bold tracking-widest text-sm animate-pulse uppercase">

@@ -33,7 +33,7 @@ export default function Hero() {
           </h1>
 
           <p className="text-slate-400 text-lg md:text-xl max-w-xl mx-auto lg:mx-0 leading-relaxed mb-10">
-            MapMend builds high-performance digital assets and optimizes Local SEO 
+            MapMend builds high performance digital assets and optimizes Local SEO 
             presence so your brand stands out where it matters most.
           </p>
 
@@ -85,7 +85,7 @@ export default function Hero() {
             <div className="absolute bottom-6 left-6 right-6 p-6 glass-card rounded-2xl border-brandOrange/10 flex items-center justify-between animate-fadeIn">
                <div>
                   <div className="text-[10px] text-brandOrange font-bold uppercase tracking-widest">Live Optimization</div>
-                  <div className="text-sm font-bold text-slate-900 dark:text-white mt-1">G-Maps Rank #1</div>
+                  <div className="text-sm font-bold text-slate-900 dark:text-white mt-1">G Maps Rank #1</div>
                </div>
                <div className="flex items-center gap-1 text-green-400 text-sm font-bold">
                   <FiCheckCircle /> Verified

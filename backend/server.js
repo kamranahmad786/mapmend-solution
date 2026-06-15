@@ -13,6 +13,7 @@ const adminRoutes = require("./routes/admin");
 const testimonialsRoutes = require("./routes/testimonials");
 const contactRoutes = require("./routes/contact");
 const aiRoutes = require("./routes/ai");
+const chatRoutes = require("./routes/chat");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -37,6 +38,8 @@ app.use("/api/admin", adminRoutes);
 app.use("/api/testimonials", testimonialsRoutes);
 app.use("/api/contact", contactRoutes);
 app.use("/api/ai", aiRoutes);
+app.use("/api/chat", chatRoutes);
+app.use("/api/blogs", require("./routes/blogs"));
 
 // Optional admin seed (if no users)
 (async function seedAdmin() {
